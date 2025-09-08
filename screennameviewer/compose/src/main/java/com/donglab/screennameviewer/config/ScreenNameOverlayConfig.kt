@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.view.Gravity
 
 /**
- * ClassNameViewer의 UI 설정을 담당하는 설정 클래스
+ * ScreenNameViewer의 UI 설정을 담당하는 설정 클래스
  */
 data class ScreenNameOverlayConfig(
     val textSize: Float,

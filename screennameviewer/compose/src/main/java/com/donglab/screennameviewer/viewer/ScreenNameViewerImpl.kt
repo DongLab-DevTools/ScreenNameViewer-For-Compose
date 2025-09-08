@@ -18,7 +18,7 @@ internal class ScreenNameViewerImpl(
 
     init {
         require(settings.isDebugMode) {
-            "ClassNameDebugViewer should only be used in debug builds"
+            "ScreenNameViewer should only be used in debug builds"
         }
     }
 

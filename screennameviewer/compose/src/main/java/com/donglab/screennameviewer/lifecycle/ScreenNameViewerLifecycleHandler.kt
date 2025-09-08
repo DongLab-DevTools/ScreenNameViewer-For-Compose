@@ -21,7 +21,7 @@ class ScreenNameViewerLifecycleHandler(
 
     init {
         require(settings.isDebugMode) {
-            "ClassNameDebugLifecycleHandler should only be used in debug builds"
+            "ScreenNameViewer should only be used in debug builds"
         }
     }
 

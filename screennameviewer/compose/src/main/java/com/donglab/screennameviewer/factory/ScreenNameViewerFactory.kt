@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference
 object ScreenNameViewerFactory {
     
     /**
-     * 설정을 받아 ClassNameDebugViewer를 생성합니다.
+     * 설정을 받아 ScreenNameViewer를 생성합니다.
      * 
      * @param activity 대상 Activity
      * @param settings 활성화 조건 설정 (필수)
