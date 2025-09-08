@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.compose.navigation
+package com.donglab.screennameviewer.compose.tracker
 
 import android.annotation.SuppressLint
 import androidx.navigation.NavController

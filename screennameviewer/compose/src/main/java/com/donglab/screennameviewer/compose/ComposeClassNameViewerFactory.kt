@@ -2,7 +2,7 @@ package com.donglab.screennameviewer.compose
 
 import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
-import com.donglab.screennameviewer.compose.navigation.NavigationScreenTracker
+import com.donglab.screennameviewer.compose.tracker.NavigationScreenTracker
 import com.donglab.screennameviewer.factory.ClassNameViewerFactory
 import com.donglab.screennameviewer.config.ClassNameViewerSettings
 import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
