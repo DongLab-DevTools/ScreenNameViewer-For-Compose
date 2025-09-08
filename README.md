@@ -9,7 +9,7 @@
         val activity = LocalActivity.current as ComponentActivity
 
         DisposableEffect(navController) {
-            val tracker = ComposeClassNameViewerFactory.createNavigationTracker(
+            val tracker = ComposeScreenNameViewerFactory.createNavigationTracker(
                 activity = activity,
                 navController = navController,
                 settings = ScreenNameViewerSetting(
