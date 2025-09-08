@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
-import com.donglab.screennameviewer.config.ClassNameViewerSettings
+import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.compose.ComposeClassNameViewerFactory
 
 /**
@@ -56,11 +56,11 @@ private fun PureComposeContent() {
         val tracker = ComposeClassNameViewerFactory.createNavigationTracker(
             navController = navController,
             activity = context as ComponentActivity,
-            settings = ClassNameViewerSettings(
+            settings = ScreenNameViewerSetting(
                 debugModeCondition = { true },
                 enabledCondition = { true }
             ),
-            config = ClassNameDebugViewerConfig.defaultConfig()
+            config = ScreenNameOverlayConfig.defaultConfig()
         )
         
         onDispose {

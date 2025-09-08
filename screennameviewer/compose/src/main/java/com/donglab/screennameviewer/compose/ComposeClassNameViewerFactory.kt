@@ -3,9 +3,9 @@ package com.donglab.screennameviewer.compose
 import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.compose.tracker.NavigationScreenTracker
-import com.donglab.screennameviewer.factory.ClassNameViewerFactory
-import com.donglab.screennameviewer.config.ClassNameViewerSettings
-import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
+import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
+import com.donglab.screennameviewer.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 
 /**
  * ClassNameViewer for Compose 헬퍼 클래스
@@ -26,10 +26,10 @@ object ComposeClassNameViewerFactory {
     fun createNavigationTracker(
         navController: NavController,
         activity: ComponentActivity,
-        settings: ClassNameViewerSettings,
-        config: ClassNameDebugViewerConfig
+        settings: ScreenNameViewerSetting,
+        config: ScreenNameOverlayConfig
     ): NavigationScreenTracker {
-        val debugViewer = ClassNameViewerFactory.create(activity, settings, config)
+        val debugViewer = ScreenNameViewerFactory.create(activity, settings, config)
         debugViewer.initialize()
 
         return NavigationScreenTracker(navController, debugViewer)

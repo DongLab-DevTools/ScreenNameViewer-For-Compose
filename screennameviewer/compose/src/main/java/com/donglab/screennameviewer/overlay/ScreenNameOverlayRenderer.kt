@@ -15,11 +15,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.setPadding
-import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
+import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.util.dp
 import java.lang.ref.WeakReference
 
-internal class ClassNameDebugOverlayManager(
+internal class ScreenNameOverlayRenderer(
     private val activityRef: WeakReference<Activity>,
 ) {
 
@@ -45,9 +45,9 @@ internal class ClassNameDebugOverlayManager(
     private var activityNameTextView: TextView? = null
     private var fragmentTextViewLayout: LinearLayout? = null
     private var customLabelLayout: LinearLayout? = null
-    private lateinit var config: ClassNameDebugViewerConfig
+    private lateinit var config: ScreenNameOverlayConfig
 
-    fun initialize(config: ClassNameDebugViewerConfig) {
+    fun initialize(config: ScreenNameOverlayConfig) {
         this.config = config
     }
 

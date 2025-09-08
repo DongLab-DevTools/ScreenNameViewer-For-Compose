@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.compose.tracker
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.viewer.ClassNameDebugViewer
+import com.donglab.screennameviewer.viewer.ScreenNameViewer
 
 /**
  * Navigation Screen Tracker for ClassNameViewer integration.
@@ -23,7 +23,7 @@ import com.donglab.screennameviewer.viewer.ClassNameDebugViewer
 @SuppressLint("RestrictedApi")
 class NavigationScreenTracker(
     private val navController: NavController,
-    private val debugViewer: ClassNameDebugViewer
+    private val debugViewer: ScreenNameViewer
 ) {
     
     private var currentRoute: String? = null

@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.config
 /**
  * ClassNameViewer의 활성화 조건을 정의하는 설정 클래스
  */
-data class ClassNameViewerSettings(
+data class ScreenNameViewerSetting(
     val debugModeCondition: () -> Boolean,
     val enabledCondition: () -> Boolean
 ) {

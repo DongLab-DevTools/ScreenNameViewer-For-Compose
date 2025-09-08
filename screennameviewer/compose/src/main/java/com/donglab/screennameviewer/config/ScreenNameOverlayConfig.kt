@@ -6,7 +6,7 @@ import android.view.Gravity
 /**
  * ClassNameViewer의 UI 설정을 담당하는 설정 클래스
  */
-data class ClassNameDebugViewerConfig(
+data class ScreenNameOverlayConfig(
     val textSize: Float,
     val textColor: Int,
     val backgroundColor: Int,
@@ -21,7 +21,7 @@ data class ClassNameDebugViewerConfig(
          * 기본 설정을 반환
          */
         @JvmStatic
-        fun defaultConfig(): ClassNameDebugViewerConfig = ClassNameDebugViewerConfig(
+        fun defaultConfig(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
             textSize = 10f,
             textColor = Color.BLUE,
             backgroundColor = Color.argb(50, 200, 200, 200),

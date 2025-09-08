@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
-import com.donglab.screennameviewer.config.ClassNameViewerSettings
-import com.donglab.screennameviewer.factory.ClassNameViewerFactory
-import com.donglab.screennameviewer.viewer.ClassNameDebugViewer
+import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
+import com.donglab.screennameviewer.viewer.ScreenNameViewer
 
-class ClassNameDebugLifecycleHandler(
-    private val settings: ClassNameViewerSettings,
-    private val config: ClassNameDebugViewerConfig = ClassNameDebugViewerConfig.defaultConfig()
+class ScreenNameViewerLifecycleHandler(
+    private val settings: ScreenNameViewerSetting,
+    private val config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
 ) : ActivityLifecycleCallbacks {
 
     init {
@@ -26,7 +26,7 @@ class ClassNameDebugLifecycleHandler(
     }
 
     // Activity ID별로 debugViewer 저장
-    private val debugViewers = mutableMapOf<String, ClassNameDebugViewer>()
+    private val debugViewers = mutableMapOf<String, ScreenNameViewer>()
     
     // Activity 고유 ID 생성
     private fun getActivityId(activity: Activity): String {
@@ -48,7 +48,7 @@ class ClassNameDebugLifecycleHandler(
         if (debugViewers.containsKey(activityId)) return
 
         // 팩토리를 통해 Viewer 인스턴스 생성
-        ClassNameViewerFactory.create(activity, settings, config).apply {
+        ScreenNameViewerFactory.create(activity, settings, config).apply {
             initialize()
             debugViewers[activityId] = this
         }

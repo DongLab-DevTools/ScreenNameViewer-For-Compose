@@ -5,16 +5,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
-import com.donglab.screennameviewer.config.ClassNameViewerSettings
-import com.donglab.screennameviewer.overlay.ClassNameDebugOverlayManager
+import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.overlay.ScreenNameOverlayRenderer
 
-internal class ClassNameDebugViewerImpl(
+internal class ScreenNameViewerImpl(
     private val activity: ComponentActivity,
-    private val overlayManager: ClassNameDebugOverlayManager,
-    private val config: ClassNameDebugViewerConfig,
-    private val settings: ClassNameViewerSettings
-) : ClassNameDebugViewer {
+    private val overlayManager: ScreenNameOverlayRenderer,
+    private val config: ScreenNameOverlayConfig,
+    private val settings: ScreenNameViewerSetting
+) : ScreenNameViewer {
 
     init {
         require(settings.isDebugMode) {
