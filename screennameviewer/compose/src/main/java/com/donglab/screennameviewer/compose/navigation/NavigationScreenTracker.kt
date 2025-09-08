@@ -1,10 +1,9 @@
 package com.donglab.screennameviewer.compose.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.classnameviewer.viewer.ClassNameDebugViewer
+import com.donglab.screennameviewer.viewer.ClassNameDebugViewer
 
 /**
  * Navigation Screen Tracker for ClassNameViewer integration.

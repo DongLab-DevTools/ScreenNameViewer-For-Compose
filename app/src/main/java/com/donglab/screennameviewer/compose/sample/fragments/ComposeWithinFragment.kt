@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.classnameviewer.config.ClassNameDebugViewerConfig
-import com.donglab.classnameviewer.config.ClassNameViewerSettings
+import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
+import com.donglab.screennameviewer.config.ClassNameViewerSettings
 import com.donglab.screennameviewer.compose.ComposeClassNameViewerFactory
 import com.donglab.screennameviewer.compose.R
 

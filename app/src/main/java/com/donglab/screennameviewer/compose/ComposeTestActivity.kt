@@ -14,8 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.donglab.classnameviewer.config.ClassNameDebugViewerConfig
-import com.donglab.classnameviewer.config.ClassNameViewerSettings
+import com.donglab.screennameviewer.config.ClassNameDebugViewerConfig
+import com.donglab.screennameviewer.config.ClassNameViewerSettings
 import com.donglab.screennameviewer.compose.sample.screens.DetailScreen
 import com.donglab.screennameviewer.compose.sample.screens.HomeScreen
 import com.donglab.screennameviewer.compose.sample.screens.ProfileScreen
