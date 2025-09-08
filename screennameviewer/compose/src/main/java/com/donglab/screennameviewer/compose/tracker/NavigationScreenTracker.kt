@@ -56,10 +56,7 @@ class NavigationScreenTracker(
         debugViewer.addCustomLabel(routeName)
         currentRoute = routeName
     }
-    /**
-     * 리소스 정리를 위한 cleanup 메서드
-     * Activity나 Fragment가 종료될 때 호출해야 함
-     */
+
     fun cleanup() {
         // 현재 표시된 route 제거
         currentRoute?.let { 

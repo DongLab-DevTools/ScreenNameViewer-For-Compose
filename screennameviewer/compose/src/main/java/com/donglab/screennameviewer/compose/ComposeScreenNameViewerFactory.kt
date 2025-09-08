@@ -12,7 +12,7 @@ import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
  * 
  * Compose 앱에서 ClassNameViewer와 Navigation 추적을 쉽게 설정할 수 있도록 도와주는 유틸리티 클래스입니다.
  */
-object ComposeClassNameViewerFactory {
+object ComposeScreenNameViewerFactory {
     
     /**
      * NavController와 함께 NavigationScreenTracker를 생성합니다.

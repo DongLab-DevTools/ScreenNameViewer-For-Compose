@@ -64,7 +64,7 @@ private fun ComposeTestApp() {
     
     // Navigation Screen Tracker 설정
     DisposableEffect(navController) {
-        val tracker = ComposeClassNameViewerFactory.createNavigationTracker(
+        val tracker = ComposeScreenNameViewerFactory.createNavigationTracker(
             navController = navController,
             activity = context as ComponentActivity,
             settings = ScreenNameViewerSetting(
