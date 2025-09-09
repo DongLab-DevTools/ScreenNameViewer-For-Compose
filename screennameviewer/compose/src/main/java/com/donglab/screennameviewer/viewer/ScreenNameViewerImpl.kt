@@ -7,7 +7,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.ScreenNameOverlayRenderer
+import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
 
 internal class ScreenNameViewerImpl(
     private val activity: ComponentActivity,

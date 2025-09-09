@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.CustomLabelOverlayRenderer
+import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
 
 /**
  * CustomLabel 전용 뷰어 구현체

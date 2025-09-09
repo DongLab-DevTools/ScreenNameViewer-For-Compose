@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.factory
 import androidx.activity.ComponentActivity
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.ScreenNameOverlayRenderer
+import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.viewer.ScreenNameViewerImpl
 import java.lang.ref.WeakReference

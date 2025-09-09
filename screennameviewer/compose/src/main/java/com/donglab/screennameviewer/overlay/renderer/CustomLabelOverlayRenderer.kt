@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.overlay
+package com.donglab.screennameviewer.overlay.renderer
 
 import android.content.Context
 import android.graphics.Color
@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.util.dp
 import com.donglab.screennameviewer.util.getStatusBarHeight
 
