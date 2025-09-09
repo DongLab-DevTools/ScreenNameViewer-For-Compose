@@ -1,59 +1,39 @@
 package com.donglab.screennameviewer.compose.tracker
 
 import android.annotation.SuppressLint
-import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.viewer.CustomLabelViewer
-import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
 
 /**
- * Navigation Screen Tracker for ClassNameViewer integration.
+ * Navigation Screen Tracker for ScreenNameViewer integration.
  * 
  * This class automatically tracks navigation destination changes and displays
- * the current route name in the ClassNameViewer overlay.
+ * the current route name in the ScreenNameViewer overlay using CustomLabelViewer.
  * 
  * Usage:
  * ```kotlin
  * val navController = rememberNavController()
+ * val activity = LocalContext.current as ComponentActivity
+ * 
  * DisposableEffect(navController) {
- *     val tracker = NavigationScreenTracker(navController, debugViewer)
+ *     val tracker = NavigationScreenTrackerFactory.create(
+ *         activity = activity,
+ *         navController = navController,
+ *         settings = ScreenNameViewerSetting(
+ *             debugModeCondition = { true },
+ *             enabledCondition = { true }
+ *         )
+ *     )
  *     onDispose { tracker.cleanup() }
  * }
  * ```
  */
 @SuppressLint("RestrictedApi")
-class NavigationScreenTracker(
+class NavigationScreenTracker internal constructor(
     private val navController: NavController,
     private val customLabelViewer: CustomLabelViewer
 ) {
-    
-    companion object {
-        /**
-         * NavigationScreenTracker를 생성합니다.
-         * CustomLabel 전용 뷰어를 내부적으로 생성합니다.
-         * 
-         * @param activity 대상 Activity
-         * @param navController NavController 인스턴스
-         * @param settings ScreenNameViewer 설정
-         * @param config UI 설정 (선택사항)
-         * @return NavigationScreenTracker 인스턴스
-         */
-        fun create(
-            activity: ComponentActivity,
-            navController: NavController,
-            settings: ScreenNameViewerSetting,
-            config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
-        ): NavigationScreenTracker {
-            val decorView = activity.window.decorView as android.view.ViewGroup
-            val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings)
-            customLabelViewer.initialize()
-            
-            return NavigationScreenTracker(navController, customLabelViewer)
-        }
-    }
     
     private var currentRoute: String? = null
     private val destinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->

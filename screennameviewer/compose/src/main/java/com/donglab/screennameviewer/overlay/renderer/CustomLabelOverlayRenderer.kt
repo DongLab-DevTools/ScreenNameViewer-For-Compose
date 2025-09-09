@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.config.ScreenNameViewerConstants
 import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.util.dp
 import com.donglab.screennameviewer.util.getStatusBarHeight
@@ -37,22 +38,15 @@ internal class CustomLabelOverlayRenderer(
     }
     
     /**
-     * decorView에서 Fragment 레이아웃을 찾아서 그 다음 위치를 반환합니다.
+     * decorView에서 Fragment 레이아웃을 tag로 명시적으로 찾아서 그 다음 위치를 반환합니다.
      * Fragment 레이아웃이 없으면 기본 위치를 반환합니다.
      */
     private fun findFragmentLayoutPosition(): Int {
         for (i in 0 until decorView.childCount) {
             val child = decorView.getChildAt(i)
-            // Fragment 레이아웃은 보통 LinearLayout이고 VERTICAL orientation을 가집니다.
-            if (child is LinearLayout && child.orientation == LinearLayout.VERTICAL) {
-                // Fragment TextView를 포함한 레이아웃인지 확인
-                val hasFragmentTextView = (0 until child.childCount).any { j ->
-                    val grandChild = child.getChildAt(j)
-                    grandChild is TextView && grandChild.tag?.toString()?.contains("Fragment") == true
-                }
-                if (hasFragmentTextView) {
-                    return i + 1 // Fragment 레이아웃 다음 위치
-                }
+
+            if (child.tag == ScreenNameViewerConstants.FRAGMENT_LAYOUT_TAG) {
+                return i + 1 // Fragment 레이아웃 다음 위치
             }
         }
         return decorView.childCount // 기본 위치 (맨 마지막)

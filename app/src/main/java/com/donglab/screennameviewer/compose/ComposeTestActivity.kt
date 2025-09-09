@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.compose.tracker.NavigationScreenTracker
+import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
 import com.donglab.screennameviewer.compose.sample.screens.DetailScreen
 import com.donglab.screennameviewer.compose.sample.screens.HomeScreen
 import com.donglab.screennameviewer.compose.sample.screens.ProfileScreen
@@ -65,7 +65,7 @@ private fun ComposeTestApp() {
     
     // Navigation Screen Tracker 설정
     DisposableEffect(navController) {
-        val tracker = NavigationScreenTracker.create(
+        val tracker = ScreenNameViewerFactory.createNavigationScreenTracker(
             activity = context as ComponentActivity,
             navController = navController,
             settings = ScreenNameViewerSetting(

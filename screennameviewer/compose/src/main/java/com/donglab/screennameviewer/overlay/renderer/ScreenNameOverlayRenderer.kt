@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.config.ScreenNameViewerConstants
 import com.donglab.screennameviewer.overlay.builder.OverlayLayoutBuilder
 import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.util.dp
@@ -60,7 +61,9 @@ internal class ScreenNameOverlayRenderer(
         return when (type) {
             OverlayType.FRAGMENT -> {
                 if (fragmentTextViewLayout == null) {
-                    fragmentTextViewLayout = layoutBuilder.createContainer(gravityByType, topMargin)
+                    fragmentTextViewLayout = layoutBuilder.createContainer(gravityByType, topMargin)?.apply {
+                        tag = ScreenNameViewerConstants.FRAGMENT_LAYOUT_TAG
+                    }
                 }
                 fragmentTextViewLayout
             }
