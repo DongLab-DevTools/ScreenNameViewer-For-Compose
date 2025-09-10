@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerConstants
+import com.donglab.screennameviewer.consts.ScreenNameViewerConstants
 import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.util.dp
 import com.donglab.screennameviewer.util.getStatusBarHeight

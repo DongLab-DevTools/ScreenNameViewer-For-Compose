@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.config
+package com.donglab.screennameviewer.consts
 
 internal object ScreenNameViewerConstants {
 
