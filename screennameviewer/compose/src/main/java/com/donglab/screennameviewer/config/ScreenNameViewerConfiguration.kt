@@ -6,7 +6,7 @@ import com.donglab.screennameviewer.lifecycle.ScreenNameViewerLifecycleHandler
 class ScreenNameViewerConfiguration private constructor() {
     var settings: ScreenNameViewerSetting = ScreenNameViewerSetting.default()
         private set
-    var config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
+    var config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.default()
         private set
 
     fun initialize(

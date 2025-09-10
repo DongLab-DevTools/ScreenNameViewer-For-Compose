@@ -16,7 +16,7 @@ class SampleApplication : Application() {
                 debugModeCondition = { true },
                 enabledCondition = { true }
             ),
-            config = ScreenNameOverlayConfig.defaultConfig()
+            config = ScreenNameOverlayConfig.default()
         )
     }
 }
