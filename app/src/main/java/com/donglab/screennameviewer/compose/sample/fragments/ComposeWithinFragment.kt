@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
 import com.donglab.screennameviewer.compose.R
+import com.donglab.screennameviewer.extensions.createComposeScreenNameViewer
 
 /**
  * XML Fragment 내에 Compose 영역이 포함된 하이브리드 Fragment
@@ -61,17 +60,14 @@ class ComposeWithinFragment : Fragment() {
 @Composable
 private fun HybridComposeContent() {
     val navController = rememberNavController()
-    val context = LocalContext.current
-    
-    // Navigation Screen Tracker 설정 (Hybrid Fragment 내에서)
+    val activity = LocalActivity.current as? ComponentActivity
+
+    // Navigation Screen Tracker 설정
     DisposableEffect(navController) {
-        val tracker = ScreenNameViewerFactory.createForCompose(
-            activity = context as ComponentActivity,
-            navController = navController,
-        )
-        
+        val screenNameViewer = activity?.createComposeScreenNameViewer(navController)
+
         onDispose {
-            tracker.cleanup()
+            screenNameViewer?.cleanup()
         }
     }
     

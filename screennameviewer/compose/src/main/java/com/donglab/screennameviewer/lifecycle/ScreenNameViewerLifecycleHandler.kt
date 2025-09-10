@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
+import com.donglab.screennameviewer.extensions.createScreenNameViewer
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
 
 class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
@@ -36,8 +36,8 @@ class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
         val activityId = getActivityId(activity)
         if (debugViewers.containsKey(activityId)) return
 
-        // 팩토리를 통해 Viewer 인스턴스 생성
-        ScreenNameViewerFactory.create(activity).apply {
+        // 확장 함수를 통해 Viewer 인스턴스 생성
+        activity.createScreenNameViewer().apply {
             initialize()
             debugViewers[activityId] = this
         }
