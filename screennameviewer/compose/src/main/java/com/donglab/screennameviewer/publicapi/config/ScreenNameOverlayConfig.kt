@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.config
+package com.donglab.screennameviewer.publicapi.config
 
 import android.graphics.Color
 import android.view.Gravity

@@ -1,13 +1,13 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.internal.overlay.renderer.ScreenNameOverlayRenderer
 import java.lang.ref.WeakReference
 
 internal class ScreenNameViewerImpl(

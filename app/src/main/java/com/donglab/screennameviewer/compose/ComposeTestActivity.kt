@@ -20,7 +20,7 @@ import com.donglab.screennameviewer.compose.sample.screens.dialogs.AboutDialog
 import com.donglab.screennameviewer.compose.sample.screens.dialogs.EditProfileDialog
 import com.donglab.screennameviewer.compose.sample.screens.nested.NestedScreen
 import com.donglab.screennameviewer.compose.sample.screens.tabs.TabScreen
-import com.donglab.screennameviewer.extensions.enableScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
 
 /**
  * Comprehensive test Activity for the enhanced Compose screen tracking system.

@@ -1,9 +1,9 @@
-package com.donglab.screennameviewer.compose.tracker
+package com.donglab.screennameviewer.internal.compose.tracker
 
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.viewer.CustomLabelViewer
+import com.donglab.screennameviewer.internal.viewer.CustomLabelViewer
 
 /**
  * Navigation Screen Tracker for ScreenNameViewer integration.
@@ -30,7 +30,7 @@ import com.donglab.screennameviewer.viewer.CustomLabelViewer
  * ```
  */
 @SuppressLint("RestrictedApi")
-class ComposeScreenNameTracker internal constructor(
+internal class ComposeScreenNameTracker internal constructor(
     private val navController: NavController,
     private val customLabelViewer: CustomLabelViewer
 ) {

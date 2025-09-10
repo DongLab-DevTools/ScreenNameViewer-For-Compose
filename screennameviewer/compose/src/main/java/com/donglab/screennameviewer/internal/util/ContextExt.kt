@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.util
+package com.donglab.screennameviewer.internal.util
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import kotlin.let
 
 
 @SuppressLint("InternalInsetResource")
-fun Context?.getStatusBarHeight(): Int {
+internal fun Context?.getStatusBarHeight(): Int {
     if (this == null) return 0
 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

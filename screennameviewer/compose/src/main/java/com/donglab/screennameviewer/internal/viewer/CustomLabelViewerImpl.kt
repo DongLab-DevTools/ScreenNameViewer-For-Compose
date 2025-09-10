@@ -1,10 +1,10 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 import android.content.Context
 import android.view.ViewGroup
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.internal.overlay.renderer.CustomLabelOverlayRenderer
 
 /**
  * CustomLabel 전용 뷰어 구현체

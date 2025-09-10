@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.extensions
+package com.donglab.screennameviewer.publicapi.extensions
 
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
@@ -6,9 +6,9 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavController
-import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameTracker
-import com.donglab.screennameviewer.config.ScreenNameViewerConfiguration
-import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
+import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
+import com.donglab.screennameviewer.internal.viewer.CustomLabelViewerImpl
+import com.donglab.screennameviewer.publicapi.ScreenNameViewerSdk
 
 /**
  * NavController에 ScreenNameViewer를 활성화하는 Composable 확장 함수입니다.
@@ -16,7 +16,7 @@ import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
  */
 @Composable
 fun NavController.enableScreenNameTracker() {
-    val configuration = ScreenNameViewerConfiguration.getInstance()
+    val configuration = ScreenNameViewerSdk.getInstance()
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
 

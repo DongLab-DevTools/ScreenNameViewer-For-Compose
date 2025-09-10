@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.config
+package com.donglab.screennameviewer.publicapi.config
 
 /**
  * ScreenNameViewer의 활성화 조건을 정의하는 설정 클래스

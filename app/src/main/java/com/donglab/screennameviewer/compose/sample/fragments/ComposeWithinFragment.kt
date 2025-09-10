@@ -21,7 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.donglab.screennameviewer.compose.R
-import com.donglab.screennameviewer.extensions.enableScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
 
 /**
  * XML Fragment 내에 Compose 영역이 포함된 하이브리드 Fragment

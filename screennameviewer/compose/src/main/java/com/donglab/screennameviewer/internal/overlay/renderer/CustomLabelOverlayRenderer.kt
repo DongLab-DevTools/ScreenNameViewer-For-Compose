@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.overlay.renderer
+package com.donglab.screennameviewer.internal.overlay.renderer
 
 import android.content.Context
 import android.graphics.Color
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.consts.ScreenNameViewerConstants
-import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
-import com.donglab.screennameviewer.util.dp
-import com.donglab.screennameviewer.util.getStatusBarHeight
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.internal.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.internal.overlay.builder.StyledTextViewBuilder
+import com.donglab.screennameviewer.internal.util.dp
+import com.donglab.screennameviewer.internal.util.getStatusBarHeight
 
 /**
  * CustomLabel 전용 오버레이 렌더러

@@ -1,18 +1,17 @@
-package com.donglab.screennameviewer.overlay.renderer
+package com.donglab.screennameviewer.internal.overlay.renderer
 
-import android.app.Activity
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.consts.ScreenNameViewerConstants
-import com.donglab.screennameviewer.overlay.builder.OverlayLayoutBuilder
-import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
-import com.donglab.screennameviewer.util.dp
-import com.donglab.screennameviewer.util.getStatusBarHeight
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.internal.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.internal.overlay.builder.OverlayLayoutBuilder
+import com.donglab.screennameviewer.internal.overlay.builder.StyledTextViewBuilder
+import com.donglab.screennameviewer.internal.util.dp
+import com.donglab.screennameviewer.internal.util.getStatusBarHeight
 import java.lang.ref.WeakReference
 
 internal class ScreenNameOverlayRenderer(
