@@ -40,12 +40,11 @@ fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
 @Composable
 fun NavController.enableScreenNameViewer() {
     val activity = LocalActivity.current as? ComponentActivity ?: return
+    val decorView = activity.window?.decorView as? ViewGroup ?: return
 
     DisposableEffect(this) {
         val settings = ScreenNameViewerConfiguration.getSettings()
         val config = ScreenNameViewerConfiguration.getConfig()
-        val decorView = activity.window?.decorView as ViewGroup
-
         val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings).apply {
             initialize()
         }
