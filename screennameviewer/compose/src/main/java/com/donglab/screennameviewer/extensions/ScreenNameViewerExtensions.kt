@@ -8,7 +8,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameTracker
 import com.donglab.screennameviewer.config.ScreenNameViewerConfiguration
-import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
 import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.viewer.ScreenNameViewerImpl
@@ -25,7 +24,6 @@ internal fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
 
     return ScreenNameViewerImpl(
         activityRef = WeakReference(this),
-        overlayRenderer = ScreenNameOverlayRenderer(activityRef = WeakReference(this)),
         config = configuration.config,
         settings = configuration.settings
     )

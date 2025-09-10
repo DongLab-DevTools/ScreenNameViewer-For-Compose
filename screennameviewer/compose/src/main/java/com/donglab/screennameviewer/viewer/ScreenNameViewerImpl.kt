@@ -12,7 +12,6 @@ import java.lang.ref.WeakReference
 
 internal class ScreenNameViewerImpl(
     private val activityRef: WeakReference<ComponentActivity>,
-    private val overlayRenderer: ScreenNameOverlayRenderer,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : ScreenNameViewer {
@@ -26,10 +25,13 @@ internal class ScreenNameViewerImpl(
     private val activity: ComponentActivity?
         get() = activityRef.get()
 
+    private val overlayRenderer: ScreenNameOverlayRenderer by lazy {
+        ScreenNameOverlayRenderer(activityRef, config)
+    }
+
     override fun initialize() {
         if (!settings.isEnabled) return
 
-        overlayRenderer.initialize(config)
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
