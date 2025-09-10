@@ -3,19 +3,15 @@ package com.donglab.screennameviewer.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.compose.sample.screens.DetailScreen
 import com.donglab.screennameviewer.compose.sample.screens.HomeScreen
 import com.donglab.screennameviewer.compose.sample.screens.ProfileScreen
@@ -24,6 +20,7 @@ import com.donglab.screennameviewer.compose.sample.screens.dialogs.AboutDialog
 import com.donglab.screennameviewer.compose.sample.screens.dialogs.EditProfileDialog
 import com.donglab.screennameviewer.compose.sample.screens.nested.NestedScreen
 import com.donglab.screennameviewer.compose.sample.screens.tabs.TabScreen
+import com.donglab.screennameviewer.extensions.enableScreenNameViewer
 
 /**
  * Comprehensive test Activity for the enhanced Compose screen tracking system.
@@ -58,25 +55,8 @@ class ComposeTestActivity : ComponentActivity() {
 
 @androidx.compose.runtime.Composable
 private fun ComposeTestApp() {
-    val navController = rememberNavController()
-    
-    val context = LocalContext.current
-    
-    // Navigation Screen Tracker 설정
-    DisposableEffect(navController) {
-        val tracker = ComposeScreenNameViewerFactory.createNavigationTracker(
-            navController = navController,
-            activity = context as ComponentActivity,
-            settings = ScreenNameViewerSetting(
-                debugModeCondition = { true },
-                enabledCondition = { true }
-            ),
-            config = ScreenNameOverlayConfig.defaultConfig()
-        )
-
-        onDispose {
-            tracker.cleanup()
-        }
+    val navController = rememberNavController().apply {
+        enableScreenNameViewer()
     }
     
     // Dialog state management

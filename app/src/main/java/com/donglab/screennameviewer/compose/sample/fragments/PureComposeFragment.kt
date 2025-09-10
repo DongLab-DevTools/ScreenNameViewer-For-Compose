@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,18 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.compose.ComposeScreenNameViewerFactory
+import com.donglab.screennameviewer.extensions.enableScreenNameViewer
 
 /**
  * 순수 Compose로 구성된 Fragment (Navigation 포함)
@@ -48,24 +43,8 @@ class PureComposeFragment : Fragment() {
 
 @Composable
 private fun PureComposeContent() {
-    val navController = rememberNavController()
-    val context = LocalContext.current
-    
-    // Navigation Screen Tracker 설정 (Fragment 내에서)
-    DisposableEffect(navController) {
-        val tracker = ComposeScreenNameViewerFactory.createNavigationTracker(
-            navController = navController,
-            activity = context as ComponentActivity,
-            settings = ScreenNameViewerSetting(
-                debugModeCondition = { true },
-                enabledCondition = { true }
-            ),
-            config = ScreenNameOverlayConfig.defaultConfig()
-        )
-        
-        onDispose {
-            tracker.cleanup()
-        }
+    val navController = rememberNavController().apply {
+        enableScreenNameViewer()
     }
     
     NavHost(

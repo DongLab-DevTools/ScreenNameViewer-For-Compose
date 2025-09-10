@@ -7,10 +7,11 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.ScreenNameOverlayRenderer
+import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
+import java.lang.ref.WeakReference
 
 internal class ScreenNameViewerImpl(
-    private val activity: ComponentActivity,
+    private val activityRef: WeakReference<ComponentActivity>,
     private val overlayManager: ScreenNameOverlayRenderer,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
@@ -22,11 +23,14 @@ internal class ScreenNameViewerImpl(
         }
     }
 
+    private val activity: ComponentActivity?
+        get() = activityRef.get()
+
     override fun initialize() {
         if (!settings.isEnabled) return
 
         overlayManager.initialize(config)
-        activity.lifecycle.addObserver(ActivityLifecycleObserver())
+        activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
     override fun registerFragment(fragment: Fragment) {
@@ -39,19 +43,9 @@ internal class ScreenNameViewerImpl(
         overlayManager.clearOverlay()
     }
 
-    override fun addCustomLabel(label: String) {
-        if (!settings.isEnabled) return
-        overlayManager.addCustomLabel(label)
-    }
-
-    override fun removeCustomLabel(label: String) {
-        if (!settings.isEnabled) return
-        overlayManager.removeCustomLabel(label)
-    }
-
     private inner class ActivityLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            overlayManager.addActivityName(activity.javaClass.simpleName)
+            overlayManager.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
         }
 
         override fun onDestroy(owner: LifecycleOwner) {

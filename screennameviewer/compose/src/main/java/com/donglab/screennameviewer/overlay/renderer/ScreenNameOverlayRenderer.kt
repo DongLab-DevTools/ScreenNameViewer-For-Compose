@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.overlay
+package com.donglab.screennameviewer.overlay.renderer
 
 import android.app.Activity
 import android.content.Context
@@ -7,6 +7,9 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.overlay.builder.OverlayLayoutBuilder
+import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.util.dp
 import com.donglab.screennameviewer.util.getStatusBarHeight
 import java.lang.ref.WeakReference
@@ -16,12 +19,11 @@ internal class ScreenNameOverlayRenderer(
 ) {
 
     private enum class OverlayType {
-        ACTIVITY, FRAGMENT, CUSTOM_LABEL;
+        ACTIVITY, FRAGMENT;
 
         fun getGravity(config: ScreenNameOverlayConfig): Int = when (this) {
             ACTIVITY -> config.activityGravity
             FRAGMENT -> config.fragmentGravity
-            CUSTOM_LABEL -> config.customLabelGravity
         }
     }
 
@@ -46,7 +48,6 @@ internal class ScreenNameOverlayRenderer(
 
     private var activityNameTextView: TextView? = null
     private var fragmentTextViewLayout: LinearLayout? = null
-    private var customLabelLayout: LinearLayout? = null
     private lateinit var config: ScreenNameOverlayConfig
 
     fun initialize(config: ScreenNameOverlayConfig) {
@@ -60,20 +61,11 @@ internal class ScreenNameOverlayRenderer(
         return when (type) {
             OverlayType.FRAGMENT -> {
                 if (fragmentTextViewLayout == null) {
-                    fragmentTextViewLayout = layoutBuilder.createContainer(gravityByType, topMargin)
+                    fragmentTextViewLayout = layoutBuilder.createContainer(gravityByType, topMargin)?.apply {
+                        tag = ScreenNameViewerConstants.FRAGMENT_LAYOUT_TAG
+                    }
                 }
                 fragmentTextViewLayout
-            }
-            OverlayType.CUSTOM_LABEL -> {
-                if (customLabelLayout == null) {
-                    // CustomLabel은 Fragment 다음에 배치
-                    customLabelLayout = layoutBuilder.createContainer(
-                        gravity = gravityByType,
-                        topMargin = topMargin,
-                        insertAfter = fragmentTextViewLayout
-                    )
-                }
-                customLabelLayout
             }
             OverlayType.ACTIVITY -> null // Activity doesn't use LinearLayout
         }
@@ -119,23 +111,8 @@ internal class ScreenNameOverlayRenderer(
         decorView?.let { decor ->
             activityNameTextView?.let { decor.removeView(it) }
             fragmentTextViewLayout?.let { decor.removeView(it) }
-            customLabelLayout?.let { decor.removeView(it) }
         }
         activityNameTextView = null
         fragmentTextViewLayout = null
-        customLabelLayout = null
-    }
-
-    /**
-     * Custom Label 관련 메서드들
-     */
-    fun addCustomLabel(label: String) {
-        activity?.let {
-            addTextViewToLayout(it, label, OverlayType.CUSTOM_LABEL)
-        }
-    }
-
-    fun removeCustomLabel(label: String) {
-        layoutBuilder.removeTextView(customLabelLayout, label)
     }
 }

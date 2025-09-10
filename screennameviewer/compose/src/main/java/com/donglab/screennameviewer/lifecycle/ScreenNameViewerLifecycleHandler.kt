@@ -9,61 +9,50 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
+import com.donglab.screennameviewer.extensions.createScreenNameViewer
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
+import java.util.WeakHashMap
 
-class ScreenNameViewerLifecycleHandler(
-    private val settings: ScreenNameViewerSetting,
-    private val config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
-) : ActivityLifecycleCallbacks {
-
-    init {
-        require(settings.isDebugMode) {
-            "ScreenNameViewer should only be used in debug builds"
-        }
-    }
+class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
     // Activity ID별로 debugViewer 저장
-    private val debugViewers = mutableMapOf<String, ScreenNameViewer>()
-    
-    // Activity 고유 ID 생성
-    private fun getActivityId(activity: Activity): String {
-        return "${activity.javaClass.simpleName}_${activity.hashCode()}"
-    }
+    private val debugViewers = WeakHashMap<Activity, ScreenNameViewer>()
+    private val fragmentCallbacks = WeakHashMap<Activity, FragmentLifecycleCallbacks>()
 
-    private fun createFragmentCallback(activityId: String): FragmentLifecycleCallbacks {
+    private fun createFragmentCallback(owner: FragmentActivity): FragmentLifecycleCallbacks {
         return object : FragmentLifecycleCallbacks() {
             override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-                debugViewers[activityId]?.registerFragment(f)
+                debugViewers[owner]?.registerFragment(f)
             }
         }
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity !is ComponentActivity) return
+        if (debugViewers.containsKey(activity)) return
 
-        val activityId = getActivityId(activity)
-        if (debugViewers.containsKey(activityId)) return
-
-        // 팩토리를 통해 Viewer 인스턴스 생성
-        ScreenNameViewerFactory.create(activity, settings, config).apply {
+        // 확장 함수를 통해 Viewer 인스턴스 생성
+        activity.createScreenNameViewer().apply {
             initialize()
-            debugViewers[activityId] = this
+            debugViewers[activity] = this
         }
 
         if (activity is FragmentActivity) {
-            activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-                createFragmentCallback(activityId),
-                true
-            )
+            createFragmentCallback(activity).apply {
+                fragmentCallbacks[activity] = this
+                activity.supportFragmentManager.registerFragmentLifecycleCallbacks(this, true)
+            }
         }
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        val activityId = getActivityId(activity)
-        debugViewers.remove(activityId)?.clear()
+        debugViewers.remove(activity)?.clear()
+
+        if (activity is FragmentActivity) {
+            fragmentCallbacks.remove(activity)?.let { callback ->
+                activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(callback)
+            }
+        }
     }
 
     override fun onActivityStarted(activity: Activity) = Unit

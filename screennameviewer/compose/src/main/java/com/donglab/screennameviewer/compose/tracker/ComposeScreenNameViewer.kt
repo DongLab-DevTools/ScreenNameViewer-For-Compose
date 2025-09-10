@@ -3,27 +3,36 @@ package com.donglab.screennameviewer.compose.tracker
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.viewer.ScreenNameViewer
+import com.donglab.screennameviewer.viewer.CustomLabelViewer
 
 /**
- * Navigation Screen Tracker for ClassNameViewer integration.
+ * Navigation Screen Tracker for ScreenNameViewer integration.
  * 
  * This class automatically tracks navigation destination changes and displays
- * the current route name in the ClassNameViewer overlay.
+ * the current route name in the ScreenNameViewer overlay using CustomLabelViewer.
  * 
  * Usage:
  * ```kotlin
  * val navController = rememberNavController()
+ * val activity = LocalContext.current as ComponentActivity
+ * 
  * DisposableEffect(navController) {
- *     val tracker = NavigationScreenTracker(navController, debugViewer)
+ *     val tracker = NavigationScreenTrackerFactory.create(
+ *         activity = activity,
+ *         navController = navController,
+ *         settings = ScreenNameViewerSetting(
+ *             debugModeCondition = { true },
+ *             enabledCondition = { true }
+ *         )
+ *     )
  *     onDispose { tracker.cleanup() }
  * }
  * ```
  */
 @SuppressLint("RestrictedApi")
-class NavigationScreenTracker(
+class ComposeScreenNameViewer internal constructor(
     private val navController: NavController,
-    private val debugViewer: ScreenNameViewer
+    private val customLabelViewer: CustomLabelViewer
 ) {
     
     private var currentRoute: String? = null
@@ -49,22 +58,23 @@ class NavigationScreenTracker(
         
         // 기존 route 제거
         currentRoute?.let { 
-            debugViewer.removeCustomLabel(it)
+            customLabelViewer.removeCustomLabel(it)
         }
         
         // 새 route 표시
-        debugViewer.addCustomLabel(routeName)
+        customLabelViewer.addCustomLabel(routeName)
         currentRoute = routeName
     }
 
     fun cleanup() {
         // 현재 표시된 route 제거
         currentRoute?.let { 
-            debugViewer.removeCustomLabel(it)
+            customLabelViewer.removeCustomLabel(it)
             currentRoute = null
         }
         
         // 리스너 해제
         navController.removeOnDestinationChangedListener(destinationChangedListener)
+        customLabelViewer.clear()
     }
 }
