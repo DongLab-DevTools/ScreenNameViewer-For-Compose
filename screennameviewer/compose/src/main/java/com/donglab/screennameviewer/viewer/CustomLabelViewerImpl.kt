@@ -11,12 +11,12 @@ import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
  * Context와 ViewGroup만으로 동작하며 Activity에 의존하지 않습니다.
  */
 internal class CustomLabelViewerImpl(
-    private val context: Context,
-    private val decorView: ViewGroup,
+    context: Context,
+    decorView: ViewGroup,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : CustomLabelViewer {
-    
+
     private val customLabelRenderer = CustomLabelOverlayRenderer(context, decorView)
     
     init {

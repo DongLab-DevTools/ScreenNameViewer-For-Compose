@@ -42,8 +42,13 @@ fun NavController.enableScreenNameViewer() {
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
 
-    DisposableEffect(this) {
-        val customLabelViewer = CustomLabelViewerImpl(activity, decorView, configuration.config, configuration.settings).apply {
+    DisposableEffect(this, activity) {
+        val customLabelViewer = CustomLabelViewerImpl(
+            context = activity,
+            decorView = decorView,
+            config = configuration.config,
+            settings = configuration.settings
+        ).apply {
             initialize()
         }
 

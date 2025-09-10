@@ -75,5 +75,6 @@ class ComposeScreenNameViewer internal constructor(
         
         // 리스너 해제
         navController.removeOnDestinationChangedListener(destinationChangedListener)
+        customLabelViewer.clear()
     }
 }
