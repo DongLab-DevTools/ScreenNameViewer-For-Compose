@@ -25,7 +25,7 @@ internal fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
 
     return ScreenNameViewerImpl(
         activityRef = WeakReference(this),
-        overlayManager = ScreenNameOverlayRenderer(activityRef = WeakReference(this)),
+        overlayRenderer = ScreenNameOverlayRenderer(activityRef = WeakReference(this)),
         config = configuration.config,
         settings = configuration.settings
     )

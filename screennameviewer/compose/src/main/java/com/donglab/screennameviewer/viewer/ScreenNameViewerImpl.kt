@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 
 internal class ScreenNameViewerImpl(
     private val activityRef: WeakReference<ComponentActivity>,
-    private val overlayManager: ScreenNameOverlayRenderer,
+    private val overlayRenderer: ScreenNameOverlayRenderer,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : ScreenNameViewer {
@@ -29,7 +29,7 @@ internal class ScreenNameViewerImpl(
     override fun initialize() {
         if (!settings.isEnabled) return
 
-        overlayManager.initialize(config)
+        overlayRenderer.initialize(config)
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
@@ -40,12 +40,12 @@ internal class ScreenNameViewerImpl(
     }
 
     override fun clear() {
-        overlayManager.clearOverlay()
+        overlayRenderer.clearOverlay()
     }
 
     private inner class ActivityLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            overlayManager.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
+            overlayRenderer.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
@@ -57,16 +57,16 @@ internal class ScreenNameViewerImpl(
         private val fragmentName = fragment.javaClass.simpleName
         
         override fun onResume(owner: LifecycleOwner) {
-            overlayManager.addFragmentName(fragmentName)
+            overlayRenderer.addFragmentName(fragmentName)
         }
 
         override fun onPause(owner: LifecycleOwner) {
-            overlayManager.removeFragmentName(fragmentName)
+            overlayRenderer.removeFragmentName(fragmentName)
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
             if (fragment !is DialogFragment) return
-            overlayManager.removeFragmentName(fragmentName)
+            overlayRenderer.removeFragmentName(fragmentName)
         }
     }
 }
