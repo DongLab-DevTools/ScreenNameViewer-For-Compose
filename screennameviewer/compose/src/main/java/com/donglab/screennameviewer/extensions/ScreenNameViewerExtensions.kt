@@ -43,18 +43,14 @@ fun NavController.enableScreenNameTracker() {
     val decorView = activity.window?.decorView as? ViewGroup ?: return
 
     DisposableEffect(this, activity) {
-        val customLabelViewer = CustomLabelViewerImpl(
-            context = activity,
-            decorView = decorView,
-            config = configuration.config,
-            settings = configuration.settings
-        ).apply {
-            initialize()
-        }
-
         val screenNameViewer = ComposeScreenNameTracker(
             navController = this@enableScreenNameTracker,
-            customLabelViewer = customLabelViewer
+            customLabelViewer = CustomLabelViewerImpl(
+                context = activity,
+                decorView = decorView,
+                config = configuration.config,
+                settings = configuration.settings
+            )
         )
         
         onDispose {

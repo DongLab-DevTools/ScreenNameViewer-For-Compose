@@ -7,11 +7,6 @@ package com.donglab.screennameviewer.viewer
 interface CustomLabelViewer {
     
     /**
-     * CustomLabel 뷰어를 초기화합니다.
-     */
-    fun initialize()
-    
-    /**
      * CustomLabel을 추가합니다.
      * 
      * @param label 표시할 라벨 텍스트

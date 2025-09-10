@@ -19,11 +19,11 @@ import com.donglab.screennameviewer.util.getStatusBarHeight
  */
 internal class CustomLabelOverlayRenderer(
     private val context: Context,
-    private val decorView: ViewGroup
+    private val decorView: ViewGroup,
+    private val config: ScreenNameOverlayConfig,
 ) {
     
     private var customLabelLayout: LinearLayout? = null
-    private lateinit var config: ScreenNameOverlayConfig
     
     private val statusBarHeight: Int by lazy {
         context.getStatusBarHeight()
@@ -31,10 +31,6 @@ internal class CustomLabelOverlayRenderer(
     
     private val textViewBuilder by lazy {
         StyledTextViewBuilder(config)
-    }
-    
-    fun initialize(config: ScreenNameOverlayConfig) {
-        this.config = config
     }
     
     /**

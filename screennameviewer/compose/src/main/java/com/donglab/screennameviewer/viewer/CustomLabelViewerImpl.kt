@@ -13,23 +13,18 @@ import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
 internal class CustomLabelViewerImpl(
     context: Context,
     decorView: ViewGroup,
-    private val config: ScreenNameOverlayConfig,
+    config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : CustomLabelViewer {
 
-    private val customLabelRenderer = CustomLabelOverlayRenderer(context, decorView)
+    private val customLabelRenderer = CustomLabelOverlayRenderer(context, decorView, config)
     
     init {
         require(settings.isDebugMode) {
             "CustomLabelViewer should only be used in debug builds"
         }
     }
-    
-    override fun initialize() {
-        if (!settings.isEnabled) return
-        customLabelRenderer.initialize(config)
-    }
-    
+
     override fun addCustomLabel(label: String) {
         if (!settings.isEnabled) return
         customLabelRenderer.addCustomLabel(label)
