@@ -21,14 +21,13 @@ import java.lang.ref.WeakReference
  * @return ScreenNameViewer 인스턴스
  */
 fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
-    val settings = ScreenNameViewerConfiguration.getSettings()
-    val config = ScreenNameViewerConfiguration.getConfig()
+    val configuration = ScreenNameViewerConfiguration.getInstance()
 
     return ScreenNameViewerImpl(
         activityRef = WeakReference(this),
         overlayManager = ScreenNameOverlayRenderer(activityRef = WeakReference(this)),
-        config = config,
-        settings = settings
+        config = configuration.config,
+        settings = configuration.settings
     )
 }
 
@@ -39,13 +38,12 @@ fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
  */
 @Composable
 fun NavController.enableScreenNameViewer() {
+    val configuration = ScreenNameViewerConfiguration.getInstance()
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
 
     DisposableEffect(this) {
-        val settings = ScreenNameViewerConfiguration.getSettings()
-        val config = ScreenNameViewerConfiguration.getConfig()
-        val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings).apply {
+        val customLabelViewer = CustomLabelViewerImpl(activity, decorView, configuration.config, configuration.settings).apply {
             initialize()
         }
 
