@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameViewer
 import com.donglab.screennameviewer.config.ScreenNameViewerConfiguration
@@ -24,10 +23,10 @@ import java.lang.ref.WeakReference
 fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
     val settings = ScreenNameViewerConfiguration.getSettings()
     val config = ScreenNameViewerConfiguration.getConfig()
-    
+
     return ScreenNameViewerImpl(
-        activity = this,
-        overlayManager = ScreenNameOverlayRenderer(WeakReference(this)),
+        activityRef = WeakReference(this),
+        overlayManager = ScreenNameOverlayRenderer(activityRef = WeakReference(this)),
         config = config,
         settings = settings
     )
