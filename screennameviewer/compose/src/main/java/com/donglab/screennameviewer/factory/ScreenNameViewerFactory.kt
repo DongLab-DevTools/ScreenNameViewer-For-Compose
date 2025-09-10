@@ -1,10 +1,13 @@
 package com.donglab.screennameviewer.factory
 
+import android.app.Application
+import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameViewer
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.lifecycle.ScreenNameViewerLifecycleHandler
 import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
 import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
@@ -13,17 +16,35 @@ import java.lang.ref.WeakReference
 
 object ScreenNameViewerFactory {
     
+    private var settings: ScreenNameViewerSetting = ScreenNameViewerSetting.default()
+    private var config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
+    
     /**
-     * 설정을 받아 ScreenNameViewer를 생성합니다.
+     * ScreenNameViewerFactory를 초기화합니다.
+     * Application에서 한 번 호출하여 전역 설정을 저장합니다.
+     * 
+     * @param settings 활성화 조건 설정
+     * @param config UI 설정
+     */
+    fun initialize(
+        application: Application,
+        settings: ScreenNameViewerSetting,
+        config: ScreenNameOverlayConfig
+    ) {
+        this.settings = settings
+        this.config = config
+
+        val lifecycleHandler = ScreenNameViewerLifecycleHandler()
+        application.registerActivityLifecycleCallbacks(lifecycleHandler)
+    }
+
+    /**
+     * 초기화된 전역 설정을 사용하여 ScreenNameViewer를 생성합니다.
      * 
      * @param activity 대상 Activity
-     * @param settings 활성화 조건 설정 (필수)
-     * @param config UI 설정 (선택사항)
      */
     fun create(
-        activity: ComponentActivity,
-        settings: ScreenNameViewerSetting,
-        config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
+        activity: ComponentActivity
     ): ScreenNameViewer {
         return ScreenNameViewerImpl(
             activity = activity,
@@ -36,20 +57,17 @@ object ScreenNameViewerFactory {
     /**
      * NavigationScreenTracker를 생성합니다.
      * CustomLabel 전용 뷰어를 내부적으로 생성하여 Navigation route를 추적합니다.
+     * 초기화된 전역 설정을 사용합니다.
      * 
      * @param activity 대상 Activity
      * @param navController NavController 인스턴스
-     * @param settings ScreenNameViewer 설정
-     * @param config UI 설정 (선택사항)
-     * @return NavigationScreenTracker 인스턴스
+     * @return ComposeScreenNameViewer 인스턴스
      */
     fun createForCompose(
         activity: ComponentActivity,
-        navController: NavController,
-        settings: ScreenNameViewerSetting,
-        config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
+        navController: NavController
     ): ComposeScreenNameViewer {
-        val decorView = activity.window.decorView as android.view.ViewGroup
+        val decorView = activity.window.decorView as ViewGroup
         val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings)
         customLabelViewer.initialize()
         

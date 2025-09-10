@@ -12,4 +12,13 @@ data class ScreenNameViewerSetting(
     
     val isEnabled: Boolean
         get() = isDebugMode && enabledCondition()
+
+    companion object {
+        fun default(): ScreenNameViewerSetting {
+            return ScreenNameViewerSetting(
+                debugModeCondition = { false },
+                enabledCondition = { false },
+            )
+        }
+    }
 }

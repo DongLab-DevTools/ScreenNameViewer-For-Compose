@@ -68,11 +68,6 @@ private fun HybridComposeContent() {
         val tracker = ScreenNameViewerFactory.createForCompose(
             activity = context as ComponentActivity,
             navController = navController,
-            settings = ScreenNameViewerSetting(
-                debugModeCondition = { true },
-                enabledCondition = { true }
-            ),
-            config = ScreenNameOverlayConfig.defaultConfig()
         )
         
         onDispose {

@@ -9,21 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.factory.ScreenNameViewerFactory
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
 
-class ScreenNameViewerLifecycleHandler(
-    private val settings: ScreenNameViewerSetting,
-    private val config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
-) : ActivityLifecycleCallbacks {
-
-    init {
-        require(settings.isDebugMode) {
-            "ScreenNameViewer should only be used in debug builds"
-        }
-    }
+class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
     // Activity ID별로 debugViewer 저장
     private val debugViewers = mutableMapOf<String, ScreenNameViewer>()
@@ -48,7 +37,7 @@ class ScreenNameViewerLifecycleHandler(
         if (debugViewers.containsKey(activityId)) return
 
         // 팩토리를 통해 Viewer 인스턴스 생성
-        ScreenNameViewerFactory.create(activity, settings, config).apply {
+        ScreenNameViewerFactory.create(activity).apply {
             initialize()
             debugViewers[activityId] = this
         }
