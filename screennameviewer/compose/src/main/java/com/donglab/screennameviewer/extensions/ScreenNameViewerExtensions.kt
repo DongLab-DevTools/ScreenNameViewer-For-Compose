@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference
  * 
  * @return ScreenNameViewer 인스턴스
  */
-fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
+internal fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
     val configuration = ScreenNameViewerConfiguration.getInstance()
 
     return ScreenNameViewerImpl(
