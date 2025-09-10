@@ -53,7 +53,7 @@ private fun PureComposeContent() {
     
     // Navigation Screen Tracker 설정 (Fragment 내에서)
     DisposableEffect(navController) {
-        val tracker = ScreenNameViewerFactory.createNavigationScreenTracker(
+        val tracker = ScreenNameViewerFactory.createForCompose(
             activity = context as ComponentActivity,
             navController = navController,
             settings = ScreenNameViewerSetting(

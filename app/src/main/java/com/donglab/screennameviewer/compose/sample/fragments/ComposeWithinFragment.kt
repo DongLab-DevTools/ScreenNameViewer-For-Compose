@@ -65,7 +65,7 @@ private fun HybridComposeContent() {
     
     // Navigation Screen Tracker 설정 (Hybrid Fragment 내에서)
     DisposableEffect(navController) {
-        val tracker = ScreenNameViewerFactory.createNavigationScreenTracker(
+        val tracker = ScreenNameViewerFactory.createForCompose(
             activity = context as ComponentActivity,
             navController = navController,
             settings = ScreenNameViewerSetting(

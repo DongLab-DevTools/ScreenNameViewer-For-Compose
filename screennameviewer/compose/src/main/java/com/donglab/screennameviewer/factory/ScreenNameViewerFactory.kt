@@ -2,11 +2,10 @@ package com.donglab.screennameviewer.factory
 
 import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
-import com.donglab.screennameviewer.compose.tracker.NavigationScreenTracker
+import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameViewer
 import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
-import com.donglab.screennameviewer.viewer.CustomLabelViewer
 import com.donglab.screennameviewer.viewer.CustomLabelViewerImpl
 import com.donglab.screennameviewer.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.viewer.ScreenNameViewerImpl
@@ -44,16 +43,16 @@ object ScreenNameViewerFactory {
      * @param config UI 설정 (선택사항)
      * @return NavigationScreenTracker 인스턴스
      */
-    fun createNavigationScreenTracker(
+    fun createForCompose(
         activity: ComponentActivity,
         navController: NavController,
         settings: ScreenNameViewerSetting,
         config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.defaultConfig()
-    ): NavigationScreenTracker {
+    ): ComposeScreenNameViewer {
         val decorView = activity.window.decorView as android.view.ViewGroup
         val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings)
         customLabelViewer.initialize()
         
-        return NavigationScreenTracker(navController, customLabelViewer)
+        return ComposeScreenNameViewer(navController, customLabelViewer)
     }
 }

@@ -30,7 +30,7 @@ import com.donglab.screennameviewer.viewer.CustomLabelViewer
  * ```
  */
 @SuppressLint("RestrictedApi")
-class NavigationScreenTracker internal constructor(
+class ComposeScreenNameViewer internal constructor(
     private val navController: NavController,
     private val customLabelViewer: CustomLabelViewer
 ) {
