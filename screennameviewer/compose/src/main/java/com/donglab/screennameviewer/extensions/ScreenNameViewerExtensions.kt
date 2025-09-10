@@ -2,6 +2,10 @@ package com.donglab.screennameviewer.extensions
 
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.compose.tracker.ComposeScreenNameViewer
 import com.donglab.screennameviewer.config.ScreenNameViewerConfiguration
@@ -29,23 +33,31 @@ fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
     )
 }
 
+
 /**
- * ComponentActivity에서 ComposeScreenNameViewer를 생성하는 확장 함수입니다.
- * CustomLabel 전용 뷰어를 내부적으로 생성하여 Navigation route를 추적합니다.
- * 초기화된 전역 설정을 사용합니다.
- * 
- * @param navController NavController 인스턴스
- * @return ComposeScreenNameViewer 인스턴스
+ * NavController에 ScreenNameViewer를 추가하는 Composable 확장 함수입니다.
+ * DisposableEffect를 내부에서 처리하여 생명주기를 자동으로 관리합니다.
  */
-fun ComponentActivity.createComposeScreenNameViewer(
-    navController: NavController
-): ComposeScreenNameViewer {
-    val settings = ScreenNameViewerConfiguration.getSettings()
-    val config = ScreenNameViewerConfiguration.getConfig()
-    
-    val decorView = window.decorView as ViewGroup
-    val customLabelViewer = CustomLabelViewerImpl(this, decorView, config, settings)
-    customLabelViewer.initialize()
-    
-    return ComposeScreenNameViewer(navController, customLabelViewer)
+@Composable
+fun NavController.addScreenNameViewer() {
+    val activity = LocalActivity.current as? ComponentActivity ?: return
+
+    DisposableEffect(this) {
+        val settings = ScreenNameViewerConfiguration.getSettings()
+        val config = ScreenNameViewerConfiguration.getConfig()
+        val decorView = activity.window?.decorView as ViewGroup
+
+        val customLabelViewer = CustomLabelViewerImpl(activity, decorView, config, settings).apply {
+            initialize()
+        }
+
+        val screenNameViewer = ComposeScreenNameViewer(
+            navController = this@addScreenNameViewer,
+            customLabelViewer = customLabelViewer
+        )
+        
+        onDispose {
+            screenNameViewer.cleanup()
+        }
+    }
 }

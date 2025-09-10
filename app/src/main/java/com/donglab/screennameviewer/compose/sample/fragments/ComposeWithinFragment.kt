@@ -25,7 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.donglab.screennameviewer.compose.R
-import com.donglab.screennameviewer.extensions.createComposeScreenNameViewer
+import com.donglab.screennameviewer.extensions.addScreenNameViewer
 
 /**
  * XML Fragment 내에 Compose 영역이 포함된 하이브리드 Fragment
@@ -59,16 +59,8 @@ class ComposeWithinFragment : Fragment() {
 
 @Composable
 private fun HybridComposeContent() {
-    val navController = rememberNavController()
-    val activity = LocalActivity.current as? ComponentActivity
-
-    // Navigation Screen Tracker 설정
-    DisposableEffect(navController) {
-        val screenNameViewer = activity?.createComposeScreenNameViewer(navController)
-
-        onDispose {
-            screenNameViewer?.cleanup()
-        }
+    val navController = rememberNavController().apply {
+        addScreenNameViewer()
     }
     
     NavHost(

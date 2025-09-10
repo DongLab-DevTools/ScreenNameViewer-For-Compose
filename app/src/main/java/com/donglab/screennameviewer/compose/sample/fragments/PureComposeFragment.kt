@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.extensions.createComposeScreenNameViewer
+import com.donglab.screennameviewer.extensions.addScreenNameViewer
 
 /**
  * 순수 Compose로 구성된 Fragment (Navigation 포함)
@@ -46,16 +46,8 @@ class PureComposeFragment : Fragment() {
 
 @Composable
 private fun PureComposeContent() {
-    val navController = rememberNavController()
-    val activity = LocalActivity.current as? ComponentActivity
-
-    // Navigation Screen Tracker 설정
-    DisposableEffect(navController) {
-        val screenNameViewer = activity?.createComposeScreenNameViewer(navController)
-
-        onDispose {
-            screenNameViewer?.cleanup()
-        }
+    val navController = rememberNavController().apply {
+        addScreenNameViewer()
     }
     
     NavHost(

@@ -2,14 +2,11 @@ package com.donglab.screennameviewer.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +20,7 @@ import com.donglab.screennameviewer.compose.sample.screens.dialogs.AboutDialog
 import com.donglab.screennameviewer.compose.sample.screens.dialogs.EditProfileDialog
 import com.donglab.screennameviewer.compose.sample.screens.nested.NestedScreen
 import com.donglab.screennameviewer.compose.sample.screens.tabs.TabScreen
-import com.donglab.screennameviewer.extensions.createComposeScreenNameViewer
+import com.donglab.screennameviewer.extensions.addScreenNameViewer
 
 /**
  * Comprehensive test Activity for the enhanced Compose screen tracking system.
@@ -58,16 +55,8 @@ class ComposeTestActivity : ComponentActivity() {
 
 @androidx.compose.runtime.Composable
 private fun ComposeTestApp() {
-    val navController = rememberNavController()
-    val activity = LocalActivity.current as? ComponentActivity
-    
-    // Navigation Screen Tracker 설정
-    DisposableEffect(navController) {
-        val screenNameViewer = activity?.createComposeScreenNameViewer(navController)
-
-        onDispose {
-            screenNameViewer?.cleanup()
-        }
+    val navController = rememberNavController().apply {
+        addScreenNameViewer()
     }
     
     // Dialog state management
