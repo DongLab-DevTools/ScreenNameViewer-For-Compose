@@ -20,7 +20,7 @@ import com.donglab.screennameviewer.compose.sample.screens.dialogs.AboutDialog
 import com.donglab.screennameviewer.compose.sample.screens.dialogs.EditProfileDialog
 import com.donglab.screennameviewer.compose.sample.screens.nested.NestedScreen
 import com.donglab.screennameviewer.compose.sample.screens.tabs.TabScreen
-import com.donglab.screennameviewer.extensions.addScreenNameViewer
+import com.donglab.screennameviewer.extensions.enableScreenNameViewer
 
 /**
  * Comprehensive test Activity for the enhanced Compose screen tracking system.
@@ -56,7 +56,7 @@ class ComposeTestActivity : ComponentActivity() {
 @androidx.compose.runtime.Composable
 private fun ComposeTestApp() {
     val navController = rememberNavController().apply {
-        addScreenNameViewer()
+        enableScreenNameViewer()
     }
     
     // Dialog state management

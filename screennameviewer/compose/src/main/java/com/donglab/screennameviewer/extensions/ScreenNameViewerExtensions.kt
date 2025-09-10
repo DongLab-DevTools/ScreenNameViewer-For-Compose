@@ -35,11 +35,11 @@ fun ComponentActivity.createScreenNameViewer(): ScreenNameViewer {
 
 
 /**
- * NavController에 ScreenNameViewer를 추가하는 Composable 확장 함수입니다.
+ * NavController에 ScreenNameViewer를 활성화하는 Composable 확장 함수입니다.
  * DisposableEffect를 내부에서 처리하여 생명주기를 자동으로 관리합니다.
  */
 @Composable
-fun NavController.addScreenNameViewer() {
+fun NavController.enableScreenNameViewer() {
     val activity = LocalActivity.current as? ComponentActivity ?: return
 
     DisposableEffect(this) {
@@ -52,7 +52,7 @@ fun NavController.addScreenNameViewer() {
         }
 
         val screenNameViewer = ComposeScreenNameViewer(
-            navController = this@addScreenNameViewer,
+            navController = this@enableScreenNameViewer,
             customLabelViewer = customLabelViewer
         )
         
