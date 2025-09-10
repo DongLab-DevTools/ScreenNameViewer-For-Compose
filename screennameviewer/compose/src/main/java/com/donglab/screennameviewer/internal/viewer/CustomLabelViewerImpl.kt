@@ -1,10 +1,10 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 import android.content.Context
 import android.view.ViewGroup
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.internal.overlay.renderer.CustomLabelOverlayRenderer
 
 /**
  * CustomLabel 전용 뷰어 구현체
@@ -13,23 +13,18 @@ import com.donglab.screennameviewer.overlay.renderer.CustomLabelOverlayRenderer
 internal class CustomLabelViewerImpl(
     context: Context,
     decorView: ViewGroup,
-    private val config: ScreenNameOverlayConfig,
+    config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : CustomLabelViewer {
 
-    private val customLabelRenderer = CustomLabelOverlayRenderer(context, decorView)
+    private val customLabelRenderer = CustomLabelOverlayRenderer(context, decorView, config)
     
     init {
         require(settings.isDebugMode) {
             "CustomLabelViewer should only be used in debug builds"
         }
     }
-    
-    override fun initialize() {
-        if (!settings.isEnabled) return
-        customLabelRenderer.initialize(config)
-    }
-    
+
     override fun addCustomLabel(label: String) {
         if (!settings.isEnabled) return
         customLabelRenderer.addCustomLabel(label)

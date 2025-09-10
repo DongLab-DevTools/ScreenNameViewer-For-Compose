@@ -1,18 +1,17 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.config.ScreenNameViewerSetting
-import com.donglab.screennameviewer.overlay.renderer.ScreenNameOverlayRenderer
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.internal.overlay.renderer.ScreenNameOverlayRenderer
 import java.lang.ref.WeakReference
 
 internal class ScreenNameViewerImpl(
     private val activityRef: WeakReference<ComponentActivity>,
-    private val overlayManager: ScreenNameOverlayRenderer,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
 ) : ScreenNameViewer {
@@ -26,10 +25,13 @@ internal class ScreenNameViewerImpl(
     private val activity: ComponentActivity?
         get() = activityRef.get()
 
+    private val overlayRenderer: ScreenNameOverlayRenderer by lazy {
+        ScreenNameOverlayRenderer(activityRef, config)
+    }
+
     override fun initialize() {
         if (!settings.isEnabled) return
 
-        overlayManager.initialize(config)
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
@@ -40,12 +42,12 @@ internal class ScreenNameViewerImpl(
     }
 
     override fun clear() {
-        overlayManager.clearOverlay()
+        overlayRenderer.clearOverlay()
     }
 
     private inner class ActivityLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            overlayManager.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
+            overlayRenderer.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
@@ -57,16 +59,16 @@ internal class ScreenNameViewerImpl(
         private val fragmentName = fragment.javaClass.simpleName
         
         override fun onResume(owner: LifecycleOwner) {
-            overlayManager.addFragmentName(fragmentName)
+            overlayRenderer.addFragmentName(fragmentName)
         }
 
         override fun onPause(owner: LifecycleOwner) {
-            overlayManager.removeFragmentName(fragmentName)
+            overlayRenderer.removeFragmentName(fragmentName)
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
             if (fragment !is DialogFragment) return
-            overlayManager.removeFragmentName(fragmentName)
+            overlayRenderer.removeFragmentName(fragmentName)
         }
     }
 }

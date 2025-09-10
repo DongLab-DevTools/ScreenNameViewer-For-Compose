@@ -1,21 +1,22 @@
-package com.donglab.screennameviewer.overlay.renderer
+package com.donglab.screennameviewer.internal.overlay.renderer
 
-import android.app.Activity
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.consts.ScreenNameViewerConstants
-import com.donglab.screennameviewer.overlay.builder.OverlayLayoutBuilder
-import com.donglab.screennameviewer.overlay.builder.StyledTextViewBuilder
-import com.donglab.screennameviewer.util.dp
-import com.donglab.screennameviewer.util.getStatusBarHeight
+import androidx.activity.ComponentActivity
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.internal.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.internal.overlay.builder.OverlayLayoutBuilder
+import com.donglab.screennameviewer.internal.overlay.builder.StyledTextViewBuilder
+import com.donglab.screennameviewer.internal.util.dp
+import com.donglab.screennameviewer.internal.util.getStatusBarHeight
 import java.lang.ref.WeakReference
 
 internal class ScreenNameOverlayRenderer(
-    private val activityRef: WeakReference<Activity>,
+    private val activityRef: WeakReference<ComponentActivity>,
+    private val config: ScreenNameOverlayConfig,
 ) {
 
     private enum class OverlayType {
@@ -27,7 +28,7 @@ internal class ScreenNameOverlayRenderer(
         }
     }
 
-    private val activity: Activity?
+    private val activity: ComponentActivity?
         get() = activityRef.get()
 
     private val decorView: ViewGroup? by lazy {
@@ -48,11 +49,6 @@ internal class ScreenNameOverlayRenderer(
 
     private var activityNameTextView: TextView? = null
     private var fragmentTextViewLayout: LinearLayout? = null
-    private lateinit var config: ScreenNameOverlayConfig
-
-    fun initialize(config: ScreenNameOverlayConfig) {
-        this.config = config
-    }
 
     private fun getOrCreateLayout(type: OverlayType): LinearLayout? {
         val topMargin = statusBarHeight + config.topMargin.dp

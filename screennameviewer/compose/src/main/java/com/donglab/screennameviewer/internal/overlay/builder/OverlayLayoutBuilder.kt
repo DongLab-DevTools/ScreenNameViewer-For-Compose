@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.overlay.builder
+package com.donglab.screennameviewer.internal.overlay.builder
 
 import android.content.Context
 import android.graphics.Color

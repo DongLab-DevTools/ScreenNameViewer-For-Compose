@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.config
+package com.donglab.screennameviewer.publicapi.config
 
 import android.graphics.Color
 import android.view.Gravity
@@ -21,7 +21,7 @@ data class ScreenNameOverlayConfig(
          * 기본 설정을 반환
          */
         @JvmStatic
-        fun defaultConfig(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
+        fun default(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
             textSize = 10f,
             textColor = Color.BLUE,
             backgroundColor = Color.argb(50, 200, 200, 200),

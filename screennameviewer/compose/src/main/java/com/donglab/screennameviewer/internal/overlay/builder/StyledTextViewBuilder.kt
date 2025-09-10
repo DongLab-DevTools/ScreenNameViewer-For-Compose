@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.overlay.builder
+package com.donglab.screennameviewer.internal.overlay.builder
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,7 +6,7 @@ import android.util.TypedValue
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.setPadding
-import com.donglab.screennameviewer.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
 
 internal class StyledTextViewBuilder(
     private val config: ScreenNameOverlayConfig

@@ -1,8 +1,8 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 import androidx.fragment.app.Fragment
 
-interface ScreenNameViewer {
+internal interface ScreenNameViewer {
     fun initialize()
     fun registerFragment(fragment: Fragment)
     fun clear()

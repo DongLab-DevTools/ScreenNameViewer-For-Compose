@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.extensions.enableScreenNameViewer
+import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
 
 /**
  * 순수 Compose로 구성된 Fragment (Navigation 포함)
@@ -44,7 +44,7 @@ class PureComposeFragment : Fragment() {
 @Composable
 private fun PureComposeContent() {
     val navController = rememberNavController().apply {
-        enableScreenNameViewer()
+        enableScreenNameTracker()
     }
     
     NavHost(

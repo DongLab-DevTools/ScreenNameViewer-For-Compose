@@ -1,15 +1,10 @@
-package com.donglab.screennameviewer.viewer
+package com.donglab.screennameviewer.internal.viewer
 
 /**
  * CustomLabel 전용 뷰어 인터페이스
  * Activity/Fragment와 독립적으로 CustomLabel만 관리합니다.
  */
-interface CustomLabelViewer {
-    
-    /**
-     * CustomLabel 뷰어를 초기화합니다.
-     */
-    fun initialize()
+internal interface CustomLabelViewer {
     
     /**
      * CustomLabel을 추가합니다.
