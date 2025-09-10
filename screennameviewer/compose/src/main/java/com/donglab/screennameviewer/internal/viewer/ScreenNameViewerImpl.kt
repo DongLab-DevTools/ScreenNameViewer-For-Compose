@@ -20,6 +20,8 @@ internal class ScreenNameViewerImpl(
         require(settings.isDebugMode) {
             "ScreenNameViewer should only be used in debug builds"
         }
+
+        activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
     private val activity: ComponentActivity?
@@ -27,12 +29,6 @@ internal class ScreenNameViewerImpl(
 
     private val overlayRenderer: ScreenNameOverlayRenderer by lazy {
         ScreenNameOverlayRenderer(activityRef, config)
-    }
-
-    override fun initialize() {
-        if (!settings.isEnabled) return
-
-        activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
     override fun registerFragment(fragment: Fragment) {

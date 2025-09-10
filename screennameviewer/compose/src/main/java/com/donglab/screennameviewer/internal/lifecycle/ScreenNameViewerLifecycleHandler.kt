@@ -39,7 +39,6 @@ internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
             config = configuration.config,
             settings = configuration.settings
         ).apply {
-            initialize()
             debugViewers[activity] = this
         }
 
