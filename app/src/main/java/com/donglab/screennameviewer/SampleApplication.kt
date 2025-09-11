@@ -2,7 +2,7 @@ package com.donglab.screennameviewer
 
 import android.app.Application
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.publicapi.ScreenNameViewerSdk
+import com.donglab.screennameviewer.publicapi.ScreenNameViewer
 import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
 
 class SampleApplication : Application() {
@@ -10,7 +10,7 @@ class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        ScreenNameViewerSdk.getInstance().initialize(
+        ScreenNameViewer.getInstance().initialize(
             application = this,
             settings = ScreenNameViewerSetting(
                 debugModeCondition = { true },

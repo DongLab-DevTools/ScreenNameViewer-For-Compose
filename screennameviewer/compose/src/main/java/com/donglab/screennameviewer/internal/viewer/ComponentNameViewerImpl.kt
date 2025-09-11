@@ -10,15 +10,15 @@ import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.internal.overlay.renderer.ScreenNameOverlayRenderer
 import java.lang.ref.WeakReference
 
-internal class ScreenNameViewerImpl(
+internal class ComponentNameViewerImpl(
     private val activityRef: WeakReference<ComponentActivity>,
     private val config: ScreenNameOverlayConfig,
     private val settings: ScreenNameViewerSetting
-) : ScreenNameViewer {
+) : ComponentNameViewer {
 
     init {
         require(settings.isDebugMode) {
-            "ScreenNameViewer should only be used in debug builds"
+            "ComponentNameViewer should only be used in debug builds"
         }
 
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
