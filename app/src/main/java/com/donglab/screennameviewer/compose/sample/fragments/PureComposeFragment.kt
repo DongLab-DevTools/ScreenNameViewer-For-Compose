@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 /**
  * 순수 Compose로 구성된 Fragment (Navigation 포함)
@@ -43,39 +43,39 @@ class PureComposeFragment : Fragment() {
 
 @Composable
 private fun PureComposeContent() {
-    val navController = rememberNavController().apply {
-        enableScreenNameTracker()
-    }
-    
-    NavHost(
-        navController = navController,
-        startDestination = "fragment_home"
-    ) {
-        composable("fragment_home") {
-            FragmentHomeScreen(
-                onNavigateToDetail = {
-                    navController.navigate("fragment_detail")
-                },
-                onNavigateToSettings = {
-                    navController.navigate("fragment_settings")
-                }
-            )
-        }
-        
-        composable("fragment_detail") {
-            FragmentDetailScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-        
-        composable("fragment_settings") {
-            FragmentSettingsScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
+    val navController = rememberNavController()
+
+    ScreenNameTracker(navController = navController) {
+        NavHost(
+            navController = navController,
+            startDestination = "fragment_home"
+        ) {
+            composable("fragment_home") {
+                FragmentHomeScreen(
+                    onNavigateToDetail = {
+                        navController.navigate("fragment_detail")
+                    },
+                    onNavigateToSettings = {
+                        navController.navigate("fragment_settings")
+                    }
+                )
+            }
+
+            composable("fragment_detail") {
+                FragmentDetailScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable("fragment_settings") {
+                FragmentSettingsScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }

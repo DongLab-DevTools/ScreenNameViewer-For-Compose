@@ -21,7 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.donglab.screennameviewer.compose.R
-import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 /**
  * XML Fragment 내에 Compose 영역이 포함된 하이브리드 Fragment
@@ -55,44 +55,44 @@ class ComposeWithinFragment : Fragment() {
 
 @Composable
 private fun HybridComposeContent() {
-    val navController = rememberNavController().apply {
-        enableScreenNameTracker()
-    }
-    
-    NavHost(
-        navController = navController,
-        startDestination = "hybrid_screen1"
-    ) {
-        composable("hybrid_screen1") {
-            HybridScreen1(
-                onNavigateToScreen2 = {
-                    navController.navigate("hybrid_screen2")
-                }
-            )
-        }
-        
-        composable("hybrid_screen2") {
-            HybridScreen2(
-                onNavigateToScreen3 = {
-                    navController.navigate("hybrid_screen3")
-                },
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-        
-        composable("hybrid_screen3") {
-            HybridScreen3(
-                onNavigateToScreen1 = {
-                    navController.navigate("hybrid_screen1") {
-                        popUpTo("hybrid_screen1") { inclusive = true }
+    val navController = rememberNavController()
+
+    ScreenNameTracker(navController = navController) {
+        NavHost(
+            navController = navController,
+            startDestination = "hybrid_screen1"
+        ) {
+            composable("hybrid_screen1") {
+                HybridScreen1(
+                    onNavigateToScreen2 = {
+                        navController.navigate("hybrid_screen2")
                     }
-                },
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
+                )
+            }
+
+            composable("hybrid_screen2") {
+                HybridScreen2(
+                    onNavigateToScreen3 = {
+                        navController.navigate("hybrid_screen3")
+                    },
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable("hybrid_screen3") {
+                HybridScreen3(
+                    onNavigateToScreen1 = {
+                        navController.navigate("hybrid_screen1") {
+                            popUpTo("hybrid_screen1") { inclusive = true }
+                        }
+                    },
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
