@@ -3,13 +3,13 @@ package com.donglab.screennameviewer.internal.compose.tracker
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.internal.viewer.CustomLabelViewer
+import com.donglab.screennameviewer.internal.viewer.ComposeRouteViewer
 
 /**
  * Navigation Screen Tracker for ScreenNameViewer integration.
  * 
  * This class automatically tracks navigation destination changes and displays
- * the current route name in the ScreenNameViewer overlay using CustomLabelViewer.
+ * the current route name in the ScreenNameViewer overlay using ComposeRouteLabelViewer.
  * 
  * Usage:
  * ```kotlin
@@ -32,7 +32,7 @@ import com.donglab.screennameviewer.internal.viewer.CustomLabelViewer
 @SuppressLint("RestrictedApi")
 internal class ComposeScreenNameTracker internal constructor(
     private val navController: NavController,
-    private val customLabelViewer: CustomLabelViewer
+    private val composeRouteViewer: ComposeRouteViewer
 ) {
     
     private var currentRoute: String? = null
@@ -58,23 +58,23 @@ internal class ComposeScreenNameTracker internal constructor(
         
         // 기존 route 제거
         currentRoute?.let { 
-            customLabelViewer.removeCustomLabel(it)
+            composeRouteViewer.removeRoute(it)
         }
         
         // 새 route 표시
-        customLabelViewer.addCustomLabel(routeName)
+        composeRouteViewer.addRoute(routeName)
         currentRoute = routeName
     }
 
     fun cleanup() {
         // 현재 표시된 route 제거
         currentRoute?.let { 
-            customLabelViewer.removeCustomLabel(it)
+            composeRouteViewer.removeRoute(it)
             currentRoute = null
         }
         
         // 리스너 해제
         navController.removeOnDestinationChangedListener(destinationChangedListener)
-        customLabelViewer.clear()
+        composeRouteViewer.clear()
     }
 }

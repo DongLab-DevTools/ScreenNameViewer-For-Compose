@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
-import com.donglab.screennameviewer.internal.viewer.CustomLabelViewerImpl
+import com.donglab.screennameviewer.internal.viewer.ComposeRouteViewerImpl
 import com.donglab.screennameviewer.publicapi.ScreenNameViewer
 
 /**
@@ -30,7 +30,7 @@ fun ScreenNameTracker(
     DisposableEffect(navController, activity) {
         val screenNameViewer = ComposeScreenNameTracker(
             navController = navController,
-            customLabelViewer = CustomLabelViewerImpl(
+            composeRouteViewer = ComposeRouteViewerImpl(
                 context = activity,
                 decorView = decorView,
                 config = configuration.config,

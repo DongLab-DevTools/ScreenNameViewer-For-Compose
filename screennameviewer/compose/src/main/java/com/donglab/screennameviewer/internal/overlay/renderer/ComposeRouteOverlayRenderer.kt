@@ -14,16 +14,16 @@ import com.donglab.screennameviewer.internal.util.dp
 import com.donglab.screennameviewer.internal.util.getStatusBarHeight
 
 /**
- * CustomLabel 전용 오버레이 렌더러
- * Activity/Fragment와 독립적으로 동작하며, Fragment 레이아웃 다음에 위치합니다.
+ * Compose Route Label 전용 오버레이 렌더러
+ * Compose Navigation의 Route 정보를 라벨로 표시합니다.
  */
-internal class CustomLabelOverlayRenderer(
+internal class ComposeRouteOverlayRenderer(
     private val context: Context,
     private val decorView: ViewGroup,
     private val config: ScreenNameOverlayConfig,
 ) {
     
-    private var customLabelLayout: LinearLayout? = null
+    private var composeRouteLayout: LinearLayout? = null
     
     private val statusBarHeight: Int by lazy {
         context.getStatusBarHeight()
@@ -49,15 +49,15 @@ internal class CustomLabelOverlayRenderer(
     }
     
     /**
-     * CustomLabel 레이아웃을 생성하거나 반환합니다.
+     * Compose Route Label 레이아웃을 생성하거나 반환합니다.
      * Fragment 레이아웃보다 아래(나중에 추가된 인덱스)에 위치합니다.
      */
-    private fun getOrCreateCustomLabelLayout(): LinearLayout {
-        if (customLabelLayout == null) {
+    private fun getOrCreateComposeRouteLabelLayout(): LinearLayout {
+        if (composeRouteLayout == null) {
             val topMargin = statusBarHeight + config.topMargin.dp
             val gravity = config.customLabelGravity
             
-            customLabelLayout = LinearLayout(context).apply {
+            composeRouteLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(Color.TRANSPARENT)
             }
@@ -72,47 +72,47 @@ internal class CustomLabelOverlayRenderer(
             
             // Fragment 레이아웃 다음 위치에 삽입
             val insertIndex = findFragmentLayoutPosition()
-            decorView.addView(customLabelLayout, insertIndex, params)
+            decorView.addView(composeRouteLayout, insertIndex, params)
         }
         
-        return customLabelLayout!!
+        return composeRouteLayout!!
     }
     
     /**
-     * CustomLabel을 추가합니다.
+     * Compose Route Label을 추가합니다.
      */
-    fun addCustomLabel(label: String) {
-        val layout = getOrCreateCustomLabelLayout()
+    fun addRoute(label: String) {
+        val layout = getOrCreateComposeRouteLabelLayout()
         val textView = textViewBuilder.build(context, label)
         
-        if (!hasCustomLabel(label)) {
+        if (!hasRoute(label)) {
             layout.addView(textView)
         }
     }
     
     /**
-     * CustomLabel을 제거합니다.
+     * Compose Route Label을 제거합니다.
      */
-    fun removeCustomLabel(label: String) {
-        customLabelLayout?.findViewWithTag<View>(label)?.let { textView ->
-            customLabelLayout?.removeView(textView)
+    fun removeRoute(label: String) {
+        composeRouteLayout?.findViewWithTag<View>(label)?.let { textView ->
+            composeRouteLayout?.removeView(textView)
         }
     }
     
     /**
-     * 해당 이름의 CustomLabel이 이미 존재하는지 확인합니다.
+     * 해당 이름의 Compose Route Label이 이미 존재하는지 확인합니다.
      */
-    private fun hasCustomLabel(label: String): Boolean {
-        return customLabelLayout?.findViewWithTag<TextView>(label) != null
+    private fun hasRoute(label: String): Boolean {
+        return composeRouteLayout?.findViewWithTag<TextView>(label) != null
     }
     
     /**
-     * 모든 CustomLabel을 제거합니다.
+     * 모든 Compose Route Label을 제거합니다.
      */
     fun clear() {
-        customLabelLayout?.let { layout ->
+        composeRouteLayout?.let { layout ->
             decorView.removeView(layout)
         }
-        customLabelLayout = null
+        composeRouteLayout = null
     }
 }
