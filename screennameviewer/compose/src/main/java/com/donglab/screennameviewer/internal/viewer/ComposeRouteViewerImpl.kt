@@ -17,25 +17,25 @@ internal class ComposeRouteViewerImpl(
     private val settings: ScreenNameViewerSetting
 ) : ComposeRouteViewer {
 
-    private val composeRouteLabelRenderer = ComposeRouteOverlayRenderer(context, decorView, config)
+    private val composeRouteRenderer = ComposeRouteOverlayRenderer(context, decorView, config)
     
     init {
         require(settings.isDebugMode) {
-            "ComposeRouteLabelViewer should only be used in debug builds"
+            "ComposeRouteViewer should only be used in debug builds"
         }
     }
 
     override fun addRoute(route: String) {
         if (!settings.isEnabled) return
-        composeRouteLabelRenderer.addRoute(route)
+        composeRouteRenderer.addRoute(route)
     }
     
     override fun removeRoute(route: String) {
         if (!settings.isEnabled) return
-        composeRouteLabelRenderer.removeRoute(route)
+        composeRouteRenderer.removeRoute(route)
     }
     
     override fun clear() {
-        composeRouteLabelRenderer.clear()
+        composeRouteRenderer.clear()
     }
 }

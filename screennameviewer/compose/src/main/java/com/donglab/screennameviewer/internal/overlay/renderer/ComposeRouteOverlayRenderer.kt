@@ -52,10 +52,10 @@ internal class ComposeRouteOverlayRenderer(
      * Compose Route Label 레이아웃을 생성하거나 반환합니다.
      * Fragment 레이아웃보다 아래(나중에 추가된 인덱스)에 위치합니다.
      */
-    private fun getOrCreateComposeRouteLabelLayout(): LinearLayout {
+    private fun getOrCreateComposeRouteLayout(): LinearLayout {
         if (composeRouteLayout == null) {
             val topMargin = statusBarHeight + config.topMargin.dp
-            val gravity = config.customLabelGravity
+            val gravity = config.composeRouteGravity
             
             composeRouteLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
@@ -82,7 +82,7 @@ internal class ComposeRouteOverlayRenderer(
      * Compose Route Label을 추가합니다.
      */
     fun addRoute(label: String) {
-        val layout = getOrCreateComposeRouteLabelLayout()
+        val layout = getOrCreateComposeRouteLayout()
         val textView = textViewBuilder.build(context, label)
         
         if (!hasRoute(label)) {

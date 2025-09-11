@@ -14,7 +14,7 @@ data class ScreenNameOverlayConfig(
     val topMargin: Int,
     val activityGravity: Int,
     val fragmentGravity: Int,
-    val customLabelGravity: Int
+    val composeRouteGravity: Int
 ) {
     companion object {
         /**
@@ -29,7 +29,7 @@ data class ScreenNameOverlayConfig(
             topMargin = 52,
             activityGravity = Gravity.TOP or Gravity.START,
             fragmentGravity = Gravity.TOP or Gravity.END,
-            customLabelGravity = Gravity.TOP or Gravity.END
+            composeRouteGravity = Gravity.TOP or Gravity.END
         )
     }
 }
