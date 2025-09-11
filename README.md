@@ -140,6 +140,10 @@ A lightweight Android debug library that displays Activity and Fragment class na
 
 ## Overview
 
+An extension of the existing XML ScreenNameViewer that displays Compose Screen names as overlays as well.
+
+This library is particularly useful for Single Activity architectures or when managing multiple Screens within Activities/Fragments.
+
 ScreenNameViewer displays the class names of currently visible Activities and Fragments in real-time on screen.
 
 It significantly improves debugging and development efficiency in apps with complex Fragment structures or frequent screen transitions.
@@ -168,27 +172,37 @@ dependencies {
 
 ## Usage
 
-### Initialize in Application class (Recommended)
+### Initialize in Application class
 
 Set up once and all Activities and Fragments will be automatically tracked:
 
 ```kotlin
 class MyApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
-        
-        val settings = ScreenNameViewerSetting(
-            debugModeCondition = { BuildConfig.DEBUG },
-            enabledCondition = { 
-                PreferenceManager.getDefaultSharedPreferences(this)
-                    .getBoolean("debug_overlay_enabled", true)
-            }
+
+        ScreenNameViewer.getInstance().initialize(
+            application = this,
+            settings = ScreenNameViewerSetting(
+                debugModeCondition = { BuildConfig.DEBUG },
+                enabledCondition = {
+                    PreferenceManager.getDefaultSharedPreferences(this)
+                        .getBoolean("debug_overlay_enabled", true)
+                },
+            ),
+            config = ScreenNameOverlayConfig.default()
         )
-        
-        val lifecycleHandler = ScreenNameViewerLifecycleHandler(settings)
-        registerActivityLifecycleCallbacks(lifecycleHandler)
     }
 }
+```
+
+### Initialize in NavHost class (For Compose Integration)
+
+```kotlin
+    ScreenNameTracker(navController) {
+        NavHost() { /*...*/ }
+    }
 ```
 
 ## Configuration
