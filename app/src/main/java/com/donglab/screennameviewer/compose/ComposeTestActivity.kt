@@ -20,7 +20,7 @@ import com.donglab.screennameviewer.compose.sample.screens.dialogs.AboutDialog
 import com.donglab.screennameviewer.compose.sample.screens.dialogs.EditProfileDialog
 import com.donglab.screennameviewer.compose.sample.screens.nested.NestedScreen
 import com.donglab.screennameviewer.compose.sample.screens.tabs.TabScreen
-import com.donglab.screennameviewer.publicapi.extensions.enableScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 /**
  * Comprehensive test Activity for the enhanced Compose screen tracking system.
@@ -55,115 +55,114 @@ class ComposeTestActivity : ComponentActivity() {
 
 @androidx.compose.runtime.Composable
 private fun ComposeTestApp() {
-    val navController = rememberNavController().apply {
-        enableScreenNameTracker()
-    }
+    val navController = rememberNavController()
     
     // Dialog state management
     var showEditDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
     
     // Navigation Host
-    NavHost(
-        navController = navController,
-        startDestination = "home"
-    ) {
-        // Home Screen
-        composable("home") {
-            HomeScreen(
-                onNavigateToDetail = { id ->
-                    navController.navigate("detail/$id")
-                },
-                onNavigateToProfile = {
-                    navController.navigate("profile")
-                },
-                onNavigateToSettings = {
-                    navController.navigate("settings")
-                },
-                onOpenDialog = {
-                    showEditDialog = true
-                }
-            )
-        }
-        
-        // Detail Screen with parameter
-        composable(
-            route = "detail/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val detailId = backStackEntry.arguments?.getInt("id") ?: 0
-            
-            DetailScreen(
-                detailId = detailId,
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onNavigateToNested = {
-                    navController.navigate("nested")
-                }
-            )
-        }
-        
-        // Profile Screen
-        composable("profile") {
-            ProfileScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onOpenEditDialog = {
-                    showEditDialog = true
-                }
-            )
-        }
-        
-        // Settings Screen
-        composable("settings") {
-            SettingsScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onOpenAboutDialog = {
-                    showAboutDialog = true
-                }
-            )
-        }
-        
-        // Nested Screen
-        composable("nested") {
-            NestedScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onNavigateToTab = {
-                    navController.navigate("tab")
-                }
-            )
-        }
-        
-        // Tab Screen
-        composable("tab") {
-            TabScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-    }
-    
-    // Dialog Composables
-    if (showEditDialog) {
-        EditProfileDialog(
-            onDismiss = { showEditDialog = false },
-            onSave = {
-                // Handle save logic
+    ScreenNameTracker(navController = navController) {
+        NavHost(
+            navController = navController,
+            startDestination = "home"
+        ) {
+            // Home Screen
+            composable("home") {
+                HomeScreen(
+                    onNavigateToDetail = { id ->
+                        navController.navigate("detail/$id")
+                    },
+                    onNavigateToProfile = {
+                        navController.navigate("profile")
+                    },
+                    onNavigateToSettings = {
+                        navController.navigate("settings")
+                    },
+                    onOpenDialog = {
+                        showEditDialog = true
+                    }
+                )
             }
-        )
+
+            // Detail Screen with parameter
+            composable(
+                route = "detail/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val detailId = backStackEntry.arguments?.getInt("id") ?: 0
+
+                DetailScreen(
+                    detailId = detailId,
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToNested = {
+                        navController.navigate("nested")
+                    }
+                )
+            }
+
+            // Profile Screen
+            composable("profile") {
+                ProfileScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onOpenEditDialog = {
+                        showEditDialog = true
+                    }
+                )
+            }
+
+            // Settings Screen
+            composable("settings") {
+                SettingsScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onOpenAboutDialog = {
+                        showAboutDialog = true
+                    }
+                )
+            }
+
+            // Nested Screen
+            composable("nested") {
+                NestedScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToTab = {
+                        navController.navigate("tab")
+                    }
+                )
+            }
+
+            // Tab Screen
+            composable("tab") {
+                TabScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        // Dialog Composables
+        if (showEditDialog) {
+            EditProfileDialog(
+                onDismiss = { showEditDialog = false },
+                onSave = {
+                    // Handle save logic
+                }
+            )
+        }
+
+        if (showAboutDialog) {
+            AboutDialog(
+                onDismiss = { showAboutDialog = false }
+            )
+        }
     }
-    
-    if (showAboutDialog) {
-        AboutDialog(
-            onDismiss = { showAboutDialog = false }
-        )
-    }
-    
 }

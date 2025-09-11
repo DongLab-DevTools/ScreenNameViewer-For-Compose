@@ -11,26 +11,33 @@ import com.donglab.screennameviewer.internal.viewer.CustomLabelViewerImpl
 import com.donglab.screennameviewer.publicapi.ScreenNameViewer
 
 /**
- * NavController에 ScreenNameViewer를 활성화하는 Composable 확장 함수입니다.
- * DisposableEffect를 내부에서 처리하여 생명주기를 자동으로 관리합니다.
+ * ComposeScreenNameTracker를 활성화하는 Composable 함수입니다.
+ *
+ * @param navController 디버깅할 NavController
+ * @param content 하위 Composable 콘텐츠
  */
 @Composable
-fun NavController.enableScreenNameTracker() {
+fun ScreenNameTracker(
+    navController: NavController,
+    content: @Composable () -> Unit
+) {
+    content()
+    
     val configuration = ScreenNameViewer.getInstance()
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
 
-    DisposableEffect(this, activity) {
+    DisposableEffect(navController, activity) {
         val screenNameViewer = ComposeScreenNameTracker(
-            navController = this@enableScreenNameTracker,
+            navController = navController,
             customLabelViewer = CustomLabelViewerImpl(
                 context = activity,
                 decorView = decorView,
                 config = configuration.config,
-                settings = configuration.settings
+                settings = configuration.settings,
             )
         )
-        
+
         onDispose {
             screenNameViewer.cleanup()
         }
