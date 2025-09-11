@@ -21,6 +21,8 @@ fun ScreenNameTracker(
     navController: NavController,
     content: @Composable () -> Unit
 ) {
+    content()
+    
     val configuration = ScreenNameViewer.getInstance()
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
@@ -40,5 +42,4 @@ fun ScreenNameTracker(
             screenNameViewer.cleanup()
         }
     }
-    content()
 }
