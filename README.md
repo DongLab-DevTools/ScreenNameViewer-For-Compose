@@ -43,6 +43,13 @@
                     <sub><b>Donghyeon Kim</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/murjune">
+                    <img src="https://avatars.githubusercontent.com/u/87055456?v=4" width="100;" alt="murjune"/>
+                    <br />
+                    <sub><b>JUNWON LEE</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
