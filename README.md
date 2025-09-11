@@ -8,9 +8,9 @@
 
 ## 개요
 
-ScreenNameViewer 현재 화면에 보이는 Activity와 Fragment의 클래스명을 실시간으로 화면에 표시하는 도구입니다.
+기존 Xml용 ScreenNameViewer를 확장하여 Compose의 Screen 이름까지 오버레이로 표시해주는 라이브러리입니다.
 
-복잡한 Fragment 구조나 화면 전환이 많은 앱에서 디버깅과 개발 효율성을 크게 향상시킵니다.
+Single Activity 구조나 Activity/Fragment 내에서 여러 Screen을 관리하는 경우 유용하게 사용될 수 있습니다.
 
 ## 특징
 
@@ -42,21 +42,31 @@ dependencies {
 
 ```kotlin
 class MyApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
-        
-        val settings = ScreenNameViewerSetting(
-            debugModeCondition = { BuildConfig.DEBUG },
-            enabledCondition = { 
-                PreferenceManager.getDefaultSharedPreferences(this)
-                    .getBoolean("debug_overlay_enabled", true)
-            }
+
+        ScreenNameViewer.getInstance().initialize(
+            application = this,
+            settings = ScreenNameViewerSetting(
+                debugModeCondition = { BuildConfig.DEBUG },
+                enabledCondition = {
+                    PreferenceManager.getDefaultSharedPreferences(this)
+                        .getBoolean("debug_overlay_enabled", true)
+                },
+            ),
+            config = ScreenNameOverlayConfig.default()
         )
-        
-        val lifecycleHandler = ScreenNameViewerLifecycleHandler(settings)
-        registerActivityLifecycleCallbacks(lifecycleHandler)
     }
 }
+```
+
+### NavHost 클래스에서 초기화 (Compose 적용)
+
+```kotlin
+    ScreenNameTracker(navController) {
+        NavHost() { /*...*/ }
+    }
 ```
 
 ## 설정
