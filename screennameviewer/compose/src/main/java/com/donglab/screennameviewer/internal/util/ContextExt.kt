@@ -1,7 +1,9 @@
 package com.donglab.screennameviewer.internal.util
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Build
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -24,4 +26,10 @@ internal fun Context?.getStatusBarHeight(): Int {
             if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
         } ?: 0
     }
+}
+
+internal fun Context?.findActivityContext(): Activity? {
+    return generateSequence(this) { (it as? ContextWrapper)?.baseContext }
+        .filterIsInstance<Activity>()
+        .firstOrNull()
 }
