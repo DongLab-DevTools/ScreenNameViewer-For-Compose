@@ -2,11 +2,12 @@ package com.donglab.screennameviewer.publicapi.extensions
 
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
+import com.donglab.screennameviewer.internal.util.findActivityContext
 import com.donglab.screennameviewer.internal.viewer.ComposeRouteViewerImpl
 import com.donglab.screennameviewer.publicapi.ScreenNameViewer
 
@@ -23,9 +24,10 @@ fun ScreenNameTracker(
 ) {
     content()
     
-    val configuration = ScreenNameViewer.getInstance()
-    val activity = LocalActivity.current as? ComponentActivity ?: return
+    val context = LocalContext.current
+    val activity = context.findActivityContext() as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
+    val configuration = ScreenNameViewer.getInstance()
 
     DisposableEffect(navController, activity) {
         val screenNameViewer = ComposeScreenNameTracker(
