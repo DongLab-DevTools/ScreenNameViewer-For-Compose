@@ -55,15 +55,20 @@ internal class ComposeScreenNameTracker internal constructor(
      */
     private fun handleDestinationChanged(destination: NavDestination) {
         val routeName = destination.route ?: "UnknownRoute"
-        
+        val filteredRouteName = if ('.' in routeName) {
+            routeName.substringAfterLast('.')
+        } else {
+            routeName
+        }
+
         // 기존 route 제거
         currentRoute?.let { 
             composeRouteViewer.removeRoute(it)
         }
         
         // 새 route 표시
-        composeRouteViewer.addRoute(routeName)
-        currentRoute = routeName
+        composeRouteViewer.addRoute(filteredRouteName)
+        currentRoute = filteredRouteName
     }
 
     fun cleanup() {
