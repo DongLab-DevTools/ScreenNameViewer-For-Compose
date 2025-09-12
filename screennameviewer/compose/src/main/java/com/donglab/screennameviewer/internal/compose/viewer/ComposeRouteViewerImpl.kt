@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.internal.viewer
+package com.donglab.screennameviewer.internal.compose.viewer
 
 import android.content.Context
 import android.view.ViewGroup

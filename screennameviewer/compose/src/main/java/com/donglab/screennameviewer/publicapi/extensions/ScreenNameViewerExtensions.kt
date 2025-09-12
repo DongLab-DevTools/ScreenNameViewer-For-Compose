@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
 import com.donglab.screennameviewer.internal.util.findActivityContext
-import com.donglab.screennameviewer.internal.viewer.ComposeRouteViewerImpl
+import com.donglab.screennameviewer.internal.compose.viewer.ComposeRouteViewerImpl
 import com.donglab.screennameviewer.publicapi.ScreenNameViewer
 
 /**

@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.internal.compose.tracker
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import com.donglab.screennameviewer.internal.viewer.ComposeRouteViewer
+import com.donglab.screennameviewer.internal.compose.viewer.ComposeRouteViewer
 
 /**
  * Navigation Screen Tracker for ScreenNameViewer integration.

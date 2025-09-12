@@ -1,4 +1,4 @@
-package com.donglab.screennameviewer.internal.viewer
+package com.donglab.screennameviewer.internal.compose.viewer
 
 /**
  * Compose Route Label 전용 뷰어 인터페이스
