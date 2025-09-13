@@ -25,13 +25,46 @@ It significantly improves debugging and development efficiency in apps with comp
 
 ## Installation
 
-Add the library to your project:
+### Step 1: Add GitHub Packages repository
+
+Add the GitHub Packages repository to your project's `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
+```
+
+### Step 2: Add dependency
+
+Add the library to your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation 'com.donglab:screennameviewer:1.0.0'
+    implementation 'com.donglab.devtools:screennameviewer-compose:latestVersion'
 }
 ```
+
+### Step 3: Authentication
+
+Create a `gradle.properties` file in your project root with your GitHub credentials:
+
+```properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+```
+
+> **Note**: You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
 
 ### Requirements
 - Android API 21 (Android 5.0) or higher

@@ -19,13 +19,46 @@ Single Activity 구조나 Activity/Fragment 내에서 여러 Screen을 관리하
 
 ## 설치
 
-프로젝트에 라이브러리를 추가하세요:
+### 1단계: GitHub Packages 저장소 추가
+
+프로젝트의 `settings.gradle.kts`에 GitHub Packages 저장소를 추가하세요:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
+```
+
+### 2단계: 의존성 추가
+
+모듈의 `build.gradle.kts`에 라이브러리를 추가하세요:
 
 ```kotlin
 dependencies {
-    implementation 'com.donglab:screennameviewer:1.0.0'
+    implementation 'com.donglab.devtools:screennameviewer-compose:latestVersion'
 }
 ```
+
+### 3단계: 인증 설정
+
+프로젝트 루트에 `gradle.properties` 파일을 생성하고 GitHub 인증 정보를 추가하세요:
+
+```properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+```
+
+> **참고**: GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
 ### 요구사항
 - Android API 21 (Android 5.0) 이상
