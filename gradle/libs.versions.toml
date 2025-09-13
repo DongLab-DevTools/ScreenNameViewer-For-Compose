@@ -1,4 +1,6 @@
 [versions]
+sdk_version = "0.0.2"
+
 agp = "8.1.4"
 kotlin = "1.9.20"
 coreKtx = "1.8.0"
