@@ -1,6 +1,6 @@
 # ScreenNameViewer-For-Compose
 
-현재 Activity와 Fragment의 클래스명을 화면에 오버레이로 표시해주는 디버그 라이브러리입니다.
+현재 Activity/Fragment/Compose Screen의 클래스명을 화면에 오버레이로 표시해주는 디버그 라이브러리
 
 ![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
