@@ -25,29 +25,32 @@ class OverlayConfigBuilder {
      * 텍스트 스타일을 설정하는 확장함수
      */
     fun textStyle(block: TextStyleScope.() -> Unit) {
-        val textStyle = TextStyleScope().apply(block)
-        textSize = textStyle.size
-        textColor = textStyle.color
+        TextStyleScope().apply(block).also {
+            it.size?.let { textSize = it }
+            it.color?.let { textColor = it }
+        }
     }
 
     /**
      * 배경 스타일을 설정하는 확장함수
      */
     fun background(block: BackgroundScope.() -> Unit) {
-        val background = BackgroundScope().apply(block)
-        backgroundColor = background.color
-        padding = background.padding
+        BackgroundScope().apply(block).also {
+            it.color?.let { backgroundColor = it }
+            it.padding?.let { padding = it }
+        }
     }
 
     /**
      * 위치를 설정하는 확장함수
      */
     fun position(block: PositionScope.() -> Unit) {
-        val position = PositionScope().apply(block)
-        position.topMargin?.let { topMargin = it }
-        position.activity?.let { activityGravity = it }
-        position.fragment?.let { fragmentGravity = it }
-        position.composeRoute?.let { composeRouteGravity = it }
+        PositionScope().apply(block).also {
+            it.topMargin?.let { topMargin = it }
+            it.activity?.let { activityGravity = it }
+            it.fragment?.let { fragmentGravity = it }
+            it.composeRoute?.let { composeRouteGravity = it }
+        }
     }
 
     fun build(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
@@ -67,8 +70,8 @@ class OverlayConfigBuilder {
  */
 @OverlayConfigDsl
 class TextStyleScope {
-    var size: Float = 10f
-    var color: Int = Color.BLUE
+    var size: Float? = null
+    var color: Int? = null
 }
 
 /**
@@ -76,8 +79,8 @@ class TextStyleScope {
  */
 @OverlayConfigDsl
 class BackgroundScope {
-    var color: Int = Color.argb(50, 200, 200, 200)
-    var padding: Int = 16
+    var color: Int? = null
+    var padding: Int? = null
 }
 
 /**
