@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.publicapi.setting
 /**
  * ScreenNameViewer의 활성화 조건을 정의하는 설정 클래스
  */
-data class ScreenNameViewerSetting(
+data class ScreenNameViewerSetting internal constructor(
     val debugModeCondition: () -> Boolean,
     val enabledCondition: () -> Boolean
 ) {

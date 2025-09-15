@@ -1,7 +1,7 @@
 package com.donglab.screennameviewer
 
 import android.app.Application
-import com.donglab.screennameviewer.publicapi.initScreenNameViewer
+import com.donglab.screennameviewer.publicapi.viewer.initScreenNameViewer
 
 class SampleApplication : Application() {
 

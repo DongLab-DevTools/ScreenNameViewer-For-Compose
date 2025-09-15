@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.publicapi.ScreenNameViewer
+import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewerImpl
 import java.lang.ref.WeakReference
