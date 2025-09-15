@@ -1,12 +1,11 @@
 package com.donglab.screennameviewer.publicapi.config
 
-import android.graphics.Color
-import android.view.Gravity
+import com.donglab.screennameviewer.publicapi.dsl.overlayConfig
 
 /**
  * ScreenNameViewer의 UI 설정을 담당하는 설정 클래스
  */
-data class ScreenNameOverlayConfig(
+data class ScreenNameOverlayConfig internal constructor(
     val textSize: Float,
     val textColor: Int,
     val backgroundColor: Int,
@@ -17,19 +16,7 @@ data class ScreenNameOverlayConfig(
     val composeRouteGravity: Int
 ) {
     companion object {
-        /**
-         * 기본 설정을 반환
-         */
         @JvmStatic
-        fun default(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
-            textSize = 10f,
-            textColor = Color.BLUE,
-            backgroundColor = Color.argb(50, 200, 200, 200),
-            padding = 16,
-            topMargin = 52,
-            activityGravity = Gravity.TOP or Gravity.START,
-            fragmentGravity = Gravity.TOP or Gravity.END,
-            composeRouteGravity = Gravity.TOP or Gravity.END
-        )
+        fun default(): ScreenNameOverlayConfig = overlayConfig {}
     }
 }
