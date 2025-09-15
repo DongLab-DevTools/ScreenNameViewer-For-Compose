@@ -66,7 +66,8 @@ github_username=YOUR_GITHUB_USERNAME
 github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
-> **Note**: You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
+> [!NOTE]
+> You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
 
 ### Requirements
 - Android API 21 (Android 5.0) or higher
