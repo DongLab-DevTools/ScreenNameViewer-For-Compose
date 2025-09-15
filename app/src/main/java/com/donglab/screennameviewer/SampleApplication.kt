@@ -10,7 +10,7 @@ class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        ScreenNameViewer.getInstance().initialize(
+        ScreenNameViewer.initialize(
             application = this,
             settings = ScreenNameViewerSetting(
                 debugModeCondition = { true },
