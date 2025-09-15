@@ -16,6 +16,8 @@ data class ScreenNameViewerSetting internal constructor(
         get() = isDebugMode && enabledCondition()
 
     companion object {
+
+        @JvmStatic
         fun default(): ScreenNameViewerSetting = setting {
             debugMode { false }
             enabled { false }

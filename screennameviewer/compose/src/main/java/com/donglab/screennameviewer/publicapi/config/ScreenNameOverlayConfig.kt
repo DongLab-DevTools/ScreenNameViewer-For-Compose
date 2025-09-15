@@ -16,6 +16,7 @@ data class ScreenNameOverlayConfig internal constructor(
     val composeRouteGravity: Int
 ) {
     companion object {
+        @JvmStatic
         fun default(): ScreenNameOverlayConfig = overlayConfig {}
     }
 }
