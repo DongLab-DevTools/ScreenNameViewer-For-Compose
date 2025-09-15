@@ -35,11 +35,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
+		maven {
             url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                username = props.getProperty("github_username")
+                password = props.getProperty("github_token")
             }
         }
     }
@@ -61,8 +62,8 @@ dependencies {
 Create a `gradle.properties` file in your project root with your GitHub credentials:
 
 ```properties
-gpr.user=YOUR_GITHUB_USERNAME
-gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+github_username=YOUR_GITHUB_USERNAME
+github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
 > **Note**: You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
