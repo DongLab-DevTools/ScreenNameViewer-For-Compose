@@ -17,19 +17,22 @@ data class ScreenNameOverlayConfig(
     val composeRouteGravity: Int
 ) {
     companion object {
-        /**
-         * 기본 설정을 반환
-         */
-        @JvmStatic
-        fun default(): ScreenNameOverlayConfig = ScreenNameOverlayConfig(
-            textSize = 10f,
-            textColor = Color.BLUE,
-            backgroundColor = Color.argb(50, 200, 200, 200),
-            padding = 16,
-            topMargin = 52,
-            activityGravity = Gravity.TOP or Gravity.START,
-            fragmentGravity = Gravity.TOP or Gravity.END,
-            composeRouteGravity = Gravity.TOP or Gravity.END
-        )
+
+        fun default(): ScreenNameOverlayConfig = overlayConfig {
+            textStyle {
+                size = 10f
+                color = Color.BLUE
+            }
+            background {
+                color = Color.argb(50, 200, 200, 200)
+                padding = 16
+            }
+            position {
+                topMargin = 52
+                activity = Gravity.TOP or Gravity.START
+                fragment = Gravity.TOP or Gravity.END
+                composeRoute = Gravity.TOP or Gravity.END
+            }
+        }
     }
 }
