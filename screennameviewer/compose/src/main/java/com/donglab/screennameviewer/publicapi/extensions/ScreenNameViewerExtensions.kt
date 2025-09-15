@@ -27,7 +27,6 @@ fun ScreenNameTracker(
     val context = LocalContext.current
     val activity = context.findActivityContext() as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return
-    val configuration = ScreenNameViewer.getInstance()
 
     DisposableEffect(navController, activity) {
         val screenNameViewer = ComposeScreenNameTracker(
@@ -35,8 +34,8 @@ fun ScreenNameTracker(
             composeRouteViewer = ComposeRouteViewerImpl(
                 context = activity,
                 decorView = decorView,
-                config = configuration.config,
-                settings = configuration.settings,
+                config = ScreenNameViewer.config,
+                settings = ScreenNameViewer.settings,
             )
         )
 

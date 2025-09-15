@@ -30,11 +30,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
+		maven {
             url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                username = props.getProperty("github_username")
+                password = props.getProperty("github_token")
             }
         }
     }
@@ -56,11 +57,12 @@ dependencies {
 프로젝트 루트에 `gradle.properties` 파일을 생성하고 GitHub 인증 정보를 추가하세요:
 
 ```properties
-gpr.user=YOUR_GITHUB_USERNAME
-gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+github_username=YOUR_GITHUB_USERNAME
+github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
-> **참고**: GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
+> [!NOTE]
+> GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
 ### 요구사항
 - Android API 21 (Android 5.0) 이상
