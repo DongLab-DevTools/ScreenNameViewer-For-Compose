@@ -120,7 +120,7 @@ val config = ScreenNameOverlayConfig(
     topMargin = 64,                              // Top margin
     activityGravity = Gravity.TOP or Gravity.START,  // Activity display position
     fragmentGravity = Gravity.TOP or Gravity.END,    // Fragment display position
-    customLabelGravity = Gravity.TOP or Gravity.END  // Custom label display position
+    composeRouteGravity = Gravity.TOP or Gravity.END  // Compose Route display position
 )
 
 val lifecycleHandler = ScreenNameViewerLifecycleHandler(settings, config)
