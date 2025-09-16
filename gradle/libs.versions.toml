@@ -1,5 +1,5 @@
 [versions]
-sdk_version = "0.0.5-alpha"
+sdk_version = "0.0.5-alpha-1"
 
 agp = "8.1.4"
 kotlin = "1.9.20"
