@@ -2,18 +2,15 @@
 
 **[한국어 README](./README_ko.md)**
 
-A lightweight Android debug library that displays Activity and Fragment class names as screen overlays during development.
+A debug library that overlays the class names of the current Activity and Fragment on the screen.
 
 ## Overview
 
 ![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
-An extension of the existing XML ScreenNameViewer that displays Compose Screen names as overlays as well.
 
-This library is particularly useful for Single Activity architectures or when managing multiple Screens within Activities/Fragments.
+ScreenNameViewer overlays class names directly on the screen, allowing you to instantly identify the currently visible Activity or Fragment.
 
-ScreenNameViewer displays the class names of currently visible Activities and Fragments in real-time on screen.
-
-It significantly improves debugging and development efficiency in apps with complex Fragment structures or frequent screen transitions.
+This makes it easier to locate the corresponding code, speeding up debugging and improving development efficiency.
 
 ## Features
 

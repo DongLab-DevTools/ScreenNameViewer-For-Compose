@@ -42,12 +42,22 @@ android {
 }
 
 dependencies {
-
+    // Project modules
     implementation(project(":screennameviewer:compose"))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material3)
 
+    // Android Core
+    implementation(libs.androidx.core.ktx)
+
+    // Compose (샘플앱 UI용 최소한)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
