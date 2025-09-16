@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.donglab.screennameviewer.compose.ui.theme.ScreenNameViewerForComposeTheme
+import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 class ComposeSampleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,15 +84,17 @@ fun ComposeSampleApp() {
             }
         }
     ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = "dashboard",
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable("dashboard") { ComposeDashboardScreen() }
-            composable("notifications") { ComposeNotificationsScreen() }
-            composable("favorites") { ComposeFavoritesScreen() }
-            composable("account") { ComposeAccountScreen() }
+        ScreenNameTracker(navController) {
+            NavHost(
+                navController = navController,
+                startDestination = "dashboard",
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable("dashboard") { ComposeDashboardScreen() }
+                composable("notifications") { ComposeNotificationsScreen() }
+                composable("favorites") { ComposeFavoritesScreen() }
+                composable("account") { ComposeAccountScreen() }
+            }
         }
     }
 }
