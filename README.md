@@ -9,7 +9,7 @@
 ScreenNameViewer is a debugging tool that overlays the class name of the currently displayed screen.  
 It allows you to intuitively check which screen is active, and in a Compose environment, it can also display the screen route.
 
-This helps you quickly locate and access the relevant code, improving both debugging and development efficiency.
+This allows you to quickly find and navigate to the code for the desired screen, improving both debugging and development efficiency.
 
 ## Features
 
