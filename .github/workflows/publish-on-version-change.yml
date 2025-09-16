@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - 'release/**'  # release로 시작하는 모든 브랜치에서 실행
+      - 'feature/**'
     paths:
       - 'gradle/libs.versions.toml'  # 이 파일이 변경된 경우에만 실행
 
