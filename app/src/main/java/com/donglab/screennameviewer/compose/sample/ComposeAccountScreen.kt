@@ -27,7 +27,7 @@ fun ComposeAccountScreen() {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
                 )
@@ -200,7 +200,7 @@ fun ComposeAccountScreen() {
         items(menuItems) { item ->
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = if (item.title == "로그아웃")
                         MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f)

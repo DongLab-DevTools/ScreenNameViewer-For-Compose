@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ComposeNotificationsScreen() {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     var notifications by remember { mutableStateOf(generateNotifications()) }
 
     LazyColumn(
@@ -25,9 +26,9 @@ fun ComposeNotificationsScreen() {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             ) {
                 Column(
@@ -40,14 +41,14 @@ fun ComposeNotificationsScreen() {
                         Icon(
                             Icons.Filled.Notifications,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                            tint = accentColor,
                             modifier = Modifier.size(32.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
                             text = "알림 목록",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -129,7 +130,7 @@ fun ComposeNotificationsScreen() {
                     containerColor = if (notification.isRead)
                         MaterialTheme.colorScheme.surface
                     else
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                        MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Row(
@@ -212,44 +213,46 @@ data class NotificationType(
 )
 
 private fun generateNotifications(): List<NotificationItem> {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     return listOf(
         NotificationItem(
             "새 메시지",
             "안녕하세요! 새로운 메시지가 도착했습니다.",
             "방금 전",
-            NotificationType("message", Icons.Filled.Email, androidx.compose.ui.graphics.Color.Blue),
+            NotificationType("message", Icons.Filled.Email, accentColor),
             false
         ),
         NotificationItem(
             "시스템 업데이트",
             "앱이 최신 버전으로 업데이트되었습니다.",
             "1시간 전",
-            NotificationType("system", Icons.Filled.Settings, androidx.compose.ui.graphics.Color.Green),
+            NotificationType("system", Icons.Filled.Settings, accentColor),
             true
         ),
         NotificationItem(
             "할인 혜택",
             "특별 할인 이벤트가 시작되었습니다!",
             "2시간 전",
-            NotificationType("promotion", Icons.Filled.ShoppingCart, androidx.compose.ui.graphics.Color.Red),
+            NotificationType("promotion", Icons.Filled.ShoppingCart, accentColor),
             false
         ),
         NotificationItem(
             "친구 요청",
             "새로운 친구 요청이 있습니다.",
             "어제",
-            NotificationType("social", Icons.Filled.Person, androidx.compose.ui.graphics.Color.Magenta),
+            NotificationType("social", Icons.Filled.Person, accentColor),
             true
         )
     )
 }
 
 private fun generateRandomNotification(): NotificationItem {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     val types = listOf(
-        NotificationType("message", Icons.Filled.Email, androidx.compose.ui.graphics.Color.Blue),
-        NotificationType("system", Icons.Filled.Settings, androidx.compose.ui.graphics.Color.Green),
-        NotificationType("promotion", Icons.Filled.ShoppingCart, androidx.compose.ui.graphics.Color.Red),
-        NotificationType("social", Icons.Filled.Person, androidx.compose.ui.graphics.Color.Magenta)
+        NotificationType("message", Icons.Filled.Email, accentColor),
+        NotificationType("system", Icons.Filled.Settings, accentColor),
+        NotificationType("promotion", Icons.Filled.ShoppingCart, accentColor),
+        NotificationType("social", Icons.Filled.Person, accentColor)
     )
 
     val titles = listOf("새 알림", "중요한 업데이트", "특별 혜택", "시스템 메시지")

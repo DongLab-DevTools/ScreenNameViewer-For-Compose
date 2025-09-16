@@ -25,7 +25,7 @@ fun ComposeDashboardScreen() {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )
@@ -110,11 +110,12 @@ fun ComposeDashboardScreen() {
             }
         }
 
+        val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
         val statsItems = listOf(
-            DashboardStat("총 사용자", "1,234", Icons.Filled.Person, androidx.compose.ui.graphics.Color.Blue),
-            DashboardStat("활성 세션", "89", Icons.Filled.Star, androidx.compose.ui.graphics.Color.Green),
-            DashboardStat("오늘 방문", "456", Icons.Filled.DateRange, androidx.compose.ui.graphics.Color.Red),
-            DashboardStat("새 알림", "12", Icons.Filled.Notifications, androidx.compose.ui.graphics.Color.Blue)
+            DashboardStat("총 사용자", "1,234", Icons.Filled.Person, accentColor),
+            DashboardStat("활성 세션", "89", Icons.Filled.Star, accentColor),
+            DashboardStat("오늘 방문", "456", Icons.Filled.DateRange, accentColor),
+            DashboardStat("새 알림", "12", Icons.Filled.Notifications, accentColor)
         )
 
         items(statsItems) { stat ->

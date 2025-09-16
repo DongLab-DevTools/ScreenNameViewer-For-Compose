@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ComposeFavoritesScreen() {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     var favorites by remember { mutableStateOf(generateFavorites()) }
 
     Column(
@@ -25,9 +26,9 @@ fun ComposeFavoritesScreen() {
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                containerColor = MaterialTheme.colorScheme.surface
             )
         ) {
             Column(
@@ -40,14 +41,14 @@ fun ComposeFavoritesScreen() {
                     Icon(
                         Icons.Filled.Favorite,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                        tint = accentColor,
                         modifier = Modifier.size(32.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
                         text = "즐겨찾기",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -134,7 +135,7 @@ fun ComposeFavoritesScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surface
                         )
@@ -215,7 +216,7 @@ fun ComposeFavoritesScreen() {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
+                                    tint = accentColor,
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -247,52 +248,54 @@ data class FavoriteCategory(
 )
 
 private fun generateFavorites(): List<FavoriteItem> {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     return listOf(
         FavoriteItem(
             "Jetpack Compose",
             "안드로이드의 최신 UI 프레임워크",
-            FavoriteCategory("기술", Icons.Filled.Build, androidx.compose.ui.graphics.Color.Blue),
+            FavoriteCategory("기술", Icons.Filled.Build, accentColor),
             4.8f
         ),
         FavoriteItem(
             "Material Design 3",
             "구글의 디자인 시스템",
-            FavoriteCategory("디자인", Icons.Filled.Create, androidx.compose.ui.graphics.Color.Green),
+            FavoriteCategory("디자인", Icons.Filled.Create, accentColor),
             4.7f
         ),
         FavoriteItem(
             "Kotlin",
             "안드로이드 공식 프로그래밍 언어",
-            FavoriteCategory("언어", Icons.Filled.Info, androidx.compose.ui.graphics.Color.Red),
+            FavoriteCategory("언어", Icons.Filled.Info, accentColor),
             4.9f
         ),
         FavoriteItem(
             "Android Studio",
             "안드로이드 개발 IDE",
-            FavoriteCategory("도구", Icons.Filled.Build, androidx.compose.ui.graphics.Color.Magenta),
+            FavoriteCategory("도구", Icons.Filled.Build, accentColor),
             4.6f
         ),
         FavoriteItem(
             "Navigation",
             "앱 내 화면 전환 라이브러리",
-            FavoriteCategory("라이브러리", Icons.Filled.LocationOn, androidx.compose.ui.graphics.Color.Cyan),
+            FavoriteCategory("라이브러리", Icons.Filled.LocationOn, accentColor),
             4.5f
         ),
         FavoriteItem(
             "Room Database",
             "로컬 데이터베이스 솔루션",
-            FavoriteCategory("데이터", Icons.Filled.List, androidx.compose.ui.graphics.Color(0xFFFF9800)),
+            FavoriteCategory("데이터", Icons.Filled.List, accentColor),
             4.4f
         )
     )
 }
 
 private fun generateRandomFavorite(): FavoriteItem {
+    val accentColor = androidx.compose.ui.graphics.Color(0xFF2196F3)
     val categories = listOf(
-        FavoriteCategory("기술", Icons.Filled.Build, androidx.compose.ui.graphics.Color.Blue),
-        FavoriteCategory("디자인", Icons.Filled.Create, androidx.compose.ui.graphics.Color.Green),
-        FavoriteCategory("언어", Icons.Filled.Info, androidx.compose.ui.graphics.Color.Red),
-        FavoriteCategory("도구", Icons.Filled.Build, androidx.compose.ui.graphics.Color.Magenta)
+        FavoriteCategory("기술", Icons.Filled.Build, accentColor),
+        FavoriteCategory("디자인", Icons.Filled.Create, accentColor),
+        FavoriteCategory("언어", Icons.Filled.Info, accentColor),
+        FavoriteCategory("도구", Icons.Filled.Build, accentColor)
     )
 
     val titles = listOf("새로운 기술", "유용한 도구", "훌륭한 라이브러리", "멋진 프레임워크")

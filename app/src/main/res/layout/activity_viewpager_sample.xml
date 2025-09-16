@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:elevation="4dp"
+        android:elevation="2dp"
         app:title="ViewPager 샘플"
         app:titleTextColor="@color/dark_gray"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:menu="@menu/viewpager_bottom_navigation_menu"
-        app:elevation="8dp"
+        app:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
