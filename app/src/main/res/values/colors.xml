@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- White-based color scheme -->
+    <color name="light_gray">#FFF5F5F5</color>
+    <color name="light_gray_container">#FFF9F9F9</color>
+    <color name="dark_gray">#FF424242</color>
+    <color name="accent_blue">#FF2196F3</color>
+    <color name="surface_white">#FFFFFFFF</color>
+    <color name="divider_gray">#FFE0E0E0</color>
+
+    <!-- Bottom navigation colors -->
+    <color name="bottom_nav_selected">#FF2196F3</color>
+    <color name="bottom_nav_unselected">#FF9E9E9E</color>
 </resources>
