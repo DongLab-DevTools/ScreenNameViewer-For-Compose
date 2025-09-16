@@ -6,10 +6,10 @@
 
 ![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
-ScreenNameViewer는 화면 위에 클래스명을 오버레이로 표시하여, 현재 표시 중인 화면을 즉시 확인할 수 있도록 도와줍니다.
-해당 라이브러리는 ScreenNameViewer를 확장하여 Compose의 Screen Route도 표시할 수 있습니다.
+ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이로 보여주는 디버깅 도구입니다. 
+어떤 화면이 활성화되어 있는지 직관적으로 확인할 수 있으며, Compose 환경에서는 Screen Route까지 함께 표시할 수 있습니다. 
 
-이를 통해 원하는 화면의 코드를 빠르게 찾아 디버깅 및 개발 효율을 높일 수 있습니다.
+이를 통해 원하는 화면의 코드를 빠르게 찾아 접근할 수 있어 디버깅과 개발 효율을 높여줍니다.
 
 ## 특징
 
