@@ -1,12 +1,12 @@
 # ScreenNameViewer-For-Compose
-
-개발 중인 안드로이드 앱에서 현재 Activity와 Fragment의 클래스명을 화면에 오버레이로 표시해주는 디버그 라이브러리입니다.
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
 ## 개요
 
-기존 Xml용 ScreenNameViewer를 확장하여 Compose의 Screen 이름까지 오버레이로 표시해주는 라이브러리입니다.
+ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이로 보여주는 디버깅 도구입니다.  
+어떤 화면이 활성화되어 있는지 직관적으로 확인할 수 있으며, Compose 환경에서는 Screen Route까지 함께 표시할 수 있습니다. 
 
-Single Activity 구조나 Activity/Fragment 내에서 여러 Screen을 관리하는 경우 유용하게 사용될 수 있습니다.
+이를 통해 원하는 화면의 코드를 빠르게 찾아 접근할 수 있어 디버깅과 개발 효율을 높여줍니다.
 
 ## 특징
 
@@ -28,11 +28,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
+		maven {
             url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                username = props.getProperty("github_username")
+                password = props.getProperty("github_token")
             }
         }
     }
@@ -54,11 +55,12 @@ dependencies {
 프로젝트 루트에 `gradle.properties` 파일을 생성하고 GitHub 인증 정보를 추가하세요:
 
 ```properties
-gpr.user=YOUR_GITHUB_USERNAME
-gpr.key=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+github_username=YOUR_GITHUB_USERNAME
+github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
-> **참고**: GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
+> [!NOTE]
+> GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
 ### 요구사항
 - Android API 21 (Android 5.0) 이상
@@ -75,17 +77,31 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        ScreenNameViewer.getInstance().initialize(
-            application = this,
-            settings = ScreenNameViewerSetting(
-                debugModeCondition = { BuildConfig.DEBUG },
-                enabledCondition = {
-                    PreferenceManager.getDefaultSharedPreferences(this)
+        initScreenNameViewer(this) {
+            settings {
+                debugMode { BuildConfig.DEBUG }
+                enabled {
+                    PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
                         .getBoolean("debug_overlay_enabled", true)
-                },
-            ),
-            config = ScreenNameOverlayConfig.default()
-        )
+                }
+            }
+            config {
+                textStyle {
+                    size = 12f
+                    color = Color.WHITE
+                }
+                background {
+                    color = Color.argb(128, 0, 0, 0)
+                    padding = 16
+                }
+                position {
+                    topMargin = 64
+                    activity = Gravity.TOP or Gravity.START
+                    fragment = Gravity.TOP or Gravity.END
+                    composeRoute = Gravity.TOP or Gravity.END
+                }
+            }
+        }
     }
 }
 ```
@@ -100,65 +116,50 @@ class MyApplication : Application() {
 
 ## 설정
 
-### UI 커스터마이징
+### DSL 설정
+
+간단한 DSL(Domain Specific Language)을 사용하여 라이브러리를 설정할 수 있습니다:
 
 ```kotlin
-val config = ScreenNameOverlayConfig(
-    textSize = 12f,                              // 텍스트 크기
-    textColor = Color.WHITE,                     // 텍스트 색상
-    backgroundColor = Color.argb(128, 0, 0, 0),  // 배경색
-    padding = 16,                                // 패딩
-    topMargin = 64,                              // 상단 여백
-    activityGravity = Gravity.TOP or Gravity.START,  // Activity 표시 위치
-    fragmentGravity = Gravity.TOP or Gravity.END,    // Fragment 표시 위치
-    customLabelGravity = Gravity.TOP or Gravity.END  // 커스텀 라벨 표시 위치
-)
-
-val lifecycleHandler = ScreenNameViewerLifecycleHandler(settings, config)
-```
-화면에 표시될 오버레이의 스타일을 커스텀할 수 있습니다.
-
-### 활성화 조건 주입
-
-```kotlin
-val settings = ScreenNameViewerSetting(
-    debugModeCondition = { BuildConfig.DEBUG },
-    enabledCondition = { 
-        PreferenceManager.getDefaultSharedPreferences(this)
-            .getBoolean("debug_overlay_enabled", true)
+initScreenNameViewer(this) {
+    settings {
+        debugMode { BuildConfig.DEBUG }
+        enabled {
+            PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
+                .getBoolean("debug_overlay_enabled", true)
+        }
     }
-)
-```
-- `debugModeCondition`: 디버그 모드 조건을 주입합니다.
-- `enabledCondition`: 오버레이 기능 활성화 조건을 주입합니다.
-
-## 라이선스
-
-```
-MIT License
-
-Copyright (c) 2025 DongLab-DevTools
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+    config {
+        textStyle {
+            size = 12f                    // 텍스트 크기
+            color = Color.WHITE           // 텍스트 색상
+        }
+        background {
+            color = Color.argb(128, 0, 0, 0)  // 배경색
+            padding = 16                      // 패딩
+        }
+        position {
+            topMargin = 64                                    // 상단 여백
+            activity = Gravity.TOP or Gravity.START          // Activity 표시 위치
+            fragment = Gravity.TOP or Gravity.END            // Fragment 표시 위치
+            composeRoute = Gravity.TOP or Gravity.END        // Compose Route 표시 위치
+        }
+    }
+}
 ```
 
-## Contributors
+### 설정 옵션
+
+- **settings**: 활성화 조건 설정
+  - `debugMode`: 디버그 모드 조건
+  - `enabled`: 오버레이 기능 활성화 조건
+
+- **config**: 오버레이 모양 커스터마이징
+  - `textStyle`: 텍스트 크기와 색상
+  - `background`: 배경색과 패딩
+  - `position`: 여백과 각 컴포넌트의 표시 위치
+
+## 기여자
 
 <!-- readme: collaborators,contributors -start -->
 <table>

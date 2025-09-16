@@ -1,11 +1,11 @@
-package com.donglab.screennameviewer.publicapi
+package com.donglab.screennameviewer.publicapi.viewer
 
 import android.app.Application
-import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
 import com.donglab.screennameviewer.internal.lifecycle.ScreenNameViewerLifecycleHandler
+import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
+import com.donglab.screennameviewer.publicapi.setting.ScreenNameViewerSetting
 
-class ScreenNameViewer private constructor() {
+object ScreenNameViewer {
     var settings: ScreenNameViewerSetting = ScreenNameViewerSetting.default()
         private set
     var config: ScreenNameOverlayConfig = ScreenNameOverlayConfig.default()
@@ -16,21 +16,10 @@ class ScreenNameViewer private constructor() {
         settings: ScreenNameViewerSetting,
         config: ScreenNameOverlayConfig
     ) {
-        this.settings = settings
-        this.config = config
+        ScreenNameViewer.settings = settings
+        ScreenNameViewer.config = config
 
         val lifecycleHandler = ScreenNameViewerLifecycleHandler()
         application.registerActivityLifecycleCallbacks(lifecycleHandler)
-    }
-
-    companion object {
-        @Volatile
-        private var INSTANCE: ScreenNameViewer? = null
-
-        fun getInstance(): ScreenNameViewer {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ScreenNameViewer().also { INSTANCE = it }
-            }
-        }
     }
 }

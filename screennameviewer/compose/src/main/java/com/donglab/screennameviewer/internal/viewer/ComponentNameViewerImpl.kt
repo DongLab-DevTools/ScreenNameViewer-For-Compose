@@ -6,7 +6,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.publicapi.setting.ScreenNameViewerSetting
 import com.donglab.screennameviewer.internal.overlay.renderer.ScreenNameOverlayRenderer
 import java.lang.ref.WeakReference
 

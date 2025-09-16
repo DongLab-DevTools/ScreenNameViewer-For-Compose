@@ -53,17 +53,15 @@ android {
 }
 
 dependencies {
-
+    // Android Core
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    
-    // Compose BOM
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
+    implementation(libs.androidx.fragment)
+
+    // Compose
     implementation(libs.androidx.activity.compose)
-    
+    implementation(libs.androidx.navigation.compose)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

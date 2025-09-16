@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
-import com.donglab.screennameviewer.publicapi.ScreenNameViewer
+import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewerImpl
 import java.lang.ref.WeakReference
@@ -17,7 +17,6 @@ import java.util.WeakHashMap
 
 internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
-    private val configuration = ScreenNameViewer.getInstance()
     // Activity ID별로 debugViewer 저장
     private val debugViewers = WeakHashMap<Activity, ComponentNameViewer>()
     private val fragmentCallbacks = WeakHashMap<Activity, FragmentLifecycleCallbacks>()
@@ -36,8 +35,8 @@ internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
         ComponentNameViewerImpl(
             activityRef = WeakReference(activity),
-            config = configuration.config,
-            settings = configuration.settings
+            config = ScreenNameViewer.config,
+            settings = ScreenNameViewer.settings
         ).apply {
             debugViewers[activity] = this
         }

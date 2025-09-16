@@ -17,19 +17,34 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ScreenNameViewerForCompose">
-
-        </activity>
-
-        <activity
-            android:name=".ComposeTestActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ScreenNameViewerForCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".sample.ViewPagerSampleActivity"
+            android:exported="false"
+            android:label="ViewPager 샘플"
+            android:theme="@style/Theme.ScreenNameViewerForCompose" />
+
+        <activity
+            android:name=".sample.ShowHideFragmentActivity"
+            android:exported="false"
+            android:label="Show/Hide Fragment 샘플"
+            android:theme="@style/Theme.ScreenNameViewerForCompose" />
+
+        <activity
+            android:name=".sample.ComposeSampleActivity"
+            android:exported="false"
+            android:label="Compose 샘플"
+            android:theme="@style/Theme.ScreenNameViewerForCompose" />
+
+        <activity
+            android:name=".ComposeTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ScreenNameViewerForCompose" />
     </application>
 
 </manifest>

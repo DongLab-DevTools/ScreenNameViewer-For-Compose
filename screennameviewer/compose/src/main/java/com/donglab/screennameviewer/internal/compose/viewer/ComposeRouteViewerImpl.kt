@@ -3,7 +3,7 @@ package com.donglab.screennameviewer.internal.compose.viewer
 import android.content.Context
 import android.view.ViewGroup
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.publicapi.config.ScreenNameViewerSetting
+import com.donglab.screennameviewer.publicapi.setting.ScreenNameViewerSetting
 import com.donglab.screennameviewer.internal.overlay.renderer.ComposeRouteOverlayRenderer
 
 /**
