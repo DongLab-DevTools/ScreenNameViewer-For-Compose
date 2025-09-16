@@ -120,7 +120,7 @@ jobs:
             ```kotlin
             repositories {
                 maven {
-                    url = uri("https://maven.pkg.github.com/DongLab-DevTools/${{ github.repository }}")
+                    url = uri("https://maven.pkg.github.com/${{ github.repository }}")
                     credentials {
                         username = "YOUR_GITHUB_USERNAME"
                         password = "YOUR_GITHUB_TOKEN"
@@ -134,7 +134,7 @@ jobs:
             ```
 
             **3. 사용 방법**
-            - 자세한 사용법은 [README](https://github.com/DongLab-DevTools/${{ github.repository }}/blob/main/README.md)를 참고하세요.
+            - 자세한 사용법은 [README](https://github.com/${{ github.repository }}/blob/main/README.md)를 참고하세요.
 
           draft: false     # 즉시 공개
           prerelease: false # 정식 릴리즈로 설정
