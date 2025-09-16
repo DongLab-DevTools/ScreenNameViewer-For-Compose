@@ -111,8 +111,8 @@
             android:textSize="14sp"
             android:gravity="center"
             android:padding="16dp"
-            android:background="?attr/colorPrimary"
-            android:textColor="@android:color/white" />
+            android:background="@color/light_gray"
+            android:textColor="@color/dark_gray" />
 
     </LinearLayout>
 

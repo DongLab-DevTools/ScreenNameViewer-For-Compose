@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.donglab.screennameviewer.compose.R
 import com.donglab.screennameviewer.compose.databinding.ActivityViewpagerSampleBinding
 
@@ -24,15 +23,25 @@ class ViewPagerSampleActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         binding.viewPager.adapter = ViewPagerAdapter(this)
+        binding.viewPager.isUserInputEnabled = false // 스와이프 비활성화
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "홈"
-                1 -> "탐색"
-                2 -> "설정"
-                else -> "탭 ${position + 1}"
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    binding.viewPager.currentItem = 0
+                    true
+                }
+                R.id.nav_explore -> {
+                    binding.viewPager.currentItem = 1
+                    true
+                }
+                R.id.nav_settings -> {
+                    binding.viewPager.currentItem = 2
+                    true
+                }
+                else -> false
             }
-        }.attach()
+        }
     }
 
     private class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
