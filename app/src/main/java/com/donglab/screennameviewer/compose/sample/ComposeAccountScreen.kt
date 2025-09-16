@@ -29,7 +29,7 @@ fun ComposeAccountScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             ) {
                 Column(
@@ -42,7 +42,7 @@ fun ComposeAccountScreen() {
                         Icon(
                             Icons.Filled.AccountCircle,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = androidx.compose.ui.graphics.Color(0xFF2196F3),
                             modifier = Modifier.size(32.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
@@ -88,7 +88,7 @@ fun ComposeAccountScreen() {
                         Card(
                             modifier = Modifier.size(64.dp),
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
                             )
                         ) {
                             Box(
@@ -98,7 +98,7 @@ fun ComposeAccountScreen() {
                                 Icon(
                                     Icons.Filled.Person,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
+                                    tint = androidx.compose.ui.graphics.Color(0xFF2196F3),
                                     modifier = Modifier.size(32.dp)
                                 )
                             }

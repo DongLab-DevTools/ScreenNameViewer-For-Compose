@@ -72,8 +72,8 @@ fun ComposeSampleApp() {
                             }
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = MaterialTheme.colorScheme.tertiary,
-                            selectedTextColor = MaterialTheme.colorScheme.tertiary,
+                            selectedIconColor = androidx.compose.ui.graphics.Color(0xFF2196F3),
+                            selectedTextColor = androidx.compose.ui.graphics.Color(0xFF2196F3),
                             unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             indicatorColor = MaterialTheme.colorScheme.surfaceVariant
