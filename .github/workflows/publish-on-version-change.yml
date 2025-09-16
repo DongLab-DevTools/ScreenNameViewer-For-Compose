@@ -1,0 +1,141 @@
+# libs.versions.toml의 sdk_version 변경 시 자동으로 GitHub Packages에 배포하는 워크플로우
+name: Publish to GitHub Packages on Version Change
+
+# 트리거 조건: release 브랜치에서 libs.versions.toml 파일이 변경된 경우
+on:
+  push:
+    branches:
+      - 'release/**'  # release로 시작하는 모든 브랜치에서 실행
+    paths:
+      - 'gradle/libs.versions.toml'  # 이 파일이 변경된 경우에만 실행
+
+# GitHub Actions에서 필요한 권한 설정
+permissions:
+  contents: write    # 릴리즈 생성을 위해 필요
+  packages: write    # GitHub Packages 배포를 위해 필요
+
+jobs:
+  # 첫 번째 작업: sdk_version이 실제로 변경되었는지 확인
+  check-version-change:
+    runs-on: ubuntu-latest
+    outputs:
+      version-changed: ${{ steps.version-check.outputs.changed }}  # 버전 변경 여부를 다음 작업에 전달
+      new-version: ${{ steps.version-check.outputs.version }}      # 새 버전 값을 다음 작업에 전달
+    steps:
+      # 코드를 체크아웃 (이전 커밋과 비교하기 위해 깊이를 2로 설정)
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # 현재와 이전 커밋을 가져오기 위함
+
+      # sdk_version이 변경되었는지 확인하는 단계
+      - name: Check if sdk_version changed
+        id: version-check
+        run: |
+          # 현재 커밋의 sdk_version 값 추출
+          CURRENT_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2)
+          echo "Current version: $CURRENT_VERSION"
+
+          # 이전 커밋의 sdk_version 값 추출
+          git checkout HEAD~1 -- gradle/libs.versions.toml 2>/dev/null || echo "No previous version found"
+          PREVIOUS_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2 2>/dev/null || echo "")
+          echo "Previous version: $PREVIOUS_VERSION"
+
+          # 현재 버전으로 파일 복원
+          git checkout HEAD -- gradle/libs.versions.toml
+
+          # 버전이 변경되었고 유효한 값인지 확인
+          if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ] && [ -n "$CURRENT_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Version not changed"
+          fi
+
+  # 두 번째 작업: 버전이 변경된 경우에만 GitHub Packages에 배포
+  publish:
+    needs: check-version-change  # 이전 작업이 완료된 후 실행
+    if: needs.check-version-change.outputs.version-changed == 'true'  # 버전이 변경된 경우에만 실행
+    runs-on: ubuntu-latest
+    steps:
+      # 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Java 11 설정 (Android 프로젝트 빌드를 위해 필요)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Gradle 캐시 설정으로 빌드 시간 단축
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # gradlew 스크립트에 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # GitHub Packages 배포를 위한 인증 정보 생성
+      - name: Create github.properties
+        run: |
+          echo "url=https://maven.pkg.github.com/${{ github.repository }}" > github.properties
+          echo "github_username=${{ github.actor }}" >> github.properties
+          echo "github_token=${{ secrets.DONGLAB_DEVTOOLS_GITHUB_TOKEN }}" >> github.properties
+
+      # 라이브러리 빌드 및 GitHub Packages에 배포
+      - name: Build and publish to GitHub Packages
+        run: ./gradlew publishReleasePublicationToMavenRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 새 버전으로 GitHub Release 생성
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.check-version-change.outputs.new-version }}
+          name: Release v${{ needs.check-version-change.outputs.new-version }}
+          body: |
+            SDK version updated to ${{ needs.check-version-change.outputs.new-version }}
+
+            Published to GitHub Packages automatically.
+
+            ### 📦 라이브러리 적용 방법
+
+            **1. GitHub Token 설정**
+            - GitHub Packages를 사용하기 위해 Personal Access Token이 필요합니다.
+
+            **2. Gradle 설정 (build.gradle.kts)**
+            ```kotlin
+            repositories {
+                maven {
+                    url = uri("https://maven.pkg.github.com/DongLab-DevTools/${{ github.repository }}")
+                    credentials {
+                        username = "YOUR_GITHUB_USERNAME"
+                        password = "YOUR_GITHUB_TOKEN"
+                    }
+                }
+            }
+
+            dependencies {
+                implementation("com.donglab.devtools:screennameviewer-compose:${{ needs.check-version-change.outputs.new-version }}")
+            }
+            ```
+
+            **3. 사용 방법**
+            - 자세한 사용법은 [README](https://github.com/DongLab-DevTools/${{ github.repository }}/blob/main/README.md)를 참고하세요.
+
+          draft: false     # 즉시 공개
+          prerelease: false # 정식 릴리즈로 설정
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
