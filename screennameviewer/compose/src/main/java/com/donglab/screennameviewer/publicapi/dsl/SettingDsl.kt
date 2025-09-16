@@ -33,6 +33,6 @@ class SettingBuilder {
     )
 }
 
-inline fun setting(block: SettingBuilder.() -> Unit): ScreenNameViewerSetting {
+internal inline fun setting(block: SettingBuilder.() -> Unit): ScreenNameViewerSetting {
     return SettingBuilder().apply(block).build()
 }

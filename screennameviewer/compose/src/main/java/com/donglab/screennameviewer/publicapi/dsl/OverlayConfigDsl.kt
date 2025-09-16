@@ -94,6 +94,6 @@ class PositionScope {
     var composeRoute: Int? = null
 }
 
-inline fun overlayConfig(block: OverlayConfigBuilder.() -> Unit): ScreenNameOverlayConfig {
+internal inline fun overlayConfig(block: OverlayConfigBuilder.() -> Unit): ScreenNameOverlayConfig {
     return OverlayConfigBuilder().apply(block).build()
 }
