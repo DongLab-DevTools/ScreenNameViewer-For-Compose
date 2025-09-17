@@ -16,6 +16,8 @@ ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이�
 
 이를 통해 원하는 화면의 코드를 빠르게 찾아 접근할 수 있어 디버깅과 개발 효율을 높여줍니다.
 
+<br>
+
 ## 특징
 
 - **실시간 클래스명 표시**: Activity와 Fragment 클래스명을 화면에 실시간 표시
@@ -24,6 +26,8 @@ ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이�
 - **UI 커스터마이징**: 텍스트 크기, 색상, 위치 등 자유롭게 설정 가능
 - **메모리 안전**: WeakReference 사용으로 메모리 누수 방지
 - **터치 상호작용**: 오버레이 터치 시 Toast로 전체 클래스명 표시
+
+<br>
 
 ## 설치
 
@@ -70,8 +74,12 @@ github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 > [!NOTE]
 > GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
+<br>
+
 ### 요구사항
 - Android API 21 (Android 5.0) 이상
+
+<br>
 
 ## 사용법
 
@@ -122,6 +130,8 @@ class MyApplication : Application() {
     }
 ```
 
+<br>
+
 ## 설정
 
 ### DSL 설정
@@ -156,6 +166,8 @@ initScreenNameViewer(this) {
 }
 ```
 
+<br>
+
 ### 설정 옵션
 
 - **settings**: 활성화 조건 설정
@@ -166,6 +178,8 @@ initScreenNameViewer(this) {
   - `textStyle`: 텍스트 크기와 색상
   - `background`: 배경색과 패딩
   - `position`: 여백과 각 컴포넌트의 표시 위치
+
+<br>
 
 ## 기여자
 
