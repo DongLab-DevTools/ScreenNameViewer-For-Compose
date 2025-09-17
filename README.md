@@ -18,6 +18,8 @@ It allows you to intuitively check which screen is active, and in a Compose envi
 
 This allows you to quickly find and navigate to the code for the desired screen, improving both debugging and development efficiency.
 
+<br>
+
 ## Features
 
 - **Real-time class name display**: Shows Activity and Fragment class names on screen in real-time
@@ -26,6 +28,8 @@ This allows you to quickly find and navigate to the code for the desired screen,
 - **UI customization**: Freely configure text size, color, position, etc.
 - **Memory safe**: Prevents memory leaks using WeakReference
 - **Touch interaction**: Touch overlay to show full class name in toast
+
+<br>
 
 ## Installation
 
@@ -72,8 +76,12 @@ github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 > [!NOTE]
 > You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
 
+<br>
+
 ### Requirements
 - Android API 21 (Android 5.0) or higher
+
+<br>
 
 ## Usage
 
@@ -124,6 +132,8 @@ class MyApplication : Application() {
     }
 ```
 
+<br>
+
 ## Configuration
 
 ### DSL Configuration
@@ -158,6 +168,8 @@ initScreenNameViewer(this) {
 }
 ```
 
+<br>
+
 ### Configuration Options
 
 - **settings**: Configure activation conditions
@@ -168,6 +180,8 @@ initScreenNameViewer(this) {
   - `textStyle`: Text size and color
   - `background`: Background color and padding
   - `position`: Margin and display positions for different components
+
+<br>
 
 ## Contributors
 
