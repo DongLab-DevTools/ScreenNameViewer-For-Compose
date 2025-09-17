@@ -6,7 +6,12 @@
 
 ![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
-![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png)
+<a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
+	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png"/>
+</a>
+
+<br>
+<br>
 
 ScreenNameViewer is a debugging tool that overlays the class name of the currently displayed screen.  
 It allows you to intuitively check which screen is active, and in a Compose environment, it can also display the screen route.
