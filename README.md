@@ -1,4 +1,5 @@
 # ScreenNameViewer-For-Compose
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png)
 
 **[한국어 README](./README_ko.md)**
 
