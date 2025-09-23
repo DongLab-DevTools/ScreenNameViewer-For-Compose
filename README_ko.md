@@ -1,12 +1,22 @@
 # ScreenNameViewer-For-Compose
-![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
 ## 개요
+
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
+
+<a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
+	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/a1bedb1a1d026948f4b9b8cdf25e95293aab2cf1/.github/docs/images/screen_name_viewer_link_thumb_xml_kr.png"/>
+</a>
+
+<br>
+<br>
 
 ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이로 보여주는 디버깅 도구입니다.  
 어떤 화면이 활성화되어 있는지 직관적으로 확인할 수 있으며, Compose 환경에서는 Screen Route까지 함께 표시할 수 있습니다. 
 
 이를 통해 원하는 화면의 코드를 빠르게 찾아 접근할 수 있어 디버깅과 개발 효율을 높여줍니다.
+
+<br>
 
 ## 특징
 
@@ -16,6 +26,8 @@ ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이�
 - **UI 커스터마이징**: 텍스트 크기, 색상, 위치 등 자유롭게 설정 가능
 - **메모리 안전**: WeakReference 사용으로 메모리 누수 방지
 - **터치 상호작용**: 오버레이 터치 시 Toast로 전체 클래스명 표시
+
+<br>
 
 ## 설치
 
@@ -62,8 +74,12 @@ github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 > [!NOTE]
 > GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
+<br>
+
 ### 요구사항
 - Android API 21 (Android 5.0) 이상
+
+<br>
 
 ## 사용법
 
@@ -114,6 +130,8 @@ class MyApplication : Application() {
     }
 ```
 
+<br>
+
 ## 설정
 
 ### DSL 설정
@@ -148,6 +166,8 @@ initScreenNameViewer(this) {
 }
 ```
 
+<br>
+
 ### 설정 옵션
 
 - **settings**: 활성화 조건 설정
@@ -158,6 +178,8 @@ initScreenNameViewer(this) {
   - `textStyle`: 텍스트 크기와 색상
   - `background`: 배경색과 패딩
   - `position`: 여백과 각 컴포넌트의 표시 위치
+
+<br>
 
 ## 기여자
 

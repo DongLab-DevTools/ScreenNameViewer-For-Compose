@@ -1,4 +1,8 @@
 # ScreenNameViewer-For-Compose
+[![Hits](https://myhits.vercel.app/api/hit/https%3A%2F%2Fgithub.com%2FDongLab-DevTools%2FScreenNameViewer-For-Compose%3Ftab%3Dreadme-ov-file?color=blue&label=hits&size=small)](https://myhits.vercel.app)
+[![Platform](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square&logo=android)](https://developer.android.com)
+[![Min SDK](https://img.shields.io/badge/min%20sdk-21-green?style=flat-square)](https://developer.android.com)
+
 
 **[한국어 README](./README_ko.md)**
 
@@ -6,10 +10,19 @@
 
 ![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
 
+<a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
+	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png"/>
+</a>
+
+<br>
+<br>
+
 ScreenNameViewer is a debugging tool that overlays the class name of the currently displayed screen.  
 It allows you to intuitively check which screen is active, and in a Compose environment, it can also display the screen route.
 
 This allows you to quickly find and navigate to the code for the desired screen, improving both debugging and development efficiency.
+
+<br>
 
 ## Features
 
@@ -19,6 +32,8 @@ This allows you to quickly find and navigate to the code for the desired screen,
 - **UI customization**: Freely configure text size, color, position, etc.
 - **Memory safe**: Prevents memory leaks using WeakReference
 - **Touch interaction**: Touch overlay to show full class name in toast
+
+<br>
 
 ## Installation
 
@@ -65,8 +80,12 @@ github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
 > [!NOTE]
 > You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
 
+<br>
+
 ### Requirements
 - Android API 21 (Android 5.0) or higher
+
+<br>
 
 ## Usage
 
@@ -117,6 +136,8 @@ class MyApplication : Application() {
     }
 ```
 
+<br>
+
 ## Configuration
 
 ### DSL Configuration
@@ -151,6 +172,8 @@ initScreenNameViewer(this) {
 }
 ```
 
+<br>
+
 ### Configuration Options
 
 - **settings**: Configure activation conditions
@@ -161,6 +184,8 @@ initScreenNameViewer(this) {
   - `textStyle`: Text size and color
   - `background`: Background color and padding
   - `position`: Margin and display positions for different components
+
+<br>
 
 ## Contributors
 
