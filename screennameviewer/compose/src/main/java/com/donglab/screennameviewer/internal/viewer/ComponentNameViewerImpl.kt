@@ -43,6 +43,8 @@ internal class ComponentNameViewerImpl(
 
     private inner class ActivityLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
+            if (!settings.isEnabled) return
+
             overlayRenderer.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
         }
 
