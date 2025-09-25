@@ -44,7 +44,7 @@ android {
 
 dependencies {
     // Project modules
-    implementation(project(":screennameviewer:compose"))
+    debugImplementation(project(":screennameviewer:compose"))
 
     // Android Core
     implementation(libs.androidx.core.ktx)

@@ -1,4 +1,5 @@
 [versions]
+leakcanaryAndroid = "2.14"
 sdk_version = "0.0.8"
 
 agp = "8.1.4"
@@ -31,6 +32,9 @@ androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.re
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeUi" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Debugging
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
