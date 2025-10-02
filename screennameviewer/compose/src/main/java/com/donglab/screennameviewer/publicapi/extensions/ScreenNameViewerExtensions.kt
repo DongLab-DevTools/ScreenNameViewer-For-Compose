@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
 import com.donglab.screennameviewer.internal.util.findActivityContext
 import com.donglab.screennameviewer.internal.compose.viewer.ComposeRouteViewerImpl
+import com.donglab.screennameviewer.publicapi.setting.ScreenNameViewerSetting
 import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 
 /**
@@ -23,7 +24,9 @@ fun ScreenNameTracker(
     content: @Composable () -> Unit
 ) {
     content()
-    
+
+    if (ScreenNameViewer.settings.isEnabled.not()) return
+
     val context = LocalContext.current
     val activity = context.findActivityContext() as? ComponentActivity ?: return
     val decorView = activity.window?.decorView as? ViewGroup ?: return

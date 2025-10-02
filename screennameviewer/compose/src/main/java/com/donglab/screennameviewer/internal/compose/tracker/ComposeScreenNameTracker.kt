@@ -42,14 +42,12 @@ internal class ComposeScreenNameTracker internal constructor(
     }
     
     init {
-        if (ScreenNameViewer.settings.isEnabled) {
-            // Navigation destination 변경 리스너 등록
-            navController.addOnDestinationChangedListener(destinationChangedListener)
+        // Navigation destination 변경 리스너 등록
+        navController.addOnDestinationChangedListener(destinationChangedListener)
 
-            // 현재 destination이 있다면 즉시 처리
-            navController.currentDestination?.let { currentDestination ->
-                handleDestinationChanged(currentDestination)
-            }
+        // 현재 destination이 있다면 즉시 처리
+        navController.currentDestination?.let { currentDestination ->
+            handleDestinationChanged(currentDestination)
         }
     }
     
