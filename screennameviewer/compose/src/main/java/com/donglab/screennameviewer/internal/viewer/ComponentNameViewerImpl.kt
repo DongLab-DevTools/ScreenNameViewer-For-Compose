@@ -17,10 +17,6 @@ internal class ComponentNameViewerImpl(
 ) : ComponentNameViewer {
 
     init {
-        require(settings.isDebugMode) {
-            "ComponentNameViewer should only be used in debug builds"
-        }
-
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 

@@ -18,12 +18,6 @@ internal class ComposeRouteViewerImpl(
 ) : ComposeRouteViewer {
 
     private val composeRouteRenderer = ComposeRouteOverlayRenderer(context, decorView, config)
-    
-    init {
-        require(settings.isDebugMode) {
-            "ComposeRouteViewer should only be used in debug builds"
-        }
-    }
 
     override fun addRoute(route: String) {
         if (!settings.isEnabled) return
