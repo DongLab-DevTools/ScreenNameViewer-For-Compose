@@ -8,9 +8,10 @@ object ScreenNameViewerInitializer {
     fun init(application: Application) {
         initScreenNameViewer(application) {
             settings {
-                debugMode { true }
-                enabled { true }
+                debugModeCondition = false
+                enableCondition = false
             }
+
             config {
                 textStyle {
                     size = 10f
