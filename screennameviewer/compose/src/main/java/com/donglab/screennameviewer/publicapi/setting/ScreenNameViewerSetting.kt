@@ -9,11 +9,8 @@ data class ScreenNameViewerSetting internal constructor(
     private val debugModeCondition: Boolean,
     private val enabledCondition: Boolean,
 ) {
-    val isDebugMode: Boolean
-        get() = debugModeCondition
-    
     val isEnabled: Boolean
-        get() = isDebugMode && enabledCondition
+        get() = debugModeCondition && enabledCondition
 
     companion object {
 

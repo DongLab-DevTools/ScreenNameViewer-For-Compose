@@ -20,9 +20,7 @@ object ScreenNameViewer {
             this@ScreenNameViewer.settings = settings
             this@ScreenNameViewer.config = config
 
-            if (settings.isEnabled.not() || settings.isDebugMode.not()) {
-                return
-            }
+            if (settings.isEnabled.not()) return
         }
 
         val lifecycleHandler = ScreenNameViewerLifecycleHandler()
