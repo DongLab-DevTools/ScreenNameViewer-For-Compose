@@ -19,7 +19,7 @@ data class ScreenNameViewerSetting internal constructor(
 
         @JvmStatic
         fun default(): ScreenNameViewerSetting = setting {
-            debugMode = false
+            debugModeCondition = false
             enableCondition = false
         }
     }

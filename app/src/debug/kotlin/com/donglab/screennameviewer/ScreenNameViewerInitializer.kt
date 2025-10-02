@@ -8,8 +8,8 @@ object ScreenNameViewerInitializer {
     fun init(application: Application) {
         initScreenNameViewer(application) {
             settings {
-                debugModeCondition = false
-                enableCondition = false
+                debugModeCondition = true
+                enableCondition = true
             }
 
             config {
