@@ -1,6 +1,6 @@
 [versions]
 leakcanaryAndroid = "2.14"
-sdk_version = "0.0.8"
+sdk_version = "1.0.1"
 
 agp = "8.1.4"
 kotlin = "1.9.20"
