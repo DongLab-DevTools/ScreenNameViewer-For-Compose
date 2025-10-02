@@ -19,6 +19,8 @@ object ScreenNameViewer {
         ScreenNameViewer.settings = settings
         ScreenNameViewer.config = config
 
+        if (settings.isEnabled.not()) return
+
         val lifecycleHandler = ScreenNameViewerLifecycleHandler()
         application.registerActivityLifecycleCallbacks(lifecycleHandler)
     }

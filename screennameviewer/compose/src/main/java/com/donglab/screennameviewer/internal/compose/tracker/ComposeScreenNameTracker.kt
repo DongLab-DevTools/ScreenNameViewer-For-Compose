@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.donglab.screennameviewer.internal.compose.viewer.ComposeRouteViewer
+import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 
 /**
  * Navigation Screen Tracker for ScreenNameViewer integration.
@@ -43,7 +44,7 @@ internal class ComposeScreenNameTracker internal constructor(
     init {
         // Navigation destination 변경 리스너 등록
         navController.addOnDestinationChangedListener(destinationChangedListener)
-        
+
         // 현재 destination이 있다면 즉시 처리
         navController.currentDestination?.let { currentDestination ->
             handleDestinationChanged(currentDestination)

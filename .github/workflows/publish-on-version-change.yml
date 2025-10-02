@@ -116,7 +116,7 @@ jobs:
             **1. GitHub Token 설정**
             - GitHub Packages를 사용하기 위해 Personal Access Token이 필요합니다.
 
-            **2. Gradle 설정
+            **2. Gradle 설정**
             ```kotlin
             # settings.gradle.kts
             dependencyResolutionManagement {

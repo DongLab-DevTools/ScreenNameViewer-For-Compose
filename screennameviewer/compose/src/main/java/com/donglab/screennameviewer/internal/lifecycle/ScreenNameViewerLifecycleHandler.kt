@@ -36,7 +36,6 @@ internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
         ComponentNameViewerImpl(
             activityRef = WeakReference(activity),
             config = ScreenNameViewer.config,
-            settings = ScreenNameViewer.settings
         ).apply {
             debugViewers[activity] = this
         }
