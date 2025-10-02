@@ -35,7 +35,6 @@ fun ScreenNameTracker(
                 context = activity,
                 decorView = decorView,
                 config = ScreenNameViewer.config,
-                settings = ScreenNameViewer.settings,
             )
         )
 

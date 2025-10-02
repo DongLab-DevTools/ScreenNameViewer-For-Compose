@@ -13,19 +13,16 @@ import com.donglab.screennameviewer.internal.overlay.renderer.ComposeRouteOverla
 internal class ComposeRouteViewerImpl(
     context: Context,
     decorView: ViewGroup,
-    config: ScreenNameOverlayConfig,
-    private val settings: ScreenNameViewerSetting
+    config: ScreenNameOverlayConfig
 ) : ComposeRouteViewer {
 
     private val composeRouteRenderer = ComposeRouteOverlayRenderer(context, decorView, config)
 
     override fun addRoute(route: String) {
-        if (!settings.isEnabled) return
         composeRouteRenderer.addRoute(route)
     }
     
     override fun removeRoute(route: String) {
-        if (!settings.isEnabled) return
         composeRouteRenderer.removeRoute(route)
     }
     
