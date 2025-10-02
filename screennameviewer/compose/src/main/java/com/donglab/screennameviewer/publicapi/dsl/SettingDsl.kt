@@ -10,28 +10,15 @@ annotation class SettingDsl
 
 @SettingDsl
 class SettingBuilder {
-    private var debugModeCondition: () -> Boolean = { false }
-    private var enabledCondition: () -> Boolean = { false }
-
-    /**
-     * 디버그 모드 활성화 조건을 람다로 설정하는 확장함수
-     */
-    fun debugMode(condition: () -> Boolean) {
-        debugModeCondition = condition
-    }
-
-    /**
-     * 활성화 조건을 람다로 설정하는 확장함수
-     */
-    fun enabled(condition: () -> Boolean) {
-        enabledCondition = condition
-    }
+    var debugModeCondition: Boolean = false
+    var enableCondition: Boolean = false
 
     fun build(): ScreenNameViewerSetting = ScreenNameViewerSetting(
         debugModeCondition = debugModeCondition,
-        enabledCondition = enabledCondition
+        enabledCondition = enableCondition
     )
 }
+
 
 internal inline fun setting(block: SettingBuilder.() -> Unit): ScreenNameViewerSetting {
     return SettingBuilder().apply(block).build()

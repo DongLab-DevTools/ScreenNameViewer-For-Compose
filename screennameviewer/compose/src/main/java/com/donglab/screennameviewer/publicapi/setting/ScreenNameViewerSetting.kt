@@ -6,21 +6,18 @@ import com.donglab.screennameviewer.publicapi.dsl.setting
  * ScreenNameViewer의 활성화 조건을 정의하는 설정 클래스
  */
 data class ScreenNameViewerSetting internal constructor(
-    val debugModeCondition: () -> Boolean,
-    val enabledCondition: () -> Boolean
+    private val debugModeCondition: Boolean,
+    private val enabledCondition: Boolean,
 ) {
-    val isDebugMode: Boolean
-        get() = debugModeCondition()
-    
     val isEnabled: Boolean
-        get() = isDebugMode && enabledCondition()
+        get() = debugModeCondition && enabledCondition
 
     companion object {
 
         @JvmStatic
         fun default(): ScreenNameViewerSetting = setting {
-            debugMode { false }
-            enabled { false }
+            debugModeCondition = false
+            enableCondition = false
         }
     }
 }
