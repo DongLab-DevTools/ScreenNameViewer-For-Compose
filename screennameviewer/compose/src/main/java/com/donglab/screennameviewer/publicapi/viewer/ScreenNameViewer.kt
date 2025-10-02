@@ -16,8 +16,14 @@ object ScreenNameViewer {
         settings: ScreenNameViewerSetting,
         config: ScreenNameOverlayConfig
     ) {
-        ScreenNameViewer.settings = settings
-        ScreenNameViewer.config = config
+        with(ScreenNameViewer) {
+            this@ScreenNameViewer.settings = settings
+            this@ScreenNameViewer.config = config
+
+            if (settings.isEnabled.not() || settings.isDebugMode.not()) {
+                return
+            }
+        }
 
         val lifecycleHandler = ScreenNameViewerLifecycleHandler()
         application.registerActivityLifecycleCallbacks(lifecycleHandler)
