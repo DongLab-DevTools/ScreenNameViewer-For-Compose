@@ -105,3 +105,38 @@ jobs:
           prerelease: false # 정식 릴리즈로 설정
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Jitpack 배포
+      - name: Trigger JitPack build
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          TAG="${{ needs.check-version-change.outputs.new-version }}"
+          echo "Triggering JitPack build for $OWNER/$REPO@$TAG"
+          curl -s -X POST "https://jitpack.io/api/builds/${OWNER}/${REPO}" \
+               -H "Content-Type: application/json" \
+               -d "{\"tag\":\"${TAG}\"}"
+
+      # Jitpack 배포 완료 체크
+      - name: Wait for JitPack build to finish
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          TAG="${{ needs.check-version-change.outputs.new-version }}"
+          echo "Waiting for JitPack build: $OWNER/$REPO@$TAG"
+          for i in {1..40}; do
+            STATUS_JSON=$(curl -s "https://jitpack.io/api/builds/${OWNER}/${REPO}/${TAG}")
+            STATUS=$(echo "$STATUS_JSON" | jq -r '.status // empty')
+            echo "JitPack status: $STATUS"
+            if [ "$STATUS" = "done" ]; then
+              echo "✅ JitPack build succeeded!"
+              exit 0
+            elif [ "$STATUS" = "error" ]; then
+              echo "❌ JitPack build failed"
+              echo "$STATUS_JSON"
+              exit 1
+            fi
+            sleep 10
+          done
+          echo "⏰ Timed out waiting for JitPack build"
+          exit 1
