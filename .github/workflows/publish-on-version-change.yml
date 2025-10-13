@@ -38,7 +38,7 @@ jobs:
           echo "Current version: $CURRENT_VERSION"
 
           # 이전 커밋의 sdk_version 값 추출
-          git checkout HEAD~1 -- gradle/libs.versions.toml 2>/dev/null || echo "No previous version found"
+          git checkout develop -- gradle/libs.versions.toml 2>/dev/null || echo "No previous version found"
           PREVIOUS_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2 2>/dev/null || echo "")
           echo "Previous version: $PREVIOUS_VERSION"
 
