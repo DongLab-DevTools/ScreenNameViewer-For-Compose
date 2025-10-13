@@ -20,36 +20,39 @@ jobs:
   check-version-change:
     runs-on: ubuntu-latest
     outputs:
-      version-changed: ${{ steps.version-check.outputs.changed }}  # 버전 변경 여부를 다음 작업에 전달
-      new-version: ${{ steps.version-check.outputs.version }}      # 새 버전 값을 다음 작업에 전달
+      version-changed: ${{ steps.version-check.outputs.changed }}  # 버전 변경 여부
+      new-version: ${{ steps.version-check.outputs.version }}      # 새 버전 값
     steps:
-      # 코드를 체크아웃 (이전 커밋과 비교하기 위해 깊이를 2로 설정)
+      # 현재 브랜치 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # 현재와 이전 커밋을 가져오기 위함
+          fetch-depth: 1
+          ref: ${{ github.ref }}   # 현재 push된 브랜치
+          persist-credentials: false
 
-      # sdk_version이 변경되었는지 확인하는 단계
-      - name: Check if sdk_version changed
+      # 최신 develop 브랜치만 fetch (비교용)
+      - name: Fetch develop branch
+        run: git fetch origin develop --depth=1
+
+      # sdk_version 비교
+      - name: Check if sdk_version changed (vs origin/develop)
         id: version-check
         run: |
-          # 현재 커밋의 sdk_version 값 추출
-          CURRENT_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2)
-          echo "Current version: $CURRENT_VERSION"
+          # develop 브랜치의 sdk_version 추출
+          PREV=$(git show origin/develop:gradle/libs.versions.toml | grep 'sdk_version' | cut -d '"' -f2 || true)
 
-          # 이전 커밋의 sdk_version 값 추출
-          git checkout develop -- gradle/libs.versions.toml 2>/dev/null || echo "No previous version found"
-          PREVIOUS_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2 2>/dev/null || echo "")
-          echo "Previous version: $PREVIOUS_VERSION"
+          # 현재 브랜치의 sdk_version 추출
+          CURR=$(grep 'sdk_version' gradle/libs.versions.toml | cut -d '"' -f2 || true)
 
-          # 현재 버전으로 파일 복원
-          git checkout HEAD -- gradle/libs.versions.toml
+          echo "develop: $PREV"
+          echo "current: $CURR"
 
-          # 버전이 변경되었고 유효한 값인지 확인
-          if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ] && [ -n "$CURRENT_VERSION" ]; then
+          # 변경 여부 판단
+          if [ "$CURR" != "$PREV" ] && [ -n "$CURR" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-            echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
+            echo "version=$CURR" >> $GITHUB_OUTPUT
+            echo "✅ Version changed from $PREV → $CURR"
           else
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "Version not changed"
