@@ -104,43 +104,17 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ needs.check-version-change.outputs.new-version }}
-          name: Release v${{ needs.check-version-change.outputs.new-version }}
+          tag_name: ${{ needs.check-version-change.outputs.new-version }}
+          name: Release ${{ needs.check-version-change.outputs.new-version }}
           body: |
             SDK version updated to ${{ needs.check-version-change.outputs.new-version }}
 
             Published to GitHub Packages automatically.
 
-            ### 📦 라이브러리 적용 방법
-
-            **1. GitHub Token 설정**
-            - GitHub Packages를 사용하기 위해 Personal Access Token이 필요합니다.
-
-            **2. Gradle 설정**
-            ```kotlin
-            # settings.gradle.kts
-            dependencyResolutionManagement {
-              repositories {
-                  maven {
-                      url = uri("https://maven.pkg.github.com/${{ github.repository }}")
-                      credentials {
-                          username = "YOUR_GITHUB_USERNAME"
-                          password = "YOUR_GITHUB_TOKEN"
-                      }
-                  }
-              }
-            }
-
-            # build.gradle.kts
-            dependencies {
-                implementation("com.donglab.devtools:screennameviewer-compose:${{ needs.check-version-change.outputs.new-version }}")
-            }
-            ```
-
-            **3. 사용 방법**
+            **사용 방법**
             - 자세한 사용법은 [README](https://github.com/${{ github.repository }}/blob/main/README.md)를 참고하세요.
 
-          draft: false     # 즉시 공개
+          draft: false      # 즉시 공개
           prerelease: false # 정식 릴리즈로 설정
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
