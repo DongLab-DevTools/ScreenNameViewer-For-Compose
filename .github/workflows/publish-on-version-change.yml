@@ -87,19 +87,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # GitHub Packages 배포를 위한 인증 정보 생성
-      - name: Create github.properties
-        run: |
-          echo "url=https://maven.pkg.github.com/${{ github.repository }}" > github.properties
-          echo "github_username=${{ github.actor }}" >> github.properties
-          echo "github_token=${{ secrets.DONGLAB_DEVTOOLS_GITHUB_TOKEN }}" >> github.properties
-
-      # 라이브러리 빌드 및 GitHub Packages에 배포
-      - name: Build and publish to GitHub Packages
-        run: ./gradlew publishReleasePublicationToMavenRepository
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       # 새 버전으로 GitHub Release 생성
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
