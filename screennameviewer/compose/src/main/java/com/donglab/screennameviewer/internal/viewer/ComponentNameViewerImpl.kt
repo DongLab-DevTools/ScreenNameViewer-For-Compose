@@ -41,12 +41,13 @@ internal class ComponentNameViewerImpl(
 
         override fun onDestroy(owner: LifecycleOwner) {
             clear()
+            owner.lifecycle.removeObserver(this)
         }
     }
 
     private inner class FragmentLifecycleObserver(private val fragment: Fragment) : DefaultLifecycleObserver {
         private val fragmentName = fragment.javaClass.simpleName
-        
+
         override fun onResume(owner: LifecycleOwner) {
             overlayRenderer.addFragmentName(fragmentName)
         }
@@ -58,6 +59,7 @@ internal class ComponentNameViewerImpl(
         override fun onDestroy(owner: LifecycleOwner) {
             if (fragment !is DialogFragment) return
             overlayRenderer.removeFragmentName(fragmentName)
+            owner.lifecycle.removeObserver(this)
         }
     }
 }
