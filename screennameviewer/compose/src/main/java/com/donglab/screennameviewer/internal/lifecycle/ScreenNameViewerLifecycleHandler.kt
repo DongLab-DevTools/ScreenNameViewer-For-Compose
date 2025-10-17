@@ -18,41 +18,45 @@ import java.util.WeakHashMap
 internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
     // Activity ID별로 debugViewer 저장
-    private val debugViewers = WeakHashMap<Activity, ComponentNameViewer>()
-    private val fragmentCallbacks = WeakHashMap<Activity, FragmentLifecycleCallbacks>()
+    private val debugViewers = WeakHashMap<Int, ComponentNameViewer>()
+    private val fragmentCallbacks = WeakHashMap<Int, FragmentLifecycleCallbacks>()
 
     private fun createFragmentCallback(owner: FragmentActivity): FragmentLifecycleCallbacks {
         return object : FragmentLifecycleCallbacks() {
             override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-                debugViewers[owner]?.registerFragment(f)
+                val activityId = owner.hashCode()
+                debugViewers[activityId]?.registerFragment(f)
             }
         }
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        val activityId = activity.hashCode()
+
         if (activity !is ComponentActivity) return
-        if (debugViewers.containsKey(activity)) return
+        if (debugViewers.containsKey(activityId)) return
 
         ComponentNameViewerImpl(
             activityRef = WeakReference(activity),
             config = ScreenNameViewer.config,
         ).apply {
-            debugViewers[activity] = this
+            debugViewers[activityId] = this
         }
 
         if (activity is FragmentActivity) {
             createFragmentCallback(activity).apply {
-                fragmentCallbacks[activity] = this
+                fragmentCallbacks[activityId] = this
                 activity.supportFragmentManager.registerFragmentLifecycleCallbacks(this, true)
             }
         }
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        debugViewers.remove(activity)?.clear()
+        val activityId = activity.hashCode()
+        debugViewers.remove(activityId)?.clear()
 
         if (activity is FragmentActivity) {
-            fragmentCallbacks.remove(activity)?.let { callback ->
+            fragmentCallbacks.remove(activityId)?.let { callback ->
                 activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(callback)
             }
         }
