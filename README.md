@@ -38,9 +38,9 @@ This allows you to quickly find and navigate to the code for the desired screen,
 
 ## Installation
 
-### Step 1: Add GitHub Packages repository
+### Step 1: Add Jitpack repository
 
-Add the GitHub Packages repository to your project's `settings.gradle.kts`:
+Add the Jitpack repository to your project's `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
