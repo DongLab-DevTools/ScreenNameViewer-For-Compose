@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square&logo=android)](https://developer.android.com)
 [![Min SDK](https://img.shields.io/badge/min%20sdk-21-green?style=flat-square)](https://developer.android.com)
 [![Jitpack](https://jitpack.io/v/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)](https://jitpack.io/#DongLab-DevTools/ScreenNameViewer-For-Compose)
-
+![GitHub stars](https://img.shields.io/github/stars/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)
 
 **[한국어 README](./README_ko.md)**
 
