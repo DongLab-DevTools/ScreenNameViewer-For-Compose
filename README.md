@@ -9,7 +9,7 @@
 
 ## Overview
 
-![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/3de0c47959bfd8fe8bdb7d21a96d9f23b0137794/.github/docs/images/screennameviewer-exmaple.png)
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/865dce5b4d47c979f05a7a3ec441a7db18c9c06e/.github/docs/images/screennameviewer-example.png)
 
 <a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
 	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png"/>
