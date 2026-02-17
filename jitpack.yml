@@ -3,3 +3,4 @@ jdk:
 
 install:
   - ./gradlew :screennameviewer:compose:publishToMavenLocal
+  - ./gradlew :screennameviewer:compose-noop:publishToMavenLocal
