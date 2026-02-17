@@ -1,10 +1,9 @@
-import java.util.Properties
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-
-    id("maven-publish")
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 android {
@@ -40,13 +39,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.4"
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -64,22 +56,41 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "com.donglab.devtools"
-                artifactId = "screennameviewer-compose"
-                version = libs.versions.sdk.version.get()
+mavenPublishing {
+    coordinates(
+        groupId = "io.github.dongx0915",
+        artifactId = "screennameviewer-compose",
+        version = libs.versions.sdk.version.get()
+    )
 
-                // POM Metadata (Optional)
-                pom {
-                    name.set("ScreenNameViewer for Compose")
-                    description.set("Screen name viewer library for Jetpack Compose")
-                    url.set("https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
-                }
+    pom {
+        name.set("ScreenNameViewer for Compose")
+        description.set("A debug library that displays the current Activity/Fragment and Compose screen route as an on-screen overlay.")
+        url.set("https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+        inceptionYear.set("2025")
+
+        licenses {
+            license {
+                name.set("The Apache Software License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
             }
         }
+
+        developers {
+            developer {
+                id.set("dongx0915")
+                name.set("Donghyeon Kim")
+                email.set("donghyeon0915@gmail.com")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
+            connection.set("scm:git:git://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose.git")
+            developerConnection.set("scm:git:ssh://git@github.com/DongLab-DevTools/ScreenNameViewer-For-Compose.git")
+        }
     }
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
 }
