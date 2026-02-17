@@ -1,22 +1,20 @@
 package com.donglab.screennameviewer.publicapi.config
 
-import com.donglab.screennameviewer.publicapi.dsl.overlayConfig
-
 /**
- * ScreenNameViewer의 UI 설정을 담당하는 설정 클래스
+ * Noop implementation - does not create overlay configuration in release builds.
  */
 data class ScreenNameOverlayConfig internal constructor(
-    val textSize: Float,
-    val textColor: Int,
-    val backgroundColor: Int,
-    val padding: Int,
-    val topMargin: Int,
-    val activityGravity: Int,
-    val fragmentGravity: Int,
-    val composeRouteGravity: Int
+    val textSize: Float = 0f,
+    val textColor: Int = 0,
+    val backgroundColor: Int = 0,
+    val padding: Int = 0,
+    val topMargin: Int = 0,
+    val activityGravity: Int = 0,
+    val fragmentGravity: Int = 0,
+    val composeRouteGravity: Int = 0
 ) {
     companion object {
         @JvmStatic
-        fun default(): ScreenNameOverlayConfig = overlayConfig {}
+        fun default(): ScreenNameOverlayConfig = ScreenNameOverlayConfig()
     }
 }
