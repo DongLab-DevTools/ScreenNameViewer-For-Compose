@@ -5,6 +5,7 @@ build/
 # Local configuration file (sdk path, etc)
 local.properties
 github.properties
+gradle.properties
 
 # Log/OS Files
 *.log
