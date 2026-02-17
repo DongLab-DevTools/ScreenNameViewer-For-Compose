@@ -1,10 +1,12 @@
 package com.donglab.screennameviewer.publicapi.viewer
 
 import android.app.Application
-import com.donglab.screennameviewer.internal.lifecycle.ScreenNameViewerLifecycleHandler
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
 import com.donglab.screennameviewer.publicapi.setting.ScreenNameViewerSetting
 
+/**
+ * Noop implementation - does not create screen name overlay in release builds.
+ */
 object ScreenNameViewer {
     var settings: ScreenNameViewerSetting = ScreenNameViewerSetting.default()
         private set
@@ -16,12 +18,8 @@ object ScreenNameViewer {
         settings: ScreenNameViewerSetting,
         config: ScreenNameOverlayConfig
     ) {
+        // No-op: Store settings and config but don't register lifecycle callbacks
         ScreenNameViewer.settings = settings
         ScreenNameViewer.config = config
-
-        if (settings.isEnabled.not()) return
-
-        val lifecycleHandler = ScreenNameViewerLifecycleHandler()
-        application.registerActivityLifecycleCallbacks(lifecycleHandler)
     }
 }

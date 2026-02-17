@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.donglab.screennameviewer.compose.lib"
+    namespace = "com.donglab.screennameviewer.compose.lib.noop"
     compileSdk = 36
 
     defaultConfig {
@@ -50,13 +50,9 @@ android {
 }
 
 dependencies {
-    // Android Core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.fragment)
-
-    // Compose
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
+    // Compile-only dependencies - the consuming app will provide these at runtime
+    compileOnly(libs.androidx.activity.compose)
+    compileOnly(libs.androidx.navigation.compose)
 
     // Test
     testImplementation(libs.junit)
@@ -70,13 +66,13 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
                 groupId = "com.donglab.devtools"
-                artifactId = "screennameviewer-compose"
+                artifactId = "screennameviewer-compose-noop"
                 version = libs.versions.sdk.version.get()
 
                 // POM Metadata (Optional)
                 pom {
-                    name.set("ScreenNameViewer for Compose")
-                    description.set("Screen name viewer library for Jetpack Compose")
+                    name.set("ScreenNameViewer for Compose (No-op)")
+                    description.set("No-operation version of ScreenNameViewer library for Jetpack Compose (for release builds)")
                     url.set("https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
                 }
             }

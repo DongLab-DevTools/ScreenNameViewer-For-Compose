@@ -12,9 +12,10 @@ class SampleApplication : Application() {
 
         initScreenNameViewer(this) {
             settings {
-                debugMode { true }
-                enabled { true }
+                debugModeCondition = true
+                enableCondition = true
             }
+
             config {
                 textStyle {
                     size = 10f

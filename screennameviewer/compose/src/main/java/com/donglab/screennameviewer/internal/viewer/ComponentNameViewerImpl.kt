@@ -13,14 +13,9 @@ import java.lang.ref.WeakReference
 internal class ComponentNameViewerImpl(
     private val activityRef: WeakReference<ComponentActivity>,
     private val config: ScreenNameOverlayConfig,
-    private val settings: ScreenNameViewerSetting
 ) : ComponentNameViewer {
 
     init {
-        require(settings.isDebugMode) {
-            "ComponentNameViewer should only be used in debug builds"
-        }
-
         activity?.lifecycle?.addObserver(ActivityLifecycleObserver())
     }
 
@@ -32,8 +27,6 @@ internal class ComponentNameViewerImpl(
     }
 
     override fun registerFragment(fragment: Fragment) {
-        if (!settings.isEnabled) return
-
         fragment.viewLifecycleOwner.lifecycle.addObserver(FragmentLifecycleObserver(fragment))
     }
 
@@ -43,8 +36,6 @@ internal class ComponentNameViewerImpl(
 
     private inner class ActivityLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            if (!settings.isEnabled) return
-
             overlayRenderer.addActivityName(activity?.javaClass?.simpleName ?: "Unknown Activity")
         }
 

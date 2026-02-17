@@ -2,13 +2,14 @@
 [![Hits](https://myhits.vercel.app/api/hit/https%3A%2F%2Fgithub.com%2FDongLab-DevTools%2FScreenNameViewer-For-Compose%3Ftab%3Dreadme-ov-file?color=blue&label=hits&size=small)](https://myhits.vercel.app)
 [![Platform](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square&logo=android)](https://developer.android.com)
 [![Min SDK](https://img.shields.io/badge/min%20sdk-21-green?style=flat-square)](https://developer.android.com)
-
+[![Jitpack](https://jitpack.io/v/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)](https://jitpack.io/#DongLab-DevTools/ScreenNameViewer-For-Compose)
+![GitHub stars](https://img.shields.io/github/stars/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)
 
 **[한국어 README](./README_ko.md)**
 
 ## Overview
 
-![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/865dce5b4d47c979f05a7a3ec441a7db18c9c06e/.github/docs/images/screennameviewer-example.png)
 
 <a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
 	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/9c53027addec40826ed428567965cfc46d17149f/.github/docs/images/screen_name_viewer_link_thumb_xml_en.png"/>
@@ -37,23 +38,16 @@ This allows you to quickly find and navigate to the code for the desired screen,
 
 ## Installation
 
-### Step 1: Add GitHub Packages repository
+### Step 1: Add Jitpack repository
 
-Add the GitHub Packages repository to your project's `settings.gradle.kts`:
+Add the Jitpack repository to your project's `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-		maven {
-            url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
-
-            credentials {
-                username = props.getProperty("github_username")
-                password = props.getProperty("github_token")
-            }
-        }
+		maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -64,21 +58,9 @@ Add the library to your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation 'com.donglab.devtools:screennameviewer-compose:latestVersion'
+    implementation 'com.github.DongLab-DevTools:ScreenNameViewer-For-Compose:latestVersion'
 }
 ```
-
-### Step 3: Authentication
-
-Create a `gradle.properties` file in your project root with your GitHub credentials:
-
-```properties
-github_username=YOUR_GITHUB_USERNAME
-github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
-```
-
-> [!NOTE]
-> You need a GitHub Personal Access Token with `read:packages` permission to download from GitHub Packages.
 
 <br>
 
@@ -101,12 +83,12 @@ class MyApplication : Application() {
 
         initScreenNameViewer(this) {
             settings {
-                debugMode { BuildConfig.DEBUG }
-                enabled {
-                    PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
-                        .getBoolean("debug_overlay_enabled", true)
-                }
+                debugModeCondition = BuildConfig.DEBUG
+                enableCondition = PreferenceManager
+                    .getDefaultSharedPreferences(this@MyApplication)
+                    .getBoolean("debug_overlay_enabled", true)
             }
+
             config {
                 textStyle {
                     size = 12f
@@ -147,12 +129,12 @@ You can configure the library using a simple DSL (Domain Specific Language):
 ```kotlin
 initScreenNameViewer(this) {
     settings {
-        debugMode { BuildConfig.DEBUG }
-        enabled {
-            PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
-                .getBoolean("debug_overlay_enabled", true)
-        }
+        debugModeCondition = BuildConfig.DEBUG
+        enableCondition = PreferenceManager
+            .getDefaultSharedPreferences(this@MyApplication)
+            .getBoolean("debug_overlay_enabled", true)
     }
+
     config {
         textStyle {
             size = 12f                    // Text size
@@ -177,8 +159,8 @@ initScreenNameViewer(this) {
 ### Configuration Options
 
 - **settings**: Configure activation conditions
-  - `debugMode`: Debug mode condition
-  - `enabled`: Overlay feature activation condition
+  - `debugModeCondition`: Debug mode condition
+  - `enableCondition`: Overlay feature activation condition
 
 - **config**: Customize overlay appearance
   - `textStyle`: Text size and color

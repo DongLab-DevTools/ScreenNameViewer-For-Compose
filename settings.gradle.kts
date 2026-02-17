@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "ScreenNameViewerForCompose"
 include(":app")
 include(":screennameviewer:compose")
+include(":screennameviewer:compose-noop")

@@ -44,7 +44,8 @@ android {
 
 dependencies {
     // Project modules
-    implementation(project(":screennameviewer:compose"))
+    debugImplementation(project(":screennameviewer:compose"))
+    releaseImplementation(project(":screennameviewer:compose-noop"))
 
     // Android Core
     implementation(libs.androidx.core.ktx)
@@ -70,4 +71,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation(libs.leakcanary.android)
 }

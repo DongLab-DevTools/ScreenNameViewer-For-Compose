@@ -2,7 +2,7 @@
 
 ## 개요
 
-![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/eae99cecc086002a6958e12620ec80647c89822f/.github/docs/images/screennameviewer-compose-exmaple.png)
+![sample](https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/3de0c47959bfd8fe8bdb7d21a96d9f23b0137794/.github/docs/images/screennameviewer-exmaple.png)
 
 <a href="https://github.com/DongLab-DevTools/ScreenNameViewer">
 	<img src="https://github.com/DongLab-DevTools/ScreenNameViewer-For-Compose/blob/a1bedb1a1d026948f4b9b8cdf25e95293aab2cf1/.github/docs/images/screen_name_viewer_link_thumb_xml_kr.png"/>
@@ -31,23 +31,16 @@ ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이�
 
 ## 설치
 
-### 1단계: GitHub Packages 저장소 추가
+### 1단계: Jitpack 저장소 추가
 
-프로젝트의 `settings.gradle.kts`에 GitHub Packages 저장소를 추가하세요:
+프로젝트의 `settings.gradle.kts`에 Jitpack 저장소를 추가하세요:
 
 ```kotlin
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-		maven {
-            url = uri("https://maven.pkg.github.com/DongLab-DevTools/ScreenNameViewer-For-Compose")
-
-            credentials {
-                username = props.getProperty("github_username")
-                password = props.getProperty("github_token")
-            }
-        }
+		maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -58,21 +51,10 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation 'com.donglab.devtools:screennameviewer-compose:latestVersion'
+    implementation 'com.github.DongLab-DevTools:ScreenNameViewer-For-Compose:latestVersion'
 }
 ```
 
-### 3단계: 인증 설정
-
-프로젝트 루트에 `gradle.properties` 파일을 생성하고 GitHub 인증 정보를 추가하세요:
-
-```properties
-github_username=YOUR_GITHUB_USERNAME
-github_token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
-```
-
-> [!NOTE]
-> GitHub Packages에서 다운로드하려면 `read:packages` 권한이 있는 GitHub Personal Access Token이 필요합니다.
 
 <br>
 
@@ -95,12 +77,12 @@ class MyApplication : Application() {
 
         initScreenNameViewer(this) {
             settings {
-                debugMode { BuildConfig.DEBUG }
-                enabled {
-                    PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
-                        .getBoolean("debug_overlay_enabled", true)
-                }
+                debugModeCondition = BuildConfig.DEBUG
+                enableCondition = PreferenceManager
+                    .getDefaultSharedPreferences(this@MyApplication)
+                    .getBoolean("debug_overlay_enabled", true)
             }
+
             config {
                 textStyle {
                     size = 12f
@@ -141,26 +123,26 @@ class MyApplication : Application() {
 ```kotlin
 initScreenNameViewer(this) {
     settings {
-        debugMode { BuildConfig.DEBUG }
-        enabled {
-            PreferenceManager.getDefaultSharedPreferences(this@MyApplication)
-                .getBoolean("debug_overlay_enabled", true)
-        }
+        debugModeCondition = BuildConfig.DEBUG
+        enableCondition = PreferenceManager
+            .getDefaultSharedPreferences(this@MyApplication)
+            .getBoolean("debug_overlay_enabled", true)
     }
+
     config {
         textStyle {
-            size = 12f                    // 텍스트 크기
-            color = Color.WHITE           // 텍스트 색상
+            size = 12f                    // Text size
+            color = Color.WHITE           // Text color
         }
         background {
-            color = Color.argb(128, 0, 0, 0)  // 배경색
-            padding = 16                      // 패딩
+            color = Color.argb(128, 0, 0, 0)  // Background color
+            padding = 16                      // Padding
         }
         position {
-            topMargin = 64                                    // 상단 여백
-            activity = Gravity.TOP or Gravity.START          // Activity 표시 위치
-            fragment = Gravity.TOP or Gravity.END            // Fragment 표시 위치
-            composeRoute = Gravity.TOP or Gravity.END        // Compose Route 표시 위치
+            topMargin = 64                                    // Top margin
+            activity = Gravity.TOP or Gravity.START          // Activity display position
+            fragment = Gravity.TOP or Gravity.END            // Fragment display position
+            composeRoute = Gravity.TOP or Gravity.END        // Compose Route display position
         }
     }
 }
@@ -171,8 +153,8 @@ initScreenNameViewer(this) {
 ### 설정 옵션
 
 - **settings**: 활성화 조건 설정
-  - `debugMode`: 디버그 모드 조건
-  - `enabled`: 오버레이 기능 활성화 조건
+  - `debugModeCondition`: 디버그 모드 조건
+  - `enableCondition`: 오버레이 기능 활성화 조건
 
 - **config**: 오버레이 모양 커스터마이징
   - `textStyle`: 텍스트 크기와 색상
