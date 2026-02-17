@@ -50,9 +50,9 @@ android {
 }
 
 dependencies {
-    // Minimal Compose dependencies for API compatibility
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
+    // Compile-only dependencies - the consuming app will provide these at runtime
+    compileOnly(libs.androidx.activity.compose)
+    compileOnly(libs.androidx.navigation.compose)
 
     // Test
     testImplementation(libs.junit)
