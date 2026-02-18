@@ -31,27 +31,14 @@ ScreenNameViewer는 현재 표시 중인 화면의 클래스명을 오버레이�
 
 ## 설치
 
-### 1단계: Jitpack 저장소 추가
-
-프로젝트의 `settings.gradle.kts`에 Jitpack 저장소를 추가하세요:
-
-```kotlin
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-		maven { url = uri("https://jitpack.io") }
-    }
-}
-```
-
-### 2단계: 의존성 추가
+### 의존성 추가
 
 모듈의 `build.gradle.kts`에 라이브러리를 추가하세요:
 
 ```kotlin
 dependencies {
-    implementation 'com.github.DongLab-DevTools:ScreenNameViewer-For-Compose:latestVersion'
+    debugImplementation("io.github.dongx0915:screennameviewer-compose:{latestVersion}")
+    releaseImplementation("io.github.dongx0915:screennameviewer-compose-noop:{latestVersion}")
 }
 ```
 
