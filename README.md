@@ -2,8 +2,10 @@
 [![Hits](https://myhits.vercel.app/api/hit/https%3A%2F%2Fgithub.com%2FDongLab-DevTools%2FScreenNameViewer-For-Compose%3Ftab%3Dreadme-ov-file?color=blue&label=hits&size=small)](https://myhits.vercel.app)
 [![Platform](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square&logo=android)](https://developer.android.com)
 [![Min SDK](https://img.shields.io/badge/min%20sdk-21-green?style=flat-square)](https://developer.android.com)
-[![Jitpack](https://jitpack.io/v/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)](https://jitpack.io/#DongLab-DevTools/ScreenNameViewer-For-Compose)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dongx0915/screennameviewer-compose)](https://central.sonatype.com/artifact/io.github.dongx0915/screennameviewer-compose)
 ![GitHub stars](https://img.shields.io/github/stars/DongLab-DevTools/ScreenNameViewer-For-Compose.svg)
+
+
 
 **[한국어 README](./README_ko.md)**
 
