@@ -38,27 +38,12 @@ This allows you to quickly find and navigate to the code for the desired screen,
 
 ## Installation
 
-### Step 1: Add Jitpack repository
-
-Add the Jitpack repository to your project's `settings.gradle.kts`:
-
-```kotlin
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-		maven { url = uri("https://jitpack.io") }
-    }
-}
-```
-
-### Step 2: Add dependency
-
 Add the library to your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation 'com.github.DongLab-DevTools:ScreenNameViewer-For-Compose:latestVersion'
+    debugImplementation("io.github.dongx0915:screennameviewer-compose:1.0.6")
+    releaseImplementation("io.github.dongx0915:screennameviewer-compose-noop:1.0.6")
 }
 ```
 
