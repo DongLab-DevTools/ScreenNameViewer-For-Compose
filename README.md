@@ -42,8 +42,8 @@ Add the library to your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    debugImplementation("io.github.dongx0915:screennameviewer-compose:1.0.6")
-    releaseImplementation("io.github.dongx0915:screennameviewer-compose-noop:1.0.6")
+    debugImplementation("io.github.dongx0915:screennameviewer-compose:{latestVersion}")
+    releaseImplementation("io.github.dongx0915:screennameviewer-compose-noop:{latestVersion}")
 }
 ```
 
