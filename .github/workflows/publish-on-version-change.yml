@@ -88,9 +88,7 @@ jobs:
 
       # Maven Central에 각 모듈 배포
       - name: Publish to Maven Central
-        run: |
-          ./gradlew :screennameviewer:compose:publishAllPublicationsToMavenCentralRepository
-          ./gradlew :screennameviewer:compose-noop:publishAllPublicationsToMavenCentralRepository
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_PASSWORD }}
