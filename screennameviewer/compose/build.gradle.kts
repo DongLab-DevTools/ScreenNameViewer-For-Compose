@@ -56,9 +56,13 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
+val publishGroupId: String = (project.findProperty("GROUP") as? String)
+    ?: error("GROUP property is required. Pass -PGROUP=<groupId> (e.g. -PGROUP=io.github.dongx0915).")
+val enableSigning: Boolean = (project.findProperty("enableSigning") as String?)?.toBoolean() ?: true
+
 mavenPublishing {
     coordinates(
-        groupId = "io.github.dongx0915",
+        groupId = publishGroupId,
         artifactId = "screennameviewer-compose",
         version = libs.versions.sdk.version.get()
     )
@@ -92,5 +96,25 @@ mavenPublishing {
     }
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
+    if (enableSigning) {
+        signAllPublications()
+    }
+}
+
+afterEvaluate {
+    publishing {
+        repositories {
+            val githubPackagesRepo = System.getenv("GITHUB_PACKAGES_REPO")
+            if (githubPackagesRepo != null) {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/$githubPackagesRepo")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR") ?: ""
+                        password = System.getenv("GITHUB_TOKEN") ?: ""
+                    }
+                }
+            }
+        }
+    }
 }

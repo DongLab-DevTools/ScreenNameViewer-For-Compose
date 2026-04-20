@@ -16,7 +16,9 @@ permissions:
 
 jobs:
   # 첫 번째 작업: sdk_version이 실제로 변경되었는지 확인
+  # 원본(개인) repo에서만 실행 — 미러된 회사 repo에서는 실행되지 않음
   check-version-change:
+    if: github.repository == 'DongLab-DevTools/ScreenNameViewer-For-Compose'
     runs-on: ubuntu-latest
     outputs:
       version-changed: ${{ steps.version-check.outputs.changed }}  # 버전 변경 여부를 다음 작업에 전달
@@ -88,7 +90,7 @@ jobs:
 
       # Maven Central에 각 모듈 배포
       - name: Publish to Maven Central
-        run: ./gradlew publishAllPublicationsToMavenCentralRepository
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository -PGROUP=io.github.dongx0915
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_PASSWORD }}

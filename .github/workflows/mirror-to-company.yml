@@ -1,0 +1,23 @@
+# 개인 repo에 push 시 회사 repo로 자동 미러링
+name: Mirror to Company Repo
+on: push
+jobs:
+  # 원본(개인) repo에서만 실행 — 미러된 회사 repo에서는 실행되지 않음
+  mirror:
+    if: github.repository == 'DongLab-DevTools/ScreenNameViewer-For-Compose'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to company repo
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.COMPANY_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          git remote add company git@github.com:${{ secrets.COMPANY_REPO }}.git
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push company --all --force
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key" git push company --tags --force
+          rm -f ~/.ssh/deploy_key
