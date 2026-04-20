@@ -1,0 +1,95 @@
+# libs.versions.toml의 sdk_version 변경 시 자동으로 GitHub Packages에 배포하는 워크플로우
+# GROUP은 repository variable(GROUP_OVERRIDE)로 오버라이드 가능
+# Settings → Secrets and variables → Actions → Variables 에서 설정
+name: Publish to GitHub Packages on Version Change
+
+on:
+  push:
+    branches:
+      - 'release/**'
+      - 'feature/**'
+    paths:
+      - 'gradle/libs.versions.toml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  GROUP_ARG: ${{ vars.GROUP_OVERRIDE && format('-PGROUP={0}', vars.GROUP_OVERRIDE) || '' }}
+
+jobs:
+  # 회사(미러) repo에서만 실행 — 원본(개인) repo에서는 실행되지 않음
+  check-version-change:
+    if: github.repository != 'DongLab-DevTools/ScreenNameViewer-For-Compose'
+    runs-on: ubuntu-latest
+    outputs:
+      version-changed: ${{ steps.version-check.outputs.changed }}
+      new-version: ${{ steps.version-check.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if sdk_version changed
+        id: version-check
+        run: |
+          CURRENT_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2)
+          echo "Current version: $CURRENT_VERSION"
+
+          git checkout HEAD~1 -- gradle/libs.versions.toml 2>/dev/null || echo "No previous version found"
+          PREVIOUS_VERSION=$(grep "sdk_version" gradle/libs.versions.toml | cut -d '"' -f 2 2>/dev/null || echo "")
+          echo "Previous version: $PREVIOUS_VERSION"
+
+          git checkout HEAD -- gradle/libs.versions.toml
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "Manual dispatch: publishing version $CURRENT_VERSION"
+          elif [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ] && [ -n "$CURRENT_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Version not changed"
+          fi
+
+  publish-compose:
+    needs: check-version-change
+    if: needs.check-version-change.outputs.version-changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: chmod +x gradlew
+      - name: Publish compose
+        run: ./gradlew :screennameviewer:compose:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}
+        env:
+          GITHUB_PACKAGES_REPO: ${{ github.repository }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-compose-noop:
+    needs: check-version-change
+    if: needs.check-version-change.outputs.version-changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: chmod +x gradlew
+      - name: Publish compose-noop
+        run: ./gradlew :screennameviewer:compose-noop:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}
+        env:
+          GITHUB_PACKAGES_REPO: ${{ github.repository }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
