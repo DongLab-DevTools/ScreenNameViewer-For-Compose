@@ -26,7 +26,7 @@ jobs:
     steps:
       # 코드를 체크아웃 (이전 커밋과 비교하기 위해 깊이를 2로 설정)
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 2  # 현재와 이전 커밋을 가져오기 위함
 
@@ -64,18 +64,18 @@ jobs:
     steps:
       # 코드 체크아웃
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Java 17 설정 (Android 프로젝트 빌드를 위해 필요)
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: '17'
           distribution: 'temurin'
 
       # Gradle 캐시 설정으로 빌드 시간 단축
       - name: Cache Gradle packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.gradle/caches
