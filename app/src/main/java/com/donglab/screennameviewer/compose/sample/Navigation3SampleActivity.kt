@@ -30,10 +30,7 @@ import com.donglab.screennameviewer.compose.ui.theme.ScreenNameViewerForComposeT
 import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 /**
- * 실제 androidx.navigation3 NavDisplay 를 사용하는 샘플.
- *
- * NavController 가 없는 Navigation3 에서는 신규 [ScreenNameTracker] 오버로드에
- * 현재 백스택 top 의 화면명 provider 를 넘겨 오버레이를 갱신한다.
+ * androidx.navigation3 NavDisplay 로 [ScreenNameTracker] 의 currentRoute 오버로드를 검증하는 샘플입니다.
  */
 class Navigation3SampleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +62,6 @@ private val nav3Tabs = listOf(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Navigation3SampleApp() {
-    // Navigation3 백스택: NavKey 목록을 앱이 직접 소유한다.
     val backStack = remember { mutableStateListOf<Nav3Key>(Nav3Key.Dashboard) }
     val current = backStack.last()
 
@@ -97,8 +93,7 @@ private fun Navigation3SampleApp() {
             }
         },
     ) { innerPadding ->
-        // 신규 오버로드: NavController 없이 현재 화면명만 제공.
-        // 화면 전환 시 오버레이 라벨이 백스택 top 을 따라 갱신된다.
+        // NavController 없이 백스택 top 화면명을 provider 로 전달
         ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let { it::class.simpleName } }) {
             NavDisplay(
                 backStack = backStack,
