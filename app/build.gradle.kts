@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.donglab.screennameviewer.compose"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -64,6 +64,10 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Navigation3 (실제 NavDisplay 데모용)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
 
     // Test
     testImplementation(libs.junit)

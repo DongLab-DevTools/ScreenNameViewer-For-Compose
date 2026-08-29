@@ -8,12 +8,13 @@ kotlin = "2.1.20"
 # Android
 coreKtx = "1.8.0"
 fragment = "1.5.0"
-material = "1.1.0"
+material = "1.3.2"
 
 # Compose
-composeUi = "1.5.0"
-activityCompose = "1.7.0"
+composeUi = "1.8.2"
+activityCompose = "1.9.3"
 navigationCompose = "2.5.0"
+navigation3 = "1.1.7"
 
 # Maven
 vanniktechMavenPublish = "0.31.0"
@@ -35,6 +36,8 @@ androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.re
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeUi" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 
 # Debugging
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
