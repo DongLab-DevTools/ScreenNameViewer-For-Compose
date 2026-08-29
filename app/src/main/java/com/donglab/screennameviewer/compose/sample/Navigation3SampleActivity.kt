@@ -2,9 +2,7 @@ package com.donglab.screennameviewer.compose.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -25,14 +23,17 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import com.donglab.screennameviewer.compose.ui.theme.ScreenNameViewerForComposeTheme
 import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
 
 /**
- * NavController 가 없는 Navigation3 스타일 샘플.
+ * 실제 androidx.navigation3 NavDisplay 를 사용하는 샘플.
  *
- * 화면 키 백스택을 앱이 직접 관리하고(= NavDisplay 의 entries 모델),
- * NavController 대신 현재 화면명 provider 를 넘기는 신규 [ScreenNameTracker] 오버로드를 사용한다.
+ * NavController 가 없는 Navigation3 에서는 신규 [ScreenNameTracker] 오버로드에
+ * 현재 백스택 top 의 화면명 provider 를 넘겨 오버레이를 갱신한다.
  */
 class Navigation3SampleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,28 +46,33 @@ class Navigation3SampleActivity : ComponentActivity() {
     }
 }
 
-private enum class Nav3Screen(val label: String, val icon: ImageVector) {
-    Dashboard("대시보드", Icons.Filled.Home),
-    Notifications("알림", Icons.Filled.Notifications),
-    Favorites("즐겨찾기", Icons.Filled.Favorite),
-    Account("계정", Icons.Filled.AccountCircle),
+private sealed interface Nav3Key : NavKey {
+    data object Dashboard : Nav3Key
+    data object Notifications : Nav3Key
+    data object Favorites : Nav3Key
+    data object Account : Nav3Key
 }
+
+private data class Nav3Tab(val key: Nav3Key, val label: String, val icon: ImageVector)
+
+private val nav3Tabs = listOf(
+    Nav3Tab(Nav3Key.Dashboard, "대시보드", Icons.Filled.Home),
+    Nav3Tab(Nav3Key.Notifications, "알림", Icons.Filled.Notifications),
+    Nav3Tab(Nav3Key.Favorites, "즐겨찾기", Icons.Filled.Favorite),
+    Nav3Tab(Nav3Key.Account, "계정", Icons.Filled.AccountCircle),
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Navigation3SampleApp() {
-    // Navigation3 모델: 화면 키 백스택을 앱이 직접 소유한다.
-    val backStack = remember { mutableStateListOf(Nav3Screen.Dashboard) }
+    // Navigation3 백스택: NavKey 목록을 앱이 직접 소유한다.
+    val backStack = remember { mutableStateListOf<Nav3Key>(Nav3Key.Dashboard) }
     val current = backStack.last()
-
-    BackHandler(enabled = backStack.size > 1) {
-        backStack.removeAt(backStack.lastIndex)
-    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Navigation3 (NavController 없음) 샘플") },
+                title = { Text("Navigation3 (NavDisplay) 샘플") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface,
@@ -75,12 +81,17 @@ private fun Navigation3SampleApp() {
         },
         bottomBar = {
             NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
-                Nav3Screen.entries.forEach { screen ->
+                nav3Tabs.forEach { tab ->
                     NavigationBarItem(
-                        icon = { Icon(screen.icon, contentDescription = screen.label) },
-                        label = { Text(screen.label) },
-                        selected = current == screen,
-                        onClick = { backStack.switchTab(screen) },
+                        icon = { Icon(tab.icon, contentDescription = tab.label) },
+                        label = { Text(tab.label) },
+                        selected = current == tab.key,
+                        onClick = {
+                            if (current != tab.key) {
+                                backStack.clear()
+                                backStack.add(tab.key)
+                            }
+                        },
                     )
                 }
             }
@@ -88,25 +99,18 @@ private fun Navigation3SampleApp() {
     ) { innerPadding ->
         // 신규 오버로드: NavController 없이 현재 화면명만 제공.
         // 화면 전환 시 오버레이 라벨이 백스택 top 을 따라 갱신된다.
-        ScreenNameTracker(currentRoute = { backStack.last().name }) {
-            Box(modifier = Modifier.padding(innerPadding)) {
-                when (current) {
-                    Nav3Screen.Dashboard -> ComposeDashboardScreen()
-                    Nav3Screen.Notifications -> ComposeNotificationsScreen()
-                    Nav3Screen.Favorites -> ComposeFavoritesScreen()
-                    Nav3Screen.Account -> ComposeAccountScreen()
-                }
-            }
+        ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let { it::class.simpleName } }) {
+            NavDisplay(
+                backStack = backStack,
+                onBack = { backStack.removeLastOrNull() },
+                entryProvider = entryProvider {
+                    entry<Nav3Key.Dashboard> { ComposeDashboardScreen() }
+                    entry<Nav3Key.Notifications> { ComposeNotificationsScreen() }
+                    entry<Nav3Key.Favorites> { ComposeFavoritesScreen() }
+                    entry<Nav3Key.Account> { ComposeAccountScreen() }
+                },
+                modifier = Modifier.padding(innerPadding),
+            )
         }
-    }
-}
-
-/** 탭 이동: 이미 있으면 그 위 항목을 걷어내고, 없으면 top 에 쌓는다 (single-top 유사). */
-private fun MutableList<Nav3Screen>.switchTab(target: Nav3Screen) {
-    val index = indexOf(target)
-    if (index >= 0) {
-        while (lastIndex > index) removeAt(lastIndex)
-    } else {
-        add(target)
     }
 }
