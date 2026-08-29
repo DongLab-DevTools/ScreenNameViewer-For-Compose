@@ -31,6 +31,9 @@ class MainActivity : ComponentActivity() {
                         },
                         onComposeSampleClick = {
                             startActivity(Intent(this@MainActivity, ComposeSampleActivity::class.java))
+                        },
+                        onNavigation3SampleClick = {
+                            startActivity(Intent(this@MainActivity, Navigation3SampleActivity::class.java))
                         }
                     )
                 }
@@ -43,7 +46,8 @@ class MainActivity : ComponentActivity() {
 fun SampleSelectionScreen(
     onViewPagerSampleClick: () -> Unit,
     onShowHideSampleClick: () -> Unit,
-    onComposeSampleClick: () -> Unit
+    onComposeSampleClick: () -> Unit,
+    onNavigation3SampleClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -76,6 +80,13 @@ fun SampleSelectionScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Compose 다중 화면 샘플")
+        }
+
+        Button(
+            onClick = onNavigation3SampleClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Navigation3 (NavController 없음) 샘플")
         }
     }
 }

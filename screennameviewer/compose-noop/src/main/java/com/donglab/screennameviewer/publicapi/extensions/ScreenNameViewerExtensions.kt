@@ -14,3 +14,15 @@ fun ScreenNameTracker(
     // No-op: Just render content without any tracking
     content()
 }
+
+/**
+ * Noop overload - Navigation3(NavDisplay) 대응 시그니처. release 빌드에선 추적 없이 content 만 렌더.
+ */
+@Composable
+fun ScreenNameTracker(
+    currentRoute: () -> String?,
+    content: @Composable () -> Unit,
+) {
+    // No-op: Just render content without any tracking
+    content()
+}
