@@ -3,6 +3,7 @@ import com.vanniktech.maven.publish.SonatypeHost
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.vanniktech.maven.publish)
 }
 
@@ -35,9 +36,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
     }
 }
 

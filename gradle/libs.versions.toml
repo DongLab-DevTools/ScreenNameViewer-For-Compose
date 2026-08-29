@@ -2,8 +2,8 @@
 leakcanaryAndroid = "2.14"
 sdk_version = "1.0.8"
 
-agp = "8.1.4"
-kotlin = "1.9.20"
+agp = "8.9.1"
+kotlin = "2.1.20"
 
 # Android
 coreKtx = "1.8.0"
@@ -47,5 +47,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublish" }
