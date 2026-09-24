@@ -56,11 +56,7 @@ internal class ComposeScreenNameTracker internal constructor(
      */
     private fun handleDestinationChanged(destination: NavDestination) {
         val routeName = destination.route ?: "UnknownRoute"
-        val filteredRouteName = if ('.' in routeName) {
-            routeName.substringAfterLast('.')
-        } else {
-            routeName
-        }
+        val filteredRouteName = routeName.withoutPackage()
 
         // 기존 route 제거
         currentRoute?.let { 
@@ -71,6 +67,16 @@ internal class ComposeScreenNameTracker internal constructor(
         composeRouteViewer.addRoute(filteredRouteName)
         currentRoute = filteredRouteName
     }
+
+    /**
+     * 소문자로 시작하는 앞쪽 세그먼트(패키지)만 제거합니다.
+     * `com.tving.TvingRoute.MoreBand.Tab` -> `TvingRoute.MoreBand.Tab`, `dashboard` -> `dashboard`
+     */
+    private fun String.withoutPackage(): String =
+        split('.')
+            .dropWhile { segment -> segment.firstOrNull()?.isLowerCase() == true }
+            .joinToString(".")
+            .ifEmpty { this }
 
     fun cleanup() {
         // 현재 표시된 route 제거

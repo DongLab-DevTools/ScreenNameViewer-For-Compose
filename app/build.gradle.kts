@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.donglab.screennameviewer.compose"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -37,9 +38,6 @@ android {
         compose = true
         viewBinding = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
-    }
 }
 
 dependencies {
@@ -60,12 +58,16 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     // Compose (샘플앱 UI용 최소한)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.activity.compose.sample)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.text)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Navigation3 (실제 NavDisplay 데모용)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
 
     // Test
     testImplementation(libs.junit)

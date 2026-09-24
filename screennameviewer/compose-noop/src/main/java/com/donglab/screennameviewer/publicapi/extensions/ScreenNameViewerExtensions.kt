@@ -14,3 +14,12 @@ fun ScreenNameTracker(
     // No-op: Just render content without any tracking
     content()
 }
+
+@Composable
+fun ScreenNameTracker(
+    currentRoute: () -> String?,
+    content: @Composable () -> Unit,
+) {
+    // No-op: Just render content without any tracking
+    content()
+}

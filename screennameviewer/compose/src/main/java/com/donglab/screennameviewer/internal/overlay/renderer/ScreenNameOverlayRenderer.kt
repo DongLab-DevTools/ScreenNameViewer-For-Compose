@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.internal.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.internal.overlay.OverlayColumn
 import com.donglab.screennameviewer.internal.overlay.builder.OverlayLayoutBuilder
 import com.donglab.screennameviewer.internal.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.internal.util.dp
@@ -39,9 +39,7 @@ internal class ScreenNameOverlayRenderer(
         activity?.getStatusBarHeight() ?: 0
     }
 
-    private val layoutBuilder by lazy {
-        OverlayLayoutBuilder(decorView, activity)
-    }
+    private val layoutBuilder = OverlayLayoutBuilder()
 
     private val textViewBuilder by lazy {
         StyledTextViewBuilder(config)
@@ -57,8 +55,17 @@ internal class ScreenNameOverlayRenderer(
         return when (type) {
             OverlayType.FRAGMENT -> {
                 if (fragmentTextViewLayout == null) {
-                    fragmentTextViewLayout = layoutBuilder.createContainer(gravityByType, topMargin)?.apply {
-                        tag = ScreenNameViewerConstants.FRAGMENT_LAYOUT_TAG
+                    val decor = decorView ?: return null
+                    fragmentTextViewLayout = LinearLayout(decor.context).apply {
+                        orientation = LinearLayout.VERTICAL
+                    }.also { layout ->
+                        OverlayColumn.attach(
+                            decorView = decor,
+                            group = layout,
+                            slot = OverlayColumn.Slot.FRAGMENT,
+                            gravity = gravityByType,
+                            topMargin = topMargin,
+                        )
                     }
                 }
                 fragmentTextViewLayout
@@ -106,8 +113,8 @@ internal class ScreenNameOverlayRenderer(
     fun clearOverlay() {
         decorView?.let { decor ->
             activityNameTextView?.let { decor.removeView(it) }
-            fragmentTextViewLayout?.let { decor.removeView(it) }
         }
+        fragmentTextViewLayout?.let(OverlayColumn::detach)
         activityNameTextView = null
         fragmentTextViewLayout = null
     }

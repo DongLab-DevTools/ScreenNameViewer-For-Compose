@@ -99,6 +99,17 @@ class MyApplication : Application() {
     }
 ```
 
+### NavController 없이 초기화 (Navigation3 NavDisplay 등)
+
+```kotlin
+    ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let(::routeNameOf) }) {
+        NavDisplay(backStack = backStack, /*...*/)
+    }
+```
+
+- `routeNameOf` 는 중첩 클래스 이름을 유지해 라벨이 겹치지 않고 바로 검색 가능
+  (예: `com.example.AppRoute.MoreBand.Tab` -> `AppRoute.MoreBand.Tab`)
+
 <br>
 
 ## 설정
