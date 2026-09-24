@@ -80,9 +80,9 @@ internal class ComponentNameViewerImpl(
          */
         private fun syncLabel() {
             val isResumed = viewLifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
-            val isHidden = generateSequence(fragment) { it.parentFragment }.any { it.isHidden }
+            val isDisplayed = generateSequence(fragment) { it.parentFragment }.none { it.isHidden }
 
-            if (isResumed && !isHidden) {
+            if (isResumed && isDisplayed) {
                 overlayRenderer.addFragmentName(fragmentName)
             } else {
                 overlayRenderer.removeFragmentName(fragmentName)
