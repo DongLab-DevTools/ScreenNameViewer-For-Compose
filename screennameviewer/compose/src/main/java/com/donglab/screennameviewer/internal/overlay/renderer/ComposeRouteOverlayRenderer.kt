@@ -60,6 +60,7 @@ internal class ComposeRouteOverlayRenderer(
             composeRouteLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(Color.TRANSPARENT)
+                tag = ScreenNameViewerConstants.COMPOSE_ROUTE_LAYOUT_TAG
             }
             
             val params = FrameLayout.LayoutParams(
