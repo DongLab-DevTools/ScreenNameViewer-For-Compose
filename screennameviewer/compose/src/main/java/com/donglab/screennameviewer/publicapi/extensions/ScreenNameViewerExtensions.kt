@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import com.donglab.screennameviewer.internal.compose.tracker.ComposeScreenNameTracker
 import com.donglab.screennameviewer.internal.compose.viewer.ComposeRouteViewerImpl
 import com.donglab.screennameviewer.internal.util.findActivityContext
-import com.donglab.screennameviewer.internal.util.safely
 import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 
 /**
@@ -84,15 +83,16 @@ fun ScreenNameTracker(
         }
 
         LaunchedEffect(viewer) {
-            // 앱이 넘긴 currentRoute() 예외 격리 (뷰 메서드가 아니라 여기서 처리)
-            safely {
-                var last: String? = null
-                snapshotFlow { latestRoute.value()?.takeIf { it.isNotBlank() } }
-                    .collect { next ->
-                        last?.let(viewer::removeRoute)
-                        next?.let(viewer::addRoute)
-                        last = next
-                    }
+            var last: String? = null
+            // 앱이 넘긴 currentRoute() 예외는 블록 안에서 null 로 처리 (flow 종료 방지, 다음 변경 때 복구)
+            snapshotFlow {
+                runCatching { latestRoute.value() }
+                    .getOrNull()
+                    ?.takeIf { it.isNotBlank() }
+            }.collect { next ->
+                last?.let(viewer::removeRoute)
+                next?.let(viewer::addRoute)
+                last = next
             }
         }
     }
