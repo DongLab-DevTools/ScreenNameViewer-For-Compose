@@ -95,6 +95,8 @@ internal class ScreenNameOverlayRenderer(
                 FrameLayout.LayoutParams.WRAP_CONTENT
             ).apply {
                 topMargin = statusBarHeight + config.topMargin.dp
+                leftMargin = OverlayColumn.EDGE_MARGIN.dp
+                rightMargin = OverlayColumn.EDGE_MARGIN.dp
                 gravity = OverlayType.ACTIVITY.getGravity(config)
             }
             

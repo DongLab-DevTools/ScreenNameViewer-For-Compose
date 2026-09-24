@@ -132,9 +132,13 @@ initScreenNameViewer(this) {
             size = 12f                    // Text size
             color = Color.WHITE           // Text color
         }
+        routeTextStyle {
+            color = Color.YELLOW          // Compose route text color (default: yellow)
+        }
         background {
-            color = Color.argb(128, 0, 0, 0)  // Background color
-            padding = 16                      // Padding
+            color = Color.argb(179, 0, 0, 0)  // Background color
+            padding = 16                      // Padding (px, all sides)
+            cornerRadius = 4                  // Corner radius (dp)
         }
         position {
             topMargin = 64                                    // Top margin
@@ -156,7 +160,8 @@ initScreenNameViewer(this) {
 
 - **config**: 오버레이 모양 커스터마이징
   - `textStyle`: 텍스트 크기와 색상
-  - `background`: 배경색과 패딩
+  - `routeTextStyle`: Compose route 라벨의 텍스트 크기와 색상 (기본값: 노랑, `textStyle` 과 같은 크기)
+  - `background`: 배경색, 패딩, 모서리 반경
   - `position`: 여백과 각 컴포넌트의 표시 위치
 
 <br>
