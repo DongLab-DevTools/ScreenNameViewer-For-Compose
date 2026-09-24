@@ -58,7 +58,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     // Compose (샘플앱 UI용 최소한)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.activity.compose.sample)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.text)
     implementation(libs.androidx.foundation)
