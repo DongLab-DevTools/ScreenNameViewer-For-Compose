@@ -105,6 +105,17 @@ class MyApplication : Application() {
     }
 ```
 
+### Initialize without NavController (Navigation3 NavDisplay, etc.)
+
+```kotlin
+    ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let(::routeNameOf) }) {
+        NavDisplay(backStack = backStack, /*...*/)
+    }
+```
+
+- `routeNameOf` keeps nested class names so the label is unique and searchable
+  (e.g. `com.example.AppRoute.MoreBand.Tab` -> `AppRoute.MoreBand.Tab`)
+
 <br>
 
 ## Configuration

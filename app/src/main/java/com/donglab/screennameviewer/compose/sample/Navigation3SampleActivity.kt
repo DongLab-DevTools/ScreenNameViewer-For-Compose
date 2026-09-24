@@ -28,6 +28,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.donglab.screennameviewer.compose.ui.theme.ScreenNameViewerForComposeTheme
 import com.donglab.screennameviewer.publicapi.extensions.ScreenNameTracker
+import com.donglab.screennameviewer.publicapi.extensions.routeNameOf
 
 /**
  * androidx.navigation3 NavDisplay 로 [ScreenNameTracker] 의 currentRoute 오버로드를 검증하는 샘플입니다.
@@ -94,7 +95,7 @@ private fun Navigation3SampleApp() {
         },
     ) { innerPadding ->
         // NavController 없이 백스택 top 화면명을 provider 로 전달
-        ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let { it::class.simpleName } }) {
+        ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let(::routeNameOf) }) {
             NavDisplay(
                 backStack = backStack,
                 onBack = { backStack.removeLastOrNull() },
