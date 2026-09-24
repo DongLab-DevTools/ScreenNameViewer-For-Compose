@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
 import com.donglab.screennameviewer.publicapi.viewer.ScreenNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewer
 import com.donglab.screennameviewer.internal.viewer.ComponentNameViewerImpl
+import com.donglab.screennameviewer.internal.util.safely
 import java.lang.ref.WeakReference
 import java.util.WeakHashMap
 
@@ -23,15 +24,15 @@ internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
 
     private fun createFragmentCallback(owner: FragmentActivity): FragmentLifecycleCallbacks {
         return object : FragmentLifecycleCallbacks() {
-            override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+            override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) = safely {
                 debugViewers[owner]?.registerFragment(f)
             }
         }
     }
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if (activity !is ComponentActivity) return
-        if (debugViewers.containsKey(activity)) return
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = safely {
+        if (activity !is ComponentActivity) return@safely
+        if (debugViewers.containsKey(activity)) return@safely
 
         ComponentNameViewerImpl(
             activityRef = WeakReference(activity),
@@ -48,7 +49,7 @@ internal class ScreenNameViewerLifecycleHandler : ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivityDestroyed(activity: Activity) {
+    override fun onActivityDestroyed(activity: Activity) = safely {
         debugViewers.remove(activity)?.clear()
 
         if (activity is FragmentActivity) {
