@@ -29,7 +29,11 @@ internal class ComposeRouteOverlayRenderer(
     }
     
     private val textViewBuilder by lazy {
-        StyledTextViewBuilder(config)
+        StyledTextViewBuilder(
+            config = config,
+            labelTextColor = config.routeTextColor,
+            labelTextSize = config.routeTextSize,
+        )
     }
     
     /**

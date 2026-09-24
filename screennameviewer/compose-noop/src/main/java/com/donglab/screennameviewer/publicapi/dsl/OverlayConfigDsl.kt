@@ -11,6 +11,7 @@ annotation class OverlayConfigDsl
 @OverlayConfigDsl
 class OverlayConfigBuilder {
     fun textStyle(block: TextStyleScope.() -> Unit) {}
+    fun routeTextStyle(block: TextStyleScope.() -> Unit) {}
     fun background(block: BackgroundScope.() -> Unit) {}
     fun position(block: PositionScope.() -> Unit) {}
 
@@ -27,6 +28,7 @@ class TextStyleScope {
 class BackgroundScope {
     var color: Int? = null
     var padding: Int? = null
+    var cornerRadius: Int? = null
 }
 
 @OverlayConfigDsl
