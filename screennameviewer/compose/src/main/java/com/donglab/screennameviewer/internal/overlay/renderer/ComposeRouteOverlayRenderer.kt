@@ -4,11 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.donglab.screennameviewer.publicapi.config.ScreenNameOverlayConfig
-import com.donglab.screennameviewer.internal.consts.ScreenNameViewerConstants
+import com.donglab.screennameviewer.internal.overlay.OverlayColumn
 import com.donglab.screennameviewer.internal.overlay.builder.StyledTextViewBuilder
 import com.donglab.screennameviewer.internal.util.dp
 import com.donglab.screennameviewer.internal.util.getStatusBarHeight
@@ -34,51 +33,27 @@ internal class ComposeRouteOverlayRenderer(
     }
     
     /**
-     * decorView에서 Fragment 레이아웃을 tag로 명시적으로 찾아서 그 다음 위치를 반환합니다.
-     * Fragment 레이아웃이 없으면 기본 위치를 반환합니다.
-     */
-    private fun findFragmentLayoutPosition(): Int {
-        for (i in 0 until decorView.childCount) {
-            val child = decorView.getChildAt(i)
-
-            if (child.tag == ScreenNameViewerConstants.FRAGMENT_LAYOUT_TAG) {
-                return i + 1 // Fragment 레이아웃 다음 위치
-            }
-        }
-        return decorView.childCount // 기본 위치 (맨 마지막)
-    }
-    
-    /**
      * Compose Route Label 레이아웃을 생성하거나 반환합니다.
-     * Fragment 레이아웃보다 아래(나중에 추가된 인덱스)에 위치합니다.
+     * 같은 gravity 의 Fragment 라벨보다 위에 쌓입니다.
      */
     private fun getOrCreateComposeRouteLayout(): LinearLayout {
-        if (composeRouteLayout == null) {
-            val topMargin = statusBarHeight + config.topMargin.dp
-            val gravity = config.composeRouteGravity
-            
-            composeRouteLayout = LinearLayout(context).apply {
-                orientation = LinearLayout.VERTICAL
-                setBackgroundColor(Color.TRANSPARENT)
-                tag = ScreenNameViewerConstants.COMPOSE_ROUTE_LAYOUT_TAG
-            }
-            
-            val params = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                this.topMargin = topMargin
-                this.gravity = gravity
-            }
-            
-            // Fragment 레이아웃 다음 위치에 삽입
-            val insertIndex = findFragmentLayoutPosition()
-            decorView.addView(composeRouteLayout, insertIndex, params)
+        composeRouteLayout?.let { return it }
+
+        return LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.TRANSPARENT)
+        }.also { layout ->
+            OverlayColumn.attach(
+                decorView = decorView,
+                group = layout,
+                slot = OverlayColumn.Slot.COMPOSE_ROUTE,
+                gravity = config.composeRouteGravity,
+                topMargin = statusBarHeight + config.topMargin.dp,
+            )
+            composeRouteLayout = layout
         }
-        
-        return composeRouteLayout!!
     }
-    
+
     /**
      * Compose Route Label을 추가합니다.
      */
@@ -111,9 +86,7 @@ internal class ComposeRouteOverlayRenderer(
      * 모든 Compose Route Label을 제거합니다.
      */
     fun clear() {
-        composeRouteLayout?.let { layout ->
-            decorView.removeView(layout)
-        }
+        composeRouteLayout?.let(OverlayColumn::detach)
         composeRouteLayout = null
     }
 }
