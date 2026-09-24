@@ -23,7 +23,7 @@ jobs:
   # 회사(미러) repo에서만 실행 — 원본(개인) repo에서는 실행되지 않음
   check-version-change:
     if: github.repository != 'DongLab-DevTools/ScreenNameViewer-For-Compose'
-    runs-on: ubuntu-latest
+    runs-on: default
     outputs:
       version-changed: ${{ steps.version-check.outputs.changed }}
       new-version: ${{ steps.version-check.outputs.version }}
@@ -61,13 +61,14 @@ jobs:
   publish-compose:
     needs: check-version-change
     if: needs.check-version-change.outputs.version-changed == 'true'
-    runs-on: ubuntu-latest
+    runs-on: default
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           java-version: '17'
           distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
       - run: chmod +x gradlew
       - name: Publish compose
         run: ./gradlew :screennameviewer:compose:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}
@@ -79,13 +80,14 @@ jobs:
   publish-compose-noop:
     needs: check-version-change
     if: needs.check-version-change.outputs.version-changed == 'true'
-    runs-on: ubuntu-latest
+    runs-on: default
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           java-version: '17'
           distribution: 'temurin'
+      - uses: android-actions/setup-android@v3
       - run: chmod +x gradlew
       - name: Publish compose-noop
         run: ./gradlew :screennameviewer:compose-noop:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}

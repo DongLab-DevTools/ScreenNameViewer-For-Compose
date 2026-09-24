@@ -42,6 +42,12 @@
             android:theme="@style/Theme.ScreenNameViewerForCompose" />
 
         <activity
+            android:name=".sample.Navigation3SampleActivity"
+            android:exported="false"
+            android:label="Navigation3 샘플"
+            android:theme="@style/Theme.ScreenNameViewerForCompose" />
+
+        <activity
             android:name=".ComposeTestActivity"
             android:exported="false"
             android:theme="@style/Theme.ScreenNameViewerForCompose" />

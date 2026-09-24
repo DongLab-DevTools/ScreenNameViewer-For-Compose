@@ -105,6 +105,17 @@ class MyApplication : Application() {
     }
 ```
 
+### Initialize without NavController (Navigation3 NavDisplay, etc.)
+
+```kotlin
+    ScreenNameTracker(currentRoute = { backStack.lastOrNull()?.let(::routeNameOf) }) {
+        NavDisplay(backStack = backStack, /*...*/)
+    }
+```
+
+- `routeNameOf` keeps nested class names so the label is unique and searchable
+  (e.g. `com.example.AppRoute.MoreBand.Tab` -> `AppRoute.MoreBand.Tab`)
+
 <br>
 
 ## Configuration
@@ -127,9 +138,13 @@ initScreenNameViewer(this) {
             size = 12f                    // Text size
             color = Color.WHITE           // Text color
         }
+        routeTextStyle {
+            color = Color.YELLOW          // Compose route text color (default: yellow)
+        }
         background {
-            color = Color.argb(128, 0, 0, 0)  // Background color
-            padding = 16                      // Padding
+            color = Color.argb(179, 0, 0, 0)  // Background color
+            padding = 16                      // Padding (px, all sides)
+            cornerRadius = 4                  // Corner radius (dp)
         }
         position {
             topMargin = 64                                    // Top margin
@@ -151,7 +166,8 @@ initScreenNameViewer(this) {
 
 - **config**: Customize overlay appearance
   - `textStyle`: Text size and color
-  - `background`: Background color and padding
+  - `routeTextStyle`: Text size and color for Compose route labels (defaults: yellow, same size as `textStyle`)
+  - `background`: Background color, padding, and corner radius
   - `position`: Margin and display positions for different components
 
 <br>
