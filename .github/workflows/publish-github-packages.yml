@@ -69,6 +69,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools' # 기본값의 'tools' 패키지는 SDK 저장소에서 삭제되어 설치 실패
       - run: chmod +x gradlew
       - name: Publish compose
         run: ./gradlew :screennameviewer:compose:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}
@@ -88,6 +90,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools' # 기본값의 'tools' 패키지는 SDK 저장소에서 삭제되어 설치 실패
       - run: chmod +x gradlew
       - name: Publish compose-noop
         run: ./gradlew :screennameviewer:compose-noop:publishAllPublicationsToGitHubPackagesRepository -PenableSigning=false ${{ env.GROUP_ARG }}
